@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#8EC3B3</color>
+    <color name="colorPrimaryDark">#3d3935</color>
+    <color name="colorAccent">#F9423A</color>
+
+    <color name="colorExcyGreen">#97D700</color>
+    <color name="colorPlayPause">#FFE900</color>
+    <color name="colorPlayStop">#e0004d</color>
+
+    <color name="colorBlue">#00B5E2</color>
+    <color name="colorProgressBar">#d3d3d3</color>
+
+    <!-- Login Screen Colors -->
+    <color name="colorSignUpBlue">#3F51B5</color>
+
+</resources>

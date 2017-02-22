@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_play"
+        android:enabled="true"
+        android:icon="@drawable/ic_nav_bar_play_2x"
+        android:title="@string/bottom_nav_view_play"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_workouts"
+        android:enabled="true"
+        android:icon="@drawable/ic_nav_bar_workouts_2x"
+        android:title="@string/bottom_nav_view_workouts"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_me"
+        android:enabled="true"
+        android:icon="@drawable/ic_nav_bar_me_2x"
+        android:title="@string/bottom_nav_view_me"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_more"
+        android:enabled="true"
+        android:icon="@drawable/ic_nav_bar_more_2x"
+        android:title="@string/bottom_nav_view_more"
+        app:showAsAction="always" />
+</menu>
