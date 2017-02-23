@@ -10,8 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:itemBackground="@color/colorPrimaryDark"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
+        app:itemIconTint="@drawable/bottom_nav_bar_selector"
+        app:itemTextColor="@drawable/bottom_nav_bar_selector"
         app:menu="@menu/bottom_navigation_menu">
     </android.support.design.widget.BottomNavigationView>
 
