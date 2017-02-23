@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.excy.excy.SignUpActivity">
+    tools:context="com.excy.excy.activities.SignUpActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -233,12 +233,13 @@
                     android:textColor="@color/white"
                     android:layout_weight="1"
                     android:id="@+id/tvDontHaveAnAccount"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/sign_up"
+                    android:text="@string/login"
                     android:textColor="@color/white"
                     android:background="@color/colorSignUpBlue"
                     android:layout_weight="1"
@@ -261,6 +262,22 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_top"
+                android:paddingBottom="@dimen/padding_bottom"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/dont_have_an_excy"
+                android:textColorLink="@color/white"
+                android:linksClickable="true"
+                android:id="@+id/tvLink"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="35dp" />
 
         </LinearLayout>
     </ScrollView>

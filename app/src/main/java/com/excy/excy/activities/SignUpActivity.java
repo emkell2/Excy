@@ -1,7 +1,9 @@
-package com.excy.excy;
+package com.excy.excy.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.excy.excy.R;
 
 public class SignUpActivity extends AppCompatActivity {
 

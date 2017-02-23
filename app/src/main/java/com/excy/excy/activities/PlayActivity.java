@@ -1,4 +1,4 @@
-package com.excy.excy;
+package com.excy.excy.activities;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.excy.excy.PlayTimer;
+import com.excy.excy.R;
 import com.excy.excy.utilities.PlayUtilities;
 
 import info.hoang8f.widget.FButton;
