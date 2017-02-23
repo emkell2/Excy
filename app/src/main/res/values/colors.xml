@@ -14,4 +14,7 @@
     <!-- Login Screen Colors -->
     <color name="colorSignUpBlue">#3F51B5</color>
 
+    <!-- Bottom Nav Bar Colors -->
+    <color name="colorNavBarActive">#2196F3</color>
+
 </resources>
