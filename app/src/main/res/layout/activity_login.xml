@@ -131,8 +131,7 @@
             android:textColor="@color/white"
             android:layout_weight="1"
             android:id="@+id/tvDontHaveAnAccount"
-            android:textAlignment="center"
-            android:textSize="14sp" />
+            android:textAlignment="center" />
 
         <Button
             android:layout_width="match_parent"
