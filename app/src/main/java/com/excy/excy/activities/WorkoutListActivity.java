@@ -7,12 +7,12 @@ import android.view.View;
 
 import com.excy.excy.R;
 
-public class WorkoutsActivity extends AppCompatActivity {
+public class WorkoutListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_workouts);
+        setContentView(R.layout.activity_workout_list);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottomNavigationView);
