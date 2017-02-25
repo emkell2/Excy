@@ -43,6 +43,11 @@
     <string name="username">Username</string>
     <string name="have_an_account">Have an account?</string>
 
+    <!-- WorkoutActivity Strings -->
+    <string name="power">power</string>
+    <string name="starting_zone">starting zone</string>
+    <string name="target_zone">target zone</string>
+
     <string name="dont_have_an_excy"><a href="http://www.excy.com">Don\'t have an Excy?</a></string>
 
     <!-- Bottom Navigation View Strings -->
