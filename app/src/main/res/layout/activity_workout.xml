@@ -148,7 +148,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:text="@string/power"/>
+                            android:text="@string/power"
+                            android:textColor="@android:color/darker_gray"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -171,7 +172,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:text="@string/starting_zone"/>
+                            android:text="@string/starting_zone"
+                            android:textColor="@android:color/darker_gray"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -194,7 +196,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:text="@string/target_zone"/>
+                            android:text="@string/target_zone"
+                            android:textColor="@android:color/darker_gray"/>
                     </LinearLayout>
                 </LinearLayout>
 
