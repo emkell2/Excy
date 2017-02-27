@@ -24,13 +24,12 @@ public class WorkoutActivity extends AppCompatActivity {
         setWorkoutImage();
         setWorkoutPowerZoneImage();
 
+        // Button layout
         Button pauseBtn = (Button) findViewById(R.id.btnPause);
-
         pauseBtn.getBackground().setColorFilter(getResources().getColor(R.color.colorPauseBtn),
                 PorterDuff.Mode.MULTIPLY);
 
         Button stopBtn = (Button) findViewById(R.id.btnStop);
-
         stopBtn.getBackground().setColorFilter(getResources().getColor(R.color.colorStopBtn),
                 PorterDuff.Mode.MULTIPLY);
     }
@@ -87,5 +86,33 @@ public class WorkoutActivity extends AppCompatActivity {
                     break;
             }
         }
+    }
+
+    private int[] getPowerZoneArray(int workoutResId) {
+        int[] powerZoneArr = {0};
+        if (workoutResId > 0) {
+            switch (workoutResId) {
+                case R.id.ibArmCandy:
+                    powerZoneArr = WorkoutUtilities.PZ_ARM_CANDY_ARR;
+                    break;
+                case R.id.ibSuperCycleCardio:
+                    powerZoneArr = WorkoutUtilities.PZ_SUPER_CYCLE_CARDIO_ARR;
+                    break;
+                case R.id.ibCycleLegBlast:
+                    powerZoneArr = WorkoutUtilities.PZ_CYCLE_LEG_BLAST_ARR;
+                    break;
+                case R.id.ibCoreFloorExplosion:
+                    powerZoneArr = WorkoutUtilities.PZ_CORE_FLOOR_EXPLOSION_ARR;
+                    break;
+                case R.id.ibArmBlast:
+                    powerZoneArr = WorkoutUtilities.PZ_ARM_BLAST_ARR;
+                    break;
+                case R.id.ibUltimateArmAndLegToning:
+                    powerZoneArr = WorkoutUtilities.PZ_ULTIMATE_ARM_LEG_TONING_ARR;
+                    break;
+            }
+        }
+
+        return powerZoneArr;
     }
 }
