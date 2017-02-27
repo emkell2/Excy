@@ -16,7 +16,7 @@ public class WorkoutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_workout);
 
         WorkoutUtilities.setBottomNavBarIconActive(this, R.id.action_workouts);
-        
+
         workoutResId = getIntent().getIntExtra(WorkoutUtilities.WORKOUT_INTENT_DATA, 0);
 
         setWorkoutImage();

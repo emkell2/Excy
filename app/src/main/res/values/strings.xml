@@ -44,6 +44,7 @@
     <string name="have_an_account">Have an account?</string>
 
     <!-- WorkoutActivity Strings -->
+    <string name="time">time</string>
     <string name="power">power</string>
     <string name="starting_zone">starting zone</string>
     <string name="target_zone">target zone</string>
