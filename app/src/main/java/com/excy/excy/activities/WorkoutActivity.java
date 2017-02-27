@@ -20,6 +20,7 @@ public class WorkoutActivity extends AppCompatActivity {
         workoutResId = getIntent().getIntExtra(WorkoutUtilities.WORKOUT_INTENT_DATA, 0);
 
         setWorkoutImage();
+        setWorkoutPowerZoneImage();
     }
 
     private void setWorkoutImage() {
@@ -44,6 +45,33 @@ public class WorkoutActivity extends AppCompatActivity {
                     break;
                 case R.id.ibUltimateArmAndLegToning:
                     workoutImage.setImageResource(R.drawable.wb_ultimate_arm_leg_tone);
+                    break;
+            }
+        }
+    }
+
+    private void setWorkoutPowerZoneImage() {
+        if (workoutResId > 0) {
+            ImageView powerZoneImage = (ImageView) findViewById(R.id.ivZone);
+
+            switch (workoutResId) {
+                case R.id.ibArmCandy:
+                    powerZoneImage.setImageResource(R.drawable.pz_arm_candy_graph);
+                    break;
+                case R.id.ibSuperCycleCardio:
+                    powerZoneImage.setImageResource(R.drawable.pz_super_cycle_graph);
+                    break;
+                case R.id.ibCycleLegBlast:
+                    powerZoneImage.setImageResource(R.drawable.pz_cycle_leg_blast_graph);
+                    break;
+                case R.id.ibCoreFloorExplosion:
+                    powerZoneImage.setImageResource(R.drawable.pz_core_floor_explosion_graph);
+                    break;
+                case R.id.ibArmBlast:
+                    powerZoneImage.setImageResource(R.drawable.pz_arm_blast_graph);
+                    break;
+                case R.id.ibUltimateArmAndLegToning:
+                    powerZoneImage.setImageResource(R.drawable.pz_ultimate_arm_and_leg_toning_graph);
                     break;
             }
         }
