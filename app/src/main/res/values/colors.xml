@@ -5,8 +5,8 @@
     <color name="colorAccent">#F9423A</color>
 
     <color name="colorExcyGreen">#97D700</color>
-    <color name="colorPlayPause">#FFE900</color>
-    <color name="colorPlayStop">#e0004d</color>
+    <color name="colorPauseBtn">#FFE900</color>
+    <color name="colorStopBtn">#e0004d</color>
 
     <color name="colorBlue">#00B5E2</color>
     <color name="colorProgressBar">#d3d3d3</color>

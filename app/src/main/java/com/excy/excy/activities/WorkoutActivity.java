@@ -1,7 +1,9 @@
 package com.excy.excy.activities;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.excy.excy.R;
@@ -21,6 +23,16 @@ public class WorkoutActivity extends AppCompatActivity {
 
         setWorkoutImage();
         setWorkoutPowerZoneImage();
+
+        Button pauseBtn = (Button) findViewById(R.id.btnPause);
+
+        pauseBtn.getBackground().setColorFilter(getResources().getColor(R.color.colorPauseBtn),
+                PorterDuff.Mode.MULTIPLY);
+
+        Button stopBtn = (Button) findViewById(R.id.btnStop);
+
+        stopBtn.getBackground().setColorFilter(getResources().getColor(R.color.colorStopBtn),
+                PorterDuff.Mode.MULTIPLY);
     }
 
     private void setWorkoutImage() {
