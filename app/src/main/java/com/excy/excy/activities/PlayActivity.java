@@ -323,7 +323,7 @@ public class PlayActivity extends AppCompatActivity {
                 Intent intent;
                 switch (item.getItemId()) {
                     case R.id.action_workouts:
-                        intent = new Intent(getContext(), WorkoutsActivity.class);
+                        intent = new Intent(getContext(), WorkoutListActivity.class);
                         startActivity(intent);
                         break;
                 }
