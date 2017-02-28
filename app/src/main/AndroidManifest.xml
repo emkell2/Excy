@@ -30,8 +30,9 @@
         </activity>
         <activity
             android:name=".activities.SignUpActivity"
-            android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name=".activities.WorkoutsActivity"></activity>
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".activities.WorkoutListActivity" />
+        <activity android:name=".activities.WorkoutActivity"></activity>
     </application>
 
 </manifest>
