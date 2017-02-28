@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.excy.excy.R;
+import com.excy.excy.utilities.AppUtilities;
 import com.excy.excy.utilities.WorkoutUtilities;
 
 public class WorkoutListActivity extends AppCompatActivity {
@@ -16,7 +17,7 @@ public class WorkoutListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_list);
 
-        WorkoutUtilities.setBottomNavBarIconActive(this, R.id.action_workouts);
+        AppUtilities.setBottomNavBarIconActive(this, R.id.action_workouts);
 
         ImageButton armCandyBtn = (ImageButton) findViewById(R.id.ibArmCandy);
         armCandyBtn.setOnClickListener(new View.OnClickListener() {

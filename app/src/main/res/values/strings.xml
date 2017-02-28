@@ -49,6 +49,16 @@
     <string name="starting_zone">starting zone</string>
     <string name="target_zone">target zone</string>
 
+    <!-- MeActivity Strings -->
+    <string name="friend_since">friend since</string>
+    <string name="quick_stats">Quick Stats</string>
+    <string name="healthy_is">Healthy is...</string>
+    <string name="my_goals">My Goals:</string>
+    <string name="calories_a_week">calories a week</string>
+    <string name="workouts_a_week">workouts a week</string>
+    <string name="my_inspiration">My Inspiration:</string>
+    <string name="recent_history">Recent History</string>
+
     <string name="dont_have_an_excy"><a href="http://www.excy.com">Don\'t have an Excy?</a></string>
 
     <!-- Bottom Navigation View Strings -->

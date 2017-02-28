@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.excy.excy.R;
+import com.excy.excy.utilities.AppUtilities;
 import com.excy.excy.utilities.WorkoutUtilities;
 
 public class WorkoutActivity extends AppCompatActivity {
@@ -17,7 +18,7 @@ public class WorkoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout);
 
-        WorkoutUtilities.setBottomNavBarIconActive(this, R.id.action_workouts);
+        AppUtilities.setBottomNavBarIconActive(this, R.id.action_workouts);
 
         workoutResId = getIntent().getIntExtra(WorkoutUtilities.WORKOUT_INTENT_DATA, 0);
 
