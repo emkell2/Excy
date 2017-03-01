@@ -61,6 +61,12 @@
 
     <string name="dont_have_an_excy"><a href="http://www.excy.com">Don\'t have an Excy?</a></string>
 
+    <!-- Workout CardView Strings -->
+    <string name="interval_workout">Interval Workout</string>
+    <string name="minimum">min:</string>
+    <string name="maximum">max:</string>
+
+
     <!-- Bottom Navigation View Strings -->
     <string name="bottom_nav_view_play">play</string>
     <string name="bottom_nav_view_workouts">workouts</string>
