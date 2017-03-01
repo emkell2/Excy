@@ -171,6 +171,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tvRecentHistory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/llMyInspiration"
@@ -183,11 +184,21 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvRecentWorkouts"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvRecentHistory">
             </android.support.v7.widget.RecyclerView>
 
         </RelativeLayout>
     </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fbEditProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_mode_edit_black_48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_above="@+id/bottomNavigationView" />
 
     <include layout="@layout/bottom_nav_bar"></include>
 </RelativeLayout>
