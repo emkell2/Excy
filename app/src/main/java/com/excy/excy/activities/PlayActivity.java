@@ -326,6 +326,10 @@ public class PlayActivity extends AppCompatActivity {
                         intent = new Intent(getContext(), WorkoutListActivity.class);
                         startActivity(intent);
                         break;
+                    case R.id.action_me:
+                        intent = new Intent(getContext(), MeActivity.class);
+                        startActivity(intent);
+                        break;
                 }
                 return true;
             }

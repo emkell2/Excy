@@ -2,7 +2,10 @@ package com.excy.excy.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -64,6 +67,27 @@ public class WorkoutListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startWorkoutActivity(R.id.ibUltimateArmAndLegToning);
+            }
+        });
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.bottomNavigationView);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
+                switch (item.getItemId()) {
+                    case R.id.action_workouts:
+                        intent = new Intent(getBaseContext(), WorkoutListActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.action_me:
+                        intent = new Intent(getBaseContext(), MeActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                return true;
             }
         });
 
