@@ -10,4 +10,64 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.excy.excy.activities.EditProfileActivity">
 
+    <LinearLayout
+        android:id="@+id/llProfileMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:weightSum="1"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.30">
+
+            <ImageButton
+                android:id="@+id/ibChangeProfileImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/placeholder_user"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/change_image"
+                android:textColor="@color/colorNavBarActive"/>
+
+        </android.support.design.widget.CoordinatorLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.70"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvSignMeUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:text="@string/sign_me_up"
+                android:textColor="@color/white"/>
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/user_email"
+                android:background="@color/white"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
 </RelativeLayout>
