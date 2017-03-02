@@ -33,7 +33,8 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activities.WorkoutListActivity" />
         <activity android:name=".activities.WorkoutActivity" />
-        <activity android:name=".activities.MeActivity"></activity>
+        <activity android:name=".activities.MeActivity" />
+        <activity android:name=".activities.EditProfileActivity"></activity>
     </application>
 
 </manifest>
