@@ -11,6 +11,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 
 import com.excy.excy.R;
@@ -58,5 +59,13 @@ public class MeActivity extends AppCompatActivity {
         params.setAnchorId(R.id.bottomNavigationView);
         params.anchorGravity = Gravity.TOP | Gravity.RIGHT | GravityCompat.END;
         fab.setLayoutParams(params);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), EditProfileActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
