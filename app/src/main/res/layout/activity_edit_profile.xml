@@ -33,8 +33,7 @@
                     android:layout_height="100dp"
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/placeholder_user"/>
+                    android:src="@drawable/rsz_placeholder_user"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -206,8 +205,8 @@
 
                 <ImageButton
                     android:id="@+id/ibImageLeft"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
                     android:scaleType="fitXY"
@@ -231,8 +230,8 @@
 
                 <ImageButton
                     android:id="@+id/ibImageCenter"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
                     android:scaleType="fitXY"
@@ -256,8 +255,8 @@
 
                 <ImageButton
                     android:id="@+id/ibImageRight"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
                     android:scaleType="fitXY"
