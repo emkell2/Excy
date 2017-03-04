@@ -49,7 +49,39 @@
     <string name="starting_zone">starting zone</string>
     <string name="target_zone">target zone</string>
 
+    <!-- MeActivity Strings -->
+    <string name="friend_since">friend since</string>
+    <string name="quick_stats">Quick Stats</string>
+    <string name="healthy_is">Healthy is...</string>
+    <string name="my_goals">My Goals:</string>
+    <string name="calories_a_week">calories a week</string>
+    <string name="workouts_a_week">workouts a week</string>
+    <string name="my_inspiration">My Inspiration:</string>
+    <string name="recent_history">Recent History</string>
+
+    <!-- EditProfileActivity Strings -->
+    <string name="change_image">Change image</string>
+    <string name="sign_me_up">Sign me up to be among the first to hear about new things with excy</string>
+
+    <string name="i_will_burn">I will burn</string>
+    <string name="colories_every_week">calories every week</string>
+    <string name="i_will_workout">I will workout</string>
+    <string name="times_a_week">times a week</string>
+    <string name="select_images">Select a few images that will inspire you</string>
+    <string name="image_1">image 1</string>
+    <string name="image_2">image 2</string>
+    <string name="image_3">image 3</string>
+    <string name="log_out">Log Out</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="healthy_desc_placeholder">What does being healthy mean to you?</string>
+
     <string name="dont_have_an_excy"><a href="http://www.excy.com">Don\'t have an Excy?</a></string>
+
+    <!-- Workout CardView Strings -->
+    <string name="interval_workout">Interval Workout</string>
+    <string name="minimum">min:</string>
+    <string name="maximum">max:</string>
+
 
     <!-- Bottom Navigation View Strings -->
     <string name="bottom_nav_view_play">play</string>

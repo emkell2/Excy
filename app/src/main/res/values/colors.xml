@@ -17,4 +17,8 @@
     <!-- Bottom Nav Bar Colors -->
     <color name="colorNavBarActive">#2196F3</color>
 
+    <!-- Edit Profile Colors -->
+    <color name="colorLogOutBtn">#1976D2</color>
+    <color name="colorSaveChangesBtn">#1976D2</color>
+
 </resources>
