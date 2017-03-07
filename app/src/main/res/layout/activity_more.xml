@@ -24,7 +24,7 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="?attr/colorPrimary"
+                    android:background="@color/colorPrimaryDark"
                     app:layout_scrollFlags="scroll|enterAlways"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
@@ -32,6 +32,7 @@
                     android:id="@+id/tlTabs"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/colorPrimaryDark"
                     app:tabMode="fixed"
                     app:tabGravity="fill"/>
             </android.support.design.widget.AppBarLayout>
