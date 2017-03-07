@@ -75,6 +75,29 @@
     <string name="save_changes">Save Changes</string>
     <string name="healthy_desc_placeholder">What does being healthy mean to you?</string>
 
+    <!-- MoreActivity Strings -->
+    <string name="learn_exercises">LEARN EXERCISES</string>
+    <string name="watch_workouts">WATCH WORKOUTS</string>
+    <string name="know_zones">KNOW THE ZONES</string>
+    <string name="tips">TIPS</string>
+    <string name="tip01">Exercise While Watching TV</string>
+    <string name="tip02">Take Excy Anywhere for Anytime Exercise</string>
+    <string name="tip03"></string>
+    <string name="tip04"></string>
+    <string name="tip05"></string>
+    <string name="tip06"></string>
+    <string name="tip07"></string>
+    <string name="tip08"></string>
+    <string name="tip09"></string>
+    <string name="tip10"></string>
+    <string name="tip11"></string>
+    <string name="tip12"></string>
+    <string name="tip13"></string>
+    <string name="tip14"></string>
+    <string name="tip15"></string>
+    <string name="tip16"></string>
+    <string name="tip17"></string>
+
     <string name="dont_have_an_excy"><a href="http://www.excy.com">Don\'t have an Excy?</a></string>
 
     <!-- Workout CardView Strings -->
@@ -101,4 +124,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
