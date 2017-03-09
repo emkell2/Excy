@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.excy.excy.R;
+import com.excy.excy.fragments.ExerciseSummaryFragment;
 import com.excy.excy.fragments.KnowZonesFragment;
 import com.excy.excy.fragments.LearnExercisesFragment;
 import com.excy.excy.fragments.MoreBaseFragment;
@@ -17,6 +18,7 @@ import com.excy.excy.utilities.AppUtilities;
 public class MoreActivity extends AppCompatActivity implements
         MoreBaseFragment.OnFragmentInteractionListener,
         LearnExercisesFragment.OnFragmentInteractionListener,
+        ExerciseSummaryFragment.OnFragmentInteractionListener,
         WatchWorkoutsFragment.OnFragmentInteractionListener,
         KnowZonesFragment.OnFragmentInteractionListener,
         TipsFragment.OnFragmentInteractionListener{
@@ -57,6 +59,11 @@ public class MoreActivity extends AppCompatActivity implements
 
     @Override
     public void onTipSelected(Uri uri) {
+        // Do Nothing
+    }
+
+    @Override
+    public void onSummaryRead(Uri uri) {
         // Do Nothing
     }
 }

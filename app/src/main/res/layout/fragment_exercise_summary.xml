@@ -1,0 +1,53 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.excy.excy.fragments.ExerciseSummaryFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivWorkoutImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"/>
+
+        <ImageView
+            android:id="@+id/ivWorkoutButtons"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="8dp"
+            android:layout_below="@id/ivWorkoutImage"/>
+
+        <ImageView
+            android:id="@+id/ivWorkoutSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ivWorkoutButtons"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"/>
+
+        <ImageView
+            android:id="@+id/ivWorkoutGraph"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@id/ivWorkoutSummary"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/btnStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ivWorkoutGraph"
+            android:layout_marginBottom="100dp"
+            android:text="@string/start_button"
+            android:textColor="@color/white"
+            android:background="@color/colorExcyGreen"/>
+    </RelativeLayout>
+
+</FrameLayout>

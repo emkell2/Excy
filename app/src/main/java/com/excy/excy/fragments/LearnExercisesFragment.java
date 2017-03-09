@@ -4,9 +4,11 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.excy.excy.R;
 
@@ -24,6 +26,13 @@ public class LearnExercisesFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    public static final String STR_ARM_CANDY = "Arm Candy";
+    public static final String STR_SUPER_CYCLE_CARDIO = "Super Cycle Cardio";
+    public static final String STR_CYCLE_LEG_BLAST = "Cycle Leg Blast";
+    public static final String STR_CORE_FLOOR_EXPLOSION = "Core Floor Explosion";
+    public static final String STR_ARM_BLAST = "Arm Blast";
+    public static final String STR_ULTIMATE_ARM_LEG_TONING = "Ultimate Arm and Leg Toning";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -66,7 +75,89 @@ public class LearnExercisesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_learn_exercises, container, false);
+        View view = inflater.inflate(R.layout.fragment_learn_exercises, container, false);
+
+        final FragmentManager fragmentManager = getFragmentManager();
+
+        ImageButton armCandyBtn = (ImageButton) view.findViewById(R.id.ibArmCandy);
+        armCandyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment frag = ExerciseSummaryFragment.newInstance(R.id.ibArmCandy);
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.more_fragment_container, frag, STR_ARM_CANDY)
+                        .addToBackStack(STR_ARM_CANDY)
+                        .commit();
+            }
+        });
+
+        ImageButton superCycleCardioBtn = (ImageButton) view.findViewById(R.id.ibSuperCycleCardio);
+        superCycleCardioBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment frag = ExerciseSummaryFragment.newInstance(R.id.ibSuperCycleCardio);
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.more_fragment_container, frag, STR_SUPER_CYCLE_CARDIO)
+                        .addToBackStack(STR_SUPER_CYCLE_CARDIO)
+                        .commit();
+            }
+        });
+
+        ImageButton cycleLegBlastBtn = (ImageButton) view.findViewById(R.id.ibCycleLegBlast);
+        cycleLegBlastBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment frag = ExerciseSummaryFragment.newInstance(R.id.ibCycleLegBlast);
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.more_fragment_container, frag, STR_CYCLE_LEG_BLAST)
+                        .addToBackStack(STR_CYCLE_LEG_BLAST)
+                        .commit();
+            }
+        });
+
+        ImageButton coreFloorExplosionBtn = (ImageButton) view.findViewById(R.id.ibCoreFloorExplosion);
+        coreFloorExplosionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment frag = ExerciseSummaryFragment.newInstance(R.id.ibCoreFloorExplosion);
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.more_fragment_container, frag, STR_CORE_FLOOR_EXPLOSION)
+                        .addToBackStack(STR_CORE_FLOOR_EXPLOSION)
+                        .commit();
+            }
+        });
+
+        ImageButton armBlastBtn = (ImageButton) view.findViewById(R.id.ibArmBlast);
+        armBlastBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment frag = ExerciseSummaryFragment.newInstance(R.id.ibArmBlast);
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.more_fragment_container, frag, STR_ARM_BLAST)
+                        .addToBackStack(STR_ARM_BLAST)
+                        .commit();
+            }
+        });
+
+        ImageButton ultimateArmLegToningBtn = (ImageButton) view.findViewById(R.id.ibUltimateArmAndLegToning);
+        ultimateArmLegToningBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment frag = ExerciseSummaryFragment.newInstance(R.id.ibUltimateArmAndLegToning);
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.more_fragment_container, frag, STR_ULTIMATE_ARM_LEG_TONING)
+                        .addToBackStack(STR_ULTIMATE_ARM_LEG_TONING)
+                        .commit();
+            }
+        });
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
