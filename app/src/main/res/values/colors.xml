@@ -22,4 +22,7 @@
     <color name="colorLogOutBtn">#00B5E2</color>
     <color name="colorSaveChangesBtn">#00B5E2</color>
 
+    <!-- Tips Colors -->
+    <color name="colorBlack">#000000</color>
+
 </resources>

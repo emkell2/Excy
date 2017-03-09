@@ -4,10 +4,409 @@
     android:layout_height="match_parent"
     tools:context="com.excy.excy.fragments.TipsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/ivTips"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/more_tips"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/tvTip01"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_below="@+id/ivTips"
+            android:paddingLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:text="@string/tip01"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/tip_font_size" />
+
+        <ImageView
+            android:id="@+id/ivTip01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTip01"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/tip_image01"/>
+
+        <TextView
+            android:id="@+id/tvTip02"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_below="@+id/ivTip01"
+            android:paddingLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:text="@string/tip02"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/tip_font_size" />
+
+        <ImageView
+            android:id="@+id/ivTip02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTip02"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/tip_image02"/>
+
+        <TextView
+            android:id="@+id/tvTip03"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_below="@+id/ivTip02"
+            android:paddingLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:text="@string/tip03"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/tip_font_size" />
+
+        <ImageView
+            android:id="@+id/ivTip03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTip03"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/tip_image03"/>
+
+        <TextView
+            android:id="@+id/tvTip04"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_below="@+id/ivTip03"
+            android:paddingLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:text="@string/tip04"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/tip_font_size" />
+
+        <ImageView
+            android:id="@+id/ivTip04"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTip04"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/tip_image04"/>
+
+        <TextView
+            android:id="@+id/tvTip05"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_below="@+id/ivTip04"
+            android:paddingLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:text="@string/tip05"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/tip_font_size" />
+
+        <ImageView
+            android:id="@+id/ivTip05"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTip05"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/tip_image05"/>
+
+        <TextView
+            android:id="@+id/tvTip06"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_below="@+id/ivTip05"
+            android:paddingLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:text="@string/tip06"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/tip_font_size" />
+
+        <ImageView
+            android:id="@+id/ivTip06"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTip06"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/tip_image06"/>
+
+        <TextView
+            android:id="@+id/tvTip07"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_below="@+id/ivTip06"
+            android:paddingLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:text="@string/tip07"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/tip_font_size" />
+
+        <ImageView
+            android:id="@+id/ivTip07"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTip07"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/tip_image07"/>
+
+        <TextView
+            android:id="@+id/tvTip08"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_below="@+id/ivTip07"
+            android:paddingLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:text="@string/tip08"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/tip_font_size" />
+
+        <ImageView
+            android:id="@+id/ivTip08"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTip08"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/tip_image08"/>
+
+        <TextView
+            android:id="@+id/tvTip09"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_below="@+id/ivTip08"
+            android:paddingLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:text="@string/tip09"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/tip_font_size" />
+
+        <ImageView
+            android:id="@+id/ivTip09"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTip09"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/tip_image09"/>
+
+        <TextView
+            android:id="@+id/tvTip10"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_below="@+id/ivTip09"
+            android:paddingLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:text="@string/tip10"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/tip_font_size" />
+
+        <ImageView
+            android:id="@+id/ivTip10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTip10"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/tip_image10"/>
+
+        <TextView
+            android:id="@+id/tvTip11"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_below="@+id/ivTip10"
+            android:paddingLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:text="@string/tip11"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/tip_font_size" />
+
+        <ImageView
+            android:id="@+id/ivTip11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTip11"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/tip_image11"/>
+
+        <TextView
+            android:id="@+id/tvTip12"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_below="@+id/ivTip11"
+            android:paddingLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:text="@string/tip12"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/tip_font_size" />
+
+        <ImageView
+            android:id="@+id/ivTip12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTip12"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/tip_image12"/>
+
+        <TextView
+            android:id="@+id/tvTip13"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_below="@+id/ivTip12"
+            android:paddingLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:text="@string/tip13"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/tip_font_size" />
+
+        <ImageView
+            android:id="@+id/ivTip13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTip13"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/tip_image13"/>
+
+        <TextView
+            android:id="@+id/tvTip14"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_below="@+id/ivTip13"
+            android:paddingLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:text="@string/tip14"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/tip_font_size" />
+
+        <ImageView
+            android:id="@+id/ivTip14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTip14"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/tip_image14"/>
+
+        <TextView
+            android:id="@+id/tvTip15"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_below="@+id/ivTip14"
+            android:paddingLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:text="@string/tip15"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/tip_font_size" />
+
+        <ImageView
+            android:id="@+id/ivTip15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTip15"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/tip_image15"/>
+
+        <TextView
+            android:id="@+id/tvTip16"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_below="@+id/ivTip15"
+            android:paddingLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:text="@string/tip16"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/tip_font_size" />
+
+        <ImageView
+            android:id="@+id/ivTip16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTip16"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/tip_image16"/>
+
+        <TextView
+            android:id="@+id/tvTip17"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_below="@+id/ivTip16"
+            android:paddingLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:text="@string/tip17"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/tip_font_size" />
+
+        <ImageView
+            android:id="@+id/ivTip17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTip17"
+            android:layout_marginBottom="100dp"
+            android:adjustViewBounds="true"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/tip_image17"/>
+    </RelativeLayout>
 </FrameLayout>

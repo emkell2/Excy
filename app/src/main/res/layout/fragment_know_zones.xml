@@ -4,32 +4,27 @@
     android:layout_height="match_parent"
     tools:context="com.excy.excy.fragments.KnowZonesFragment">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/ivKnowZones"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/more_know_the_zones"/>
+
+        <ImageView
+            android:id="@+id/ivZonesImage"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/ivKnowZones"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:src="@drawable/more_know_the_zones"/>
-
-            <ImageView
-                android:id="@+id/ivZonesImage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/ivKnowZones"
-                android:layout_marginBottom="100dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:background="@color/colorPrimary"
-                android:src="@drawable/target_zone_page"/>
-        </RelativeLayout>
-    </ScrollView>
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ivKnowZones"
+            android:layout_marginBottom="100dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/target_zone_page"/>
+    </RelativeLayout>
 
 </FrameLayout>
