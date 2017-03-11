@@ -98,4 +98,15 @@
 
     </RelativeLayout>
 
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rlSurvey"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:text="@string/feedback_btn_submit"
+        android:textSize="20sp"
+        android:textColor="@color/white"/>
+
 </RelativeLayout>
