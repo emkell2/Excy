@@ -37,11 +37,8 @@
         <activity android:name=".activities.WorkoutActivity" />
         <activity android:name=".activities.MeActivity" />
         <activity android:name=".activities.EditProfileActivity" />
-<<<<<<< HEAD
         <activity android:name=".activities.SurveyActivity"></activity>
-=======
         <activity android:name=".activities.MoreActivity"></activity>
->>>>>>> master
     </application>
 
 </manifest>

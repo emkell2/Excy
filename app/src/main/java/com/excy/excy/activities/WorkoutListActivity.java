@@ -80,8 +80,8 @@ public class WorkoutListActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Intent intent;
                 switch (item.getItemId()) {
-                    case R.id.action_workouts:
-                        intent = new Intent(getBaseContext(), WorkoutListActivity.class);
+                    case R.id.action_play:
+                        intent = new Intent(getBaseContext(), PlayActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.action_me:
