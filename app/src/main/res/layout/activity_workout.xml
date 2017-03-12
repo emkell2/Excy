@@ -213,6 +213,7 @@
                         android:id="@+id/btnPause"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="-4dp"
                         android:text="@string/pause_button"
                         android:textColor="@color/white"
                         android:layout_weight="1"/>
@@ -221,6 +222,7 @@
                         android:id="@+id/btnStop"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="-4dp"
                         android:text="@string/stop_button"
                         android:textColor="@color/white"
                         android:layout_weight="1"/>
