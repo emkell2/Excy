@@ -75,6 +75,15 @@
     <string name="save_changes">Save Changes</string>
     <string name="healthy_desc_placeholder">What does being healthy mean to you?</string>
 
+    <!-- FeedbackActivity Strings -->
+    <string name="feedback_way_to_go">Way to go! You are doing good today!</string>
+    <string name="feedback_please_help">Please help the Excy team build the best exercise experience by telling us a little more about your workout.</string>
+    <string name="feedback_rate_experience">Using the slider below, please let us know how you rate today\'s workout experience.</string>
+    <string name="feedback_location">Using the slider below, please let us know where you worked out today.</string>
+    <string name="feedback_how_you_feel">Using the slider below, what best describes how you feel after today\'s excy workout?.</string>
+    <string name="feedback_btn_submit">submit</string>
+    <string name="feedback_btn_complete">complete</string>
+
     <!-- MoreActivity Strings -->
     <string name="more_base_frag">MORE BASE FRAG</string>
     <string name="learn_exercises">LEARN EXERCISES</string>

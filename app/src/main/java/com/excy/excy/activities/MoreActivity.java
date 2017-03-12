@@ -1,10 +1,14 @@
 package com.excy.excy.activities;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.excy.excy.R;
 import com.excy.excy.fragments.ExerciseSummaryFragment;
@@ -35,6 +39,33 @@ public class MoreActivity extends AppCompatActivity implements
         Fragment moreBaseFrag = new MoreBaseFragment();
         fragmentManager.beginTransaction().replace(R.id.more_fragment_container, moreBaseFrag,
                 getResources().getString(R.string.more_base_frag)).commit();
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.bottomNavigationView);
+
+        AppUtilities.removeShiftMode(bottomNavigationView);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
+                switch (item.getItemId()) {
+                    case R.id.action_play:
+                        intent = new Intent(getBaseContext(), PlayActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.action_workouts:
+                        intent = new Intent(getBaseContext(), WorkoutListActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.action_me:
+                        intent = new Intent(getBaseContext(), MeActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     @Override

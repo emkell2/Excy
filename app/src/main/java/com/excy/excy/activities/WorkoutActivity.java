@@ -1,8 +1,12 @@
 package com.excy.excy.activities;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -33,6 +37,33 @@ public class WorkoutActivity extends AppCompatActivity {
         Button stopBtn = (Button) findViewById(R.id.btnStop);
         stopBtn.getBackground().setColorFilter(getResources().getColor(R.color.colorStopBtn),
                 PorterDuff.Mode.MULTIPLY);
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.bottomNavigationView);
+
+        AppUtilities.removeShiftMode(bottomNavigationView);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
+                switch (item.getItemId()) {
+                    case R.id.action_play:
+                        intent = new Intent(getBaseContext(), PlayActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.action_me:
+                        intent = new Intent(getBaseContext(), MeActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.action_more:
+                        intent = new Intent(getBaseContext(), MoreActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     private void setWorkoutImage() {
