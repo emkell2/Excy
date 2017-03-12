@@ -109,6 +109,17 @@
     <string name="tip16">Take a Leisure Excy Spin</string>
     <string name="tip17">Use Excy to Train for Swimming</string>
 
+    <!-- Warm Up Dialog Strings -->
+    <string name="warm_up">WARM UP</string>
+    <string name="skip">SKIP</string>
+    <string name="warm_up_title">Would you like to warm up?</string>
+    <string name="warm_up_message">A quick 2 minute warm up can really enhance your workout experience and is highly recommended for optimal health</string>
+
+    <!-- Temperature Dialog Strings -->
+    <string name="enter">ENTER</string>
+    <string name="temp_title">Minimum Temperature</string>
+    <string name="temp_message">enter the current temperature on the excy thermometer</string>
+
     <string name="dont_have_an_excy"><a href="http://www.excy.com">Don\'t have an Excy?</a></string>
 
     <!-- Workout CardView Strings -->
