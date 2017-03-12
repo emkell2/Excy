@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.excy.excy.PlayTimer;
 import com.excy.excy.R;
+import com.excy.excy.utilities.AppUtilities;
 import com.excy.excy.utilities.PlayUtilities;
 
 import info.hoang8f.widget.FButton;
@@ -316,6 +317,8 @@ public class PlayActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottomNavigationView);
+
+        AppUtilities.removeShiftMode(bottomNavigationView);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
