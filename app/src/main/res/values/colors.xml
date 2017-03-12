@@ -15,10 +15,14 @@
     <color name="colorSignUpBlue">#3F51B5</color>
 
     <!-- Bottom Nav Bar Colors -->
-    <color name="colorNavBarActive">#2196F3</color>
+    <color name="colorNavBar">#6C6868</color>
+    <color name="colorNavBarActive">#00B5E2</color>
 
     <!-- Edit Profile Colors -->
-    <color name="colorLogOutBtn">#1976D2</color>
-    <color name="colorSaveChangesBtn">#1976D2</color>
+    <color name="colorLogOutBtn">#00B5E2</color>
+    <color name="colorSaveChangesBtn">#00B5E2</color>
+
+    <!-- Tips Colors -->
+    <color name="colorBlack">#000000</color>
 
 </resources>

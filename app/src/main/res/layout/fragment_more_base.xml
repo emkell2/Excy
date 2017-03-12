@@ -1,0 +1,91 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.excy.excy.fragments.MoreBaseFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="192dp"
+            android:layout_height="130dp"
+            android:paddingTop="@dimen/padding_top"
+            android:paddingBottom="@dimen/padding_bottom"
+            android:src="@drawable/excy_logo_final_white_new"
+            android:id="@+id/ivExcyLogo"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ivExcyLogo"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
+            android:paddingTop="@dimen/activity_vertical_margin">
+
+            <ImageButton
+                android:id="@+id/ibLearnExercises"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/more_learn_the_exercises"
+                android:background="@color/colorPrimary"/>
+
+            <ImageButton
+                android:id="@+id/ibWatchWorkouts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ibLearnExercises"
+                android:layout_marginBottom="8dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/more_watch_the_workouts"
+                android:background="@color/colorPrimary"/>
+
+            <ImageButton
+                android:id="@+id/ibKnowZones"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ibWatchWorkouts"
+                android:layout_marginBottom="8dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/more_know_the_zones"
+                android:background="@color/colorPrimary"/>
+
+            <ImageButton
+                android:id="@+id/ibTips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ibKnowZones"
+                android:layout_marginBottom="64dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/more_tips"
+                android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ibTips"
+                android:paddingTop="@dimen/padding_top"
+                android:paddingBottom="@dimen/padding_bottom"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/dont_have_an_excy"
+                android:textColorLink="@color/white"
+                android:linksClickable="true"
+                android:id="@+id/tvLink" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</FrameLayout>

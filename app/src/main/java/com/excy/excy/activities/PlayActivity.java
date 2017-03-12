@@ -333,6 +333,10 @@ public class PlayActivity extends AppCompatActivity {
                         intent = new Intent(getContext(), MeActivity.class);
                         startActivity(intent);
                         break;
+                    case R.id.action_more:
+                        intent = new Intent(getContext(), MoreActivity.class);
+                        startActivity(intent);
+                        break;
                 }
                 return true;
             }

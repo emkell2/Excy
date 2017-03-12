@@ -88,6 +88,10 @@ public class WorkoutListActivity extends AppCompatActivity {
                         intent = new Intent(getBaseContext(), MeActivity.class);
                         startActivity(intent);
                         break;
+                    case R.id.action_more:
+                        intent = new Intent(getBaseContext(), MoreActivity.class);
+                        startActivity(intent);
+                        break;
                 }
                 return true;
             }

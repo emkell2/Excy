@@ -75,6 +75,7 @@
     <string name="save_changes">Save Changes</string>
     <string name="healthy_desc_placeholder">What does being healthy mean to you?</string>
 
+<<<<<<< HEAD
     <!-- FeedbackActivity Strings -->
     <string name="feedback_way_to_go">Way to go! You are doing good today!</string>
     <string name="feedback_please_help">Please help the Excy team build the best exercise experience by telling us a little more about your workout.</string>
@@ -83,6 +84,32 @@
     <string name="feedback_how_you_feel">Using the slider below, what best describes how you feel after today\'s excy workout?.</string>
     <string name="feedback_btn_submit">submit</string>
     <string name="feedback_btn_complete">complete</string>
+=======
+    <!-- MoreActivity Strings -->
+    <string name="more_base_frag">MORE BASE FRAG</string>
+    <string name="learn_exercises">LEARN EXERCISES</string>
+    <string name="watch_workouts">WATCH WORKOUTS</string>
+    <string name="know_zones">KNOW THE ZONES</string>
+    <string name="tips">TIPS</string>
+
+    <string name="tip01">Exercise While Watching TV</string>
+    <string name="tip02">Take Excy Anywhere for Anytime Exercise</string>
+    <string name="tip03">Get More Active At Work</string>
+    <string name="tip04">Hit Excy Hard for Total Efficiency</string>
+    <string name="tip05">Do 10 Short Excy Bursts Throughout the Day</string>
+    <string name="tip06">Multi-Task Excy Fitness to Fit Anywhere</string>
+    <string name="tip07">Take Excy Outside</string>
+    <string name="tip08">Use Excy To Do Strengthening Exercises</string>
+    <string name="tip09">Excy with Others</string>
+    <string name="tip10">Go Barefoot with Excy</string>
+    <string name="tip11">Excy Cycle Your Upper Body</string>
+    <string name="tip12">Workout on the Floor with Excy</string>
+    <string name="tip13">Vary Your Excy Workouts</string>
+    <string name="tip14">Increase Your Weekly Cardiac Output</string>
+    <string name="tip15">Make Exercise a Habit and Be Consistent</string>
+    <string name="tip16">Take a Leisure Excy Spin</string>
+    <string name="tip17">Use Excy to Train for Swimming</string>
+>>>>>>> master
 
     <string name="dont_have_an_excy"><a href="http://www.excy.com">Don\'t have an Excy?</a></string>
 
@@ -110,4 +137,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
