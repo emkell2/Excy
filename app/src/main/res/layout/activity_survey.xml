@@ -69,7 +69,6 @@
                 android:orientation="horizontal"
                 android:layout_marginTop="50dp"
                 android:paddingLeft="8dp"
-                android:checkedButton="@id/radio3"
                 android:weightSum="5">
 
                 <RadioButton
@@ -91,6 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:checked="true"
                     android:buttonTint="@android:color/transparent"/>
 
                 <RadioButton
