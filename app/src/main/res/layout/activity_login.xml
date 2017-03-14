@@ -9,8 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.excy.excy.activities.LoginActivity"
-    tools:background="@color/colorPrimary">
+    tools:context="com.excy.excy.activities.LoginActivity">
 
     <ImageView
         android:layout_width="192dp"
@@ -58,41 +57,38 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingTop="@dimen/padding_top"
-    android:paddingBottom="@dimen/padding_bottom"
-    android:id="@+id/inputLayoutPassword"
-    android:textColorHint="@color/white"
-    app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
-    hintTextAppearance="@style/FloatingLabelHintText"
-    android:layout_below="@+id/inputLayoutEmail"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true">
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/etLoginPassword"
-        android:hint="@string/user_password"
-        android:textColor="@color/white"
-        android:theme="@style/FloatingLabelEditText"
-        android:inputType="textPassword" />
-
-</android.support.design.widget.TextInputLayout>
-
-    <Button
-        android:text="@string/login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/padding_top"
         android:paddingBottom="@dimen/padding_bottom"
-        android:id="@+id/btnLogin"
-        android:background="@color/colorAccent"
-        android:textColor="@color/white"
-        android:layout_below="@+id/inputLayoutPassword"
+        android:id="@+id/inputLayoutPassword"
+        android:textColorHint="@color/white"
+        app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
+        hintTextAppearance="@style/FloatingLabelHintText"
+        android:layout_below="@+id/inputLayoutEmail"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentStart="true">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etLoginPassword"
+            android:hint="@string/user_password"
+            android:textColor="@color/white"
+            android:theme="@style/FloatingLabelEditText"
+            android:inputType="textPassword" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:text="@string/login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/inputLayoutPassword"
+        android:paddingTop="@dimen/padding_top"
+        android:paddingBottom="@dimen/padding_bottom"
+        android:textColor="@color/white"
         android:textSize="18sp" />
 
     <TextView
@@ -138,7 +134,6 @@
             android:layout_height="wrap_content"
             android:text="@string/sign_up"
             android:textColor="@color/white"
-            android:background="@color/colorSignUpBlue"
             android:layout_weight="1"
             android:id="@+id/btnSignUp"
             android:textSize="18sp" />

@@ -1,6 +1,7 @@
 package com.excy.excy.activities;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -17,6 +18,8 @@ public class LoginActivity extends AppCompatActivity {
 
         Button loginBtn =(Button) findViewById(R.id.btnLogin);
 
+        loginBtn.getBackground().setColorFilter(
+                getResources().getColor(R.color.colorAccent), PorterDuff.Mode.MULTIPLY);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -27,6 +30,8 @@ public class LoginActivity extends AppCompatActivity {
 
         Button signUpBtn = (Button) findViewById(R.id.btnSignUp);
 
+        signUpBtn.getBackground().setColorFilter(
+                getResources().getColor(R.color.colorSignUpBlue), PorterDuff.Mode.MULTIPLY);
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
