@@ -15,6 +15,15 @@ import com.excy.excy.R;
 public class WarmUpDialog extends DialogFragment {
     public static final String WARM_UP_DIALOG = "WARM UP DIALOG";
 
+    public static WarmUpDialog newInstance() {
+
+        Bundle args = new Bundle();
+
+        WarmUpDialog fragment = new WarmUpDialog();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

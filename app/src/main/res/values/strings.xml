@@ -117,8 +117,10 @@
 
     <!-- Temperature Dialog Strings -->
     <string name="enter">ENTER</string>
-    <string name="temp_title">Minimum Temperature</string>
-    <string name="temp_message">enter the current temperature on the excy thermometer</string>
+    <string name="min_temp_title">Minimum Temperature</string>
+    <string name="min_temp_message">enter the current temperature on the excy thermometer</string>
+    <string name="max_temp_title">Minimum Temperature</string>
+    <string name="max_temp_message">enter the current temperature on the excy thermometer</string>
 
     <string name="dont_have_an_excy"><a href="http://www.excy.com">Don\'t have an Excy?</a></string>
 

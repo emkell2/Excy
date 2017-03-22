@@ -15,11 +15,15 @@ import com.excy.excy.R;
 public class TemperatureDialog extends DialogFragment {
     public static final String TEMPERATURE_DIALOG = "TEMPERATURE DIALOG";
 
+    public void TemperatureDialog() {
+
+    }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.temp_title)
-                .setMessage(R.string.temp_message)
+        builder.setTitle(R.string.min_temp_title)
+                .setMessage(R.string.min_temp_message)
                 .setPositiveButton(R.string.enter, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
