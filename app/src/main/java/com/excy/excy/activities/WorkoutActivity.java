@@ -18,7 +18,6 @@ import com.excy.excy.utilities.AppUtilities;
 import com.excy.excy.utilities.WorkoutUtilities;
 
 public class WorkoutActivity extends AppCompatActivity {
-    int workoutResId;
     int[] powerZoneArr = {0};
 
     private static int progressStartingWidth;
@@ -61,9 +60,8 @@ public class WorkoutActivity extends AppCompatActivity {
         // Create Layout
         AppUtilities.setBottomNavBarIconActive(this, R.id.action_workouts);
 
-        workoutResId = getIntent().getIntExtra(WorkoutUtilities.WORKOUT_DATA_RES_ID, 0);
-
-        setWorkoutImages();
+        int workoutResId = getIntent().getIntExtra(WorkoutUtilities.WORKOUT_DATA_RES_ID, 0);
+        setWorkoutImages(workoutResId);
 
         // Button layout
         Button pauseBtn = (Button) findViewById(R.id.btnPause);
@@ -102,7 +100,7 @@ public class WorkoutActivity extends AppCompatActivity {
         });
     }
 
-    private void setWorkoutImages() {
+    private void setWorkoutImages(int workoutResId) {
         if (workoutResId > 0) {
             ImageView workoutImage = (ImageView) findViewById(R.id.ivWorkoutImage);
             ImageView powerZoneImage = (ImageView) findViewById(R.id.ivZone);
