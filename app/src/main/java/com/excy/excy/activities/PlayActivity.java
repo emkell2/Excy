@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.excy.excy.timers.PlayTimer;
 import com.excy.excy.R;
+import com.excy.excy.dialogs.WarmUpDialog;
 import com.excy.excy.utilities.AppUtilities;
 import com.excy.excy.utilities.PlayUtilities;
 
@@ -294,6 +295,7 @@ public class PlayActivity extends AppCompatActivity {
                 timer = new PlayTimer(startTime);
                 timer.startTimer(timerTV, progressBar, true);
 
+                WarmUpDialog.newInstance().show(getFragmentManager(), WarmUpDialog.WARM_UP_DIALOG);
             }
         });
 

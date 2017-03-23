@@ -34,19 +34,36 @@
                 android:paddingRight="32dp"
                 android:paddingTop="@dimen/activity_vertical_margin">
 
-                <ImageView
-                    android:id="@+id/ivWorkoutImage"
+                <RelativeLayout
+                    android:id="@+id/rlWorkoutImage"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"/>
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/ivWorkoutImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"/>
+
+                    <ImageView
+                        android:id="@+id/ivAudioIcon"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_alignParentRight="true"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
+                        android:visibility="gone"
+                        android:src="@drawable/audio_icon"/>
+
+                </RelativeLayout>
 
                 <LinearLayout
                     android:id="@+id/llTimerLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/ivWorkoutImage"
+                    android:layout_below="@id/rlWorkoutImage"
                     android:layout_marginBottom="8dp"
                     android:weightSum="5"
                     android:background="@color/white"
