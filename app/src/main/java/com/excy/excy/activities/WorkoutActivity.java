@@ -2,6 +2,8 @@ package com.excy.excy.activities;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -33,6 +35,8 @@ public class WorkoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout);
 
+        final Intent workoutListData = getIntent();
+
         timerTV = (TextView) findViewById(R.id.tvTimer);
         progressBar = (TextView) findViewById(R.id.tvProgressBar);
 
@@ -48,9 +52,15 @@ public class WorkoutActivity extends AppCompatActivity {
                         System.out.println("startWidth=" + progressStartingWidth);
 
                         // Start Timer, needed to put this code in here to get progressBar width
-                        long timeInMillis = getIntent().getLongExtra(WorkoutUtilities.WORKOUT_DATA_TIME_MILLIS, 0);
+                        long timeInMillis = workoutListData.getLongExtra(WorkoutUtilities.WORKOUT_DATA_TIME_MILLIS, 0);
                         WorkoutTimer timer = new WorkoutTimer(timeInMillis);
                         timer.startTimer(timerTV, progressBar);
+
+                        // Start media audio
+                        MediaPlayer player = MediaPlayer.create(getBaseContext(),
+                                workoutListData.getIntExtra(WorkoutUtilities.WORKOUT_DATA_RES_ID, 0));
+                        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                        player.start();
 
                         progressBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                     }
@@ -60,7 +70,7 @@ public class WorkoutActivity extends AppCompatActivity {
         // Create Layout
         AppUtilities.setBottomNavBarIconActive(this, R.id.action_workouts);
 
-        int workoutResId = getIntent().getIntExtra(WorkoutUtilities.WORKOUT_DATA_RES_ID, 0);
+        int workoutResId = workoutListData.getIntExtra(WorkoutUtilities.WORKOUT_DATA_RES_ID, 0);
         setWorkoutImages(workoutResId);
 
         // Button layout

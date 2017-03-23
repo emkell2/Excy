@@ -33,7 +33,7 @@ public class WorkoutListActivity extends AppCompatActivity {
         armCandyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startWorkoutActivity(R.id.ibArmCandy, armCandyTimeMS);
+                startWorkoutActivity(R.id.ibArmCandy, armCandyTimeMS, R.raw.arm_candy);
             }
         });
 
@@ -41,7 +41,8 @@ public class WorkoutListActivity extends AppCompatActivity {
         superCycleCardioBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startWorkoutActivity(R.id.ibSuperCycleCardio, superCycleCardioTimeMS);
+                startWorkoutActivity(R.id.ibSuperCycleCardio, superCycleCardioTimeMS,
+                        R.raw.super_cycle);
             }
         });
 
@@ -49,7 +50,7 @@ public class WorkoutListActivity extends AppCompatActivity {
         cycleLegBlastBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startWorkoutActivity(R.id.ibCycleLegBlast, cycleLegBlastTimeMS);
+                startWorkoutActivity(R.id.ibCycleLegBlast, cycleLegBlastTimeMS, R.raw.leg_blast);
             }
         });
 
@@ -57,7 +58,8 @@ public class WorkoutListActivity extends AppCompatActivity {
         coreFloorExplosionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startWorkoutActivity(R.id.ibCoreFloorExplosion, coreFloorExplosionTimeMS);
+                startWorkoutActivity(R.id.ibCoreFloorExplosion, coreFloorExplosionTimeMS,
+                        R.raw.core_floor);
             }
         });
 
@@ -65,7 +67,7 @@ public class WorkoutListActivity extends AppCompatActivity {
         armBlastBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startWorkoutActivity(R.id.ibArmBlast, armBlastTimeMS);
+                startWorkoutActivity(R.id.ibArmBlast, armBlastTimeMS, R.raw.arm_blast);
             }
         });
 
@@ -73,7 +75,8 @@ public class WorkoutListActivity extends AppCompatActivity {
         ultimateArmAndLegToningBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startWorkoutActivity(R.id.ibUltimateArmAndLegToning, ultimateArmAndLegTimeMS);
+                startWorkoutActivity(R.id.ibUltimateArmAndLegToning, ultimateArmAndLegTimeMS,
+                        R.raw.ultimate_arm_leg);
             }
         });
 
@@ -106,11 +109,12 @@ public class WorkoutListActivity extends AppCompatActivity {
 
     }
 
-    private void startWorkoutActivity(int resId, long timeInMillis) {
+    private void startWorkoutActivity(int resId, long timeInMillis, int audioResId) {
         Intent intent = new Intent(getBaseContext(), WorkoutActivity.class);
 
         intent.putExtra(WorkoutUtilities.WORKOUT_DATA_RES_ID, resId);
         intent.putExtra(WorkoutUtilities.WORKOUT_DATA_TIME_MILLIS, timeInMillis);
+        intent.putExtra(WorkoutUtilities.WORKOUT_DATA_AUDIO_RES_ID, audioResId);
         startActivity(intent);
     }
 }
