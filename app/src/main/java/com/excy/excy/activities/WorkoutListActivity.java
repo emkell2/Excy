@@ -15,12 +15,12 @@ import com.excy.excy.utilities.WorkoutUtilities;
 
 public class WorkoutListActivity extends AppCompatActivity {
 
-    private static int armCandyTimeMS = 420000;
-    private static int superCycleCardioTimeMS = 1380000;
-    private static int cycleLegBlastTimeMS = 900000;
-    private static int coreFloorExplosionTimeMS = 600000;
-    private static int armBlastTimeMS = 600000;
-    private static int ultimateArmAndLegTimeMS = 420000;
+    private static long armCandyTimeMS = 420000;
+    private static long superCycleCardioTimeMS = 1380000;
+    private static long cycleLegBlastTimeMS = 900000;
+    private static long coreFloorExplosionTimeMS = 600000;
+    private static long armBlastTimeMS = 600000;
+    private static long ultimateArmAndLegTimeMS = 420000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,11 +106,11 @@ public class WorkoutListActivity extends AppCompatActivity {
 
     }
 
-    private void startWorkoutActivity(int resId, int timerInMillis) {
+    private void startWorkoutActivity(int resId, long timeInMillis) {
         Intent intent = new Intent(getBaseContext(), WorkoutActivity.class);
 
         intent.putExtra(WorkoutUtilities.WORKOUT_DATA_RES_ID, resId);
-        intent.putExtra(WorkoutUtilities.WORKOUT_DATA_TIME_MILLIS, timerInMillis);
+        intent.putExtra(WorkoutUtilities.WORKOUT_DATA_TIME_MILLIS, timeInMillis);
         startActivity(intent);
     }
 }

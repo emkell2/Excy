@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.excy.excy.activities.PlayActivity;
 import com.excy.excy.activities.WorkoutActivity;
 import com.excy.excy.utilities.PlayUtilities;
 
@@ -15,12 +14,14 @@ import com.excy.excy.utilities.PlayUtilities;
 
 public class WorkoutTimer {
     private CountDownTimer timer;
+    private static long startTime;
     private static long timeRemaining;
 
     private static final int progressTotalWidth = WorkoutActivity.getProgressBarStartingWidth();
     public boolean finished;
 
     public WorkoutTimer(long startTime) {
+        this.startTime = startTime;
         timeRemaining = startTime;
     }
 
@@ -70,13 +71,13 @@ public class WorkoutTimer {
             @Override
             public void onFinish() {
                 tvTimer.setText("00:00");
-                cancelTimer(true);
+                cancelTimer();
                 finished = true;
             }
         }.start();
     }
 
-    public void cancelTimer(boolean reset) {
+    public void cancelTimer() {
         if (timer != null) {
             timer.cancel();
             timer = null;
@@ -86,7 +87,7 @@ public class WorkoutTimer {
 
     private void updateProgressBar(TextView progressBar, int minutes, int seconds) {
         int totalSeconds = (minutes * 60) + seconds;
-        int startingTime = (int) (PlayActivity.getStartingTime() / 1000);
+        int startingTime = (int) (startTime / 1000);
 
         float progress;
         if (startingTime != 0) {

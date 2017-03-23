@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,9 +32,25 @@ public class WorkoutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout);
-        
+
         timerTV = (TextView) findViewById(R.id.tvTimer);
         progressBar = (TextView) findViewById(R.id.tvProgressBar);
+
+        progressBar.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        // gets called after layout has been done but before display
+                        // so we can get the height then hide the view
+
+                        progressStartingWidth = AppUtilities.dpFromPx(getBaseContext(),
+                                progressBar.getWidth());
+                        System.out.println("startWidth=" + progressStartingWidth);
+
+                        progressBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }
+                }
+        );
 
         // Create Layout
         AppUtilities.setBottomNavBarIconActive(this, R.id.action_workouts);
@@ -80,7 +97,7 @@ public class WorkoutActivity extends AppCompatActivity {
         });
 
         // Start Timer
-        int timeInMillis = getIntent().getIntExtra(WorkoutUtilities.WORKOUT_DATA_TIME_MILLIS, 0);
+        long timeInMillis = getIntent().getLongExtra(WorkoutUtilities.WORKOUT_DATA_TIME_MILLIS, 0);
         WorkoutTimer timer = new WorkoutTimer(timeInMillis);
         timer.startTimer(timerTV, progressBar);
     }

@@ -249,7 +249,7 @@ public class PlayActivity extends AppCompatActivity {
                         // gets called after layout has been done but before display
                         // so we can get the height then hide the view
 
-                        progressStartingWidth = PlayUtilities.dpFromPx(context, progressBar.getWidth());
+                        progressStartingWidth = AppUtilities.dpFromPx(context, progressBar.getWidth());
                         System.out.println("startWidth=" + progressStartingWidth);
 
                         progressBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
