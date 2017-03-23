@@ -22,7 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.excy.excy.PlayTimer;
+import com.excy.excy.timers.PlayTimer;
 import com.excy.excy.R;
 import com.excy.excy.dialogs.WarmUpDialog;
 import com.excy.excy.utilities.AppUtilities;
@@ -250,7 +250,7 @@ public class PlayActivity extends AppCompatActivity {
                         // gets called after layout has been done but before display
                         // so we can get the height then hide the view
 
-                        progressStartingWidth = PlayUtilities.dpFromPx(context, progressBar.getWidth());
+                        progressStartingWidth = AppUtilities.dpFromPx(context, progressBar.getWidth());
                         System.out.println("startWidth=" + progressStartingWidth);
 
                         progressBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);

@@ -7,24 +7,60 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.excy.excy.R;
+import com.excy.excy.timers.WorkoutTimer;
 import com.excy.excy.utilities.AppUtilities;
 import com.excy.excy.utilities.WorkoutUtilities;
 
 public class WorkoutActivity extends AppCompatActivity {
     int workoutResId;
 
+    private static int progressStartingWidth;
+
+    private static int minutes = 00;
+    private static int seconds = 00;
+
+    TextView timerTV;
+    TextView progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout);
 
+        timerTV = (TextView) findViewById(R.id.tvTimer);
+        progressBar = (TextView) findViewById(R.id.tvProgressBar);
+
+        progressBar.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        // gets called after layout has been done but before display
+                        // so we can get the height then hide the view
+
+                        progressStartingWidth = AppUtilities.dpFromPx(getBaseContext(),
+                                progressBar.getWidth());
+                        System.out.println("startWidth=" + progressStartingWidth);
+
+                        // Start Timer, needed to put this code in here to get progressBar width
+                        long timeInMillis = getIntent().getLongExtra(WorkoutUtilities.WORKOUT_DATA_TIME_MILLIS, 0);
+                        WorkoutTimer timer = new WorkoutTimer(timeInMillis);
+                        timer.startTimer(timerTV, progressBar);
+
+                        progressBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }
+                }
+        );
+
+        // Create Layout
         AppUtilities.setBottomNavBarIconActive(this, R.id.action_workouts);
 
-        workoutResId = getIntent().getIntExtra(WorkoutUtilities.WORKOUT_INTENT_DATA, 0);
+        workoutResId = getIntent().getIntExtra(WorkoutUtilities.WORKOUT_DATA_RES_ID, 0);
 
         setWorkoutImage();
         setWorkoutPowerZoneImage();
@@ -146,5 +182,14 @@ public class WorkoutActivity extends AppCompatActivity {
         }
 
         return powerZoneArr;
+    }
+
+    public static void updateTime(int newMinutes, int newSeconds) {
+        minutes = newMinutes;
+        seconds = newSeconds;
+    }
+
+    public static int getProgressBarStartingWidth() {
+        return progressStartingWidth * 3;
     }
 }

@@ -1,7 +1,5 @@
 package com.excy.excy.utilities;
 
-import android.content.Context;
-
 /**
  * Created by erin.kelley on 7/7/16.
  */
@@ -22,7 +20,4 @@ public class PlayUtilities {
         return mins + ":" + secs;
     }
 
-    public static int dpFromPx(final Context context, final float px) {
-        return (int) (px / context.getResources().getDisplayMetrics().density);
-    }
 }
