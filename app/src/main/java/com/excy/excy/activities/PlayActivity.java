@@ -22,7 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.excy.excy.PlayTimer;
+import com.excy.excy.timers.PlayTimer;
 import com.excy.excy.R;
 import com.excy.excy.utilities.AppUtilities;
 import com.excy.excy.utilities.PlayUtilities;
