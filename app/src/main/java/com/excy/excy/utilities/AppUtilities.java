@@ -1,6 +1,7 @@
 package com.excy.excy.utilities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
@@ -45,5 +46,9 @@ public class AppUtilities {
         } catch (IllegalAccessException e) {
             Log.e("ERROR ILLEGAL ALG", "Unable to change value of shift mode");
         }
+    }
+
+    public static int dpFromPx(final Context context, final float px) {
+        return (int) (px / context.getResources().getDisplayMetrics().density);
     }
 }
