@@ -47,6 +47,11 @@ public class WorkoutActivity extends AppCompatActivity {
                                 progressBar.getWidth());
                         System.out.println("startWidth=" + progressStartingWidth);
 
+                        // Start Timer, needed to put this code in here to get progressBar width
+                        long timeInMillis = getIntent().getLongExtra(WorkoutUtilities.WORKOUT_DATA_TIME_MILLIS, 0);
+                        WorkoutTimer timer = new WorkoutTimer(timeInMillis);
+                        timer.startTimer(timerTV, progressBar);
+
                         progressBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                     }
                 }
@@ -95,11 +100,6 @@ public class WorkoutActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-        // Start Timer
-        long timeInMillis = getIntent().getLongExtra(WorkoutUtilities.WORKOUT_DATA_TIME_MILLIS, 0);
-        WorkoutTimer timer = new WorkoutTimer(timeInMillis);
-        timer.startTimer(timerTV, progressBar);
     }
 
     private void setWorkoutImage() {
