@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,6 +30,7 @@ public class WorkoutActivity extends AppCompatActivity {
 
     TextView timerTV;
     TextView progressBar;
+    ImageView audioIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,8 @@ public class WorkoutActivity extends AppCompatActivity {
 
         timerTV = (TextView) findViewById(R.id.tvTimer);
         progressBar = (TextView) findViewById(R.id.tvProgressBar);
+        audioIcon = (ImageView) findViewById(R.id.ivAudioIcon);
+
 
         progressBar.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -58,8 +62,10 @@ public class WorkoutActivity extends AppCompatActivity {
 
                         // Start media audio
                         MediaPlayer player = MediaPlayer.create(getBaseContext(),
-                                workoutListData.getIntExtra(WorkoutUtilities.WORKOUT_DATA_RES_ID, 0));
+                                workoutListData.getIntExtra(
+                                        WorkoutUtilities.WORKOUT_DATA_AUDIO_RES_ID, 0));
                         player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                        audioIcon.setVisibility(View.VISIBLE);
                         player.start();
 
                         progressBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
