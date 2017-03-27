@@ -20,6 +20,8 @@ import com.excy.excy.timers.WorkoutTimer;
 import com.excy.excy.utilities.AppUtilities;
 import com.excy.excy.utilities.WorkoutUtilities;
 
+import static android.view.View.GONE;
+
 public class WorkoutActivity extends AppCompatActivity {
     int[] powerZoneArr = {0};
 
@@ -43,6 +45,8 @@ public class WorkoutActivity extends AppCompatActivity {
         progressBar = (TextView) findViewById(R.id.tvProgressBar);
         audioIcon = (ImageView) findViewById(R.id.ivAudioIcon);
 
+        long timeInMillis = workoutListData.getLongExtra(WorkoutUtilities.WORKOUT_DATA_TIME_MILLIS, 0);
+        final WorkoutTimer timer = new WorkoutTimer(timeInMillis);
 
         progressBar.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -56,8 +60,6 @@ public class WorkoutActivity extends AppCompatActivity {
                         System.out.println("startWidth=" + progressStartingWidth);
 
                         // Start Timer, needed to put this code in here to get progressBar width
-                        long timeInMillis = workoutListData.getLongExtra(WorkoutUtilities.WORKOUT_DATA_TIME_MILLIS, 0);
-                        WorkoutTimer timer = new WorkoutTimer(timeInMillis);
                         timer.startTimer(timerTV, progressBar);
 
                         // Start media audio
@@ -83,10 +85,26 @@ public class WorkoutActivity extends AppCompatActivity {
         Button pauseBtn = (Button) findViewById(R.id.btnPause);
         pauseBtn.getBackground().setColorFilter(getResources().getColor(R.color.colorPauseBtn),
                 PorterDuff.Mode.MULTIPLY);
+        pauseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (timer != null) {
+                    timer.cancelTimer();
+                }
+
+                audioIcon.setVisibility(GONE);
+            }
+        });
 
         Button stopBtn = (Button) findViewById(R.id.btnStop);
         stopBtn.getBackground().setColorFilter(getResources().getColor(R.color.colorStopBtn),
                 PorterDuff.Mode.MULTIPLY);
+        stopBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                audioIcon.setVisibility(GONE);
+            }
+        });
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottomNavigationView);
