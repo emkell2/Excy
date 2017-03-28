@@ -30,6 +30,8 @@ public class WorkoutActivity extends AppCompatActivity {
     private static int minutes = 00;
     private static int seconds = 00;
 
+    WorkoutTimer timerRef; // Needed to have a reference to the timer
+
     TextView timerTV;
     TextView progressBar;
     ImageView audioIcon;
@@ -45,9 +47,6 @@ public class WorkoutActivity extends AppCompatActivity {
         progressBar = (TextView) findViewById(R.id.tvProgressBar);
         audioIcon = (ImageView) findViewById(R.id.ivAudioIcon);
 
-        long timeInMillis = workoutListData.getLongExtra(WorkoutUtilities.WORKOUT_DATA_TIME_MILLIS, 0);
-        final WorkoutTimer timer = new WorkoutTimer(timeInMillis);
-
         progressBar.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
@@ -60,7 +59,10 @@ public class WorkoutActivity extends AppCompatActivity {
                         System.out.println("startWidth=" + progressStartingWidth);
 
                         // Start Timer, needed to put this code in here to get progressBar width
+                        long timeInMillis = workoutListData.getLongExtra(WorkoutUtilities.WORKOUT_DATA_TIME_MILLIS, 0);
+                        final WorkoutTimer timer = new WorkoutTimer(timeInMillis);
                         timer.startTimer(timerTV, progressBar);
+                        timerRef = timer;
 
                         // Start media audio
                         MediaPlayer player = MediaPlayer.create(getBaseContext(),
@@ -88,8 +90,8 @@ public class WorkoutActivity extends AppCompatActivity {
         pauseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (timer != null) {
-                    timer.cancelTimer();
+                if (timerRef != null) {
+                    timerRef.cancelTimer();
                 }
 
                 audioIcon.setVisibility(GONE);
@@ -103,6 +105,10 @@ public class WorkoutActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 audioIcon.setVisibility(GONE);
+                if (timerRef != null) {
+                    timerRef.cancelTimer();
+                }
+                finish();
             }
         });
 
