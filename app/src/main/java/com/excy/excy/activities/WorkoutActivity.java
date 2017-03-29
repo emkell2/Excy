@@ -1,7 +1,9 @@
 package com.excy.excy.activities;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -23,29 +25,41 @@ import com.excy.excy.utilities.WorkoutUtilities;
 import static android.view.View.GONE;
 
 public class WorkoutActivity extends AppCompatActivity {
-    int[] powerZoneArr = {0};
+    private static int[] powerZoneArr = {0};
 
     private static int progressStartingWidth;
 
     private static int minutes = 00;
     private static int seconds = 00;
+    private static int currZoneCtr = 0;
 
+    private static Resources mResources;
+
+    MediaPlayer player;
     WorkoutTimer timerRef; // Needed to have a reference to the timer
 
     TextView timerTV;
     TextView progressBar;
     ImageView audioIcon;
 
+    static ImageView targetZoneIV;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout);
+        mResources = getResources();
 
         final Intent workoutListData = getIntent();
 
         timerTV = (TextView) findViewById(R.id.tvTimer);
         progressBar = (TextView) findViewById(R.id.tvProgressBar);
+        targetZoneIV = (ImageView) findViewById(R.id.ivTargetZone);
         audioIcon = (ImageView) findViewById(R.id.ivAudioIcon);
+
+        player = MediaPlayer.create(getBaseContext(), workoutListData.getIntExtra(
+                WorkoutUtilities.WORKOUT_DATA_AUDIO_RES_ID, 0));
+        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
         progressBar.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -65,10 +79,6 @@ public class WorkoutActivity extends AppCompatActivity {
                         timerRef = timer;
 
                         // Start media audio
-                        MediaPlayer player = MediaPlayer.create(getBaseContext(),
-                                workoutListData.getIntExtra(
-                                        WorkoutUtilities.WORKOUT_DATA_AUDIO_RES_ID, 0));
-                        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
                         audioIcon.setVisibility(View.VISIBLE);
                         player.start();
 
@@ -94,6 +104,7 @@ public class WorkoutActivity extends AppCompatActivity {
                     timerRef.cancelTimer();
                 }
 
+                player.pause();
                 audioIcon.setVisibility(GONE);
             }
         });
@@ -104,6 +115,7 @@ public class WorkoutActivity extends AppCompatActivity {
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                player.stop();
                 audioIcon.setVisibility(GONE);
                 if (timerRef != null) {
                     timerRef.cancelTimer();
@@ -177,15 +189,67 @@ public class WorkoutActivity extends AppCompatActivity {
                     powerZoneArr = WorkoutUtilities.PZ_ULTIMATE_ARM_LEG_TONING_ARR;
                     break;
             }
+
+            // Set beginning target zone image
+            setTargetPowerZoneImage(powerZoneArr[currZoneCtr]);
         }
+    }
+
+    private static void setTargetPowerZoneImage(int currZone) {
+        Drawable zone;;
+        switch (currZone) {
+            case 1:
+                zone = mResources.getDrawable(R.drawable.zone_intensity_1);
+                break;
+            case 2:
+                zone = mResources.getDrawable(R.drawable.zone_intensity_2);
+                break;
+            case 3:
+                zone = mResources.getDrawable(R.drawable.zone_intensity_3);
+                break;
+            case 4:
+                zone = mResources.getDrawable(R.drawable.zone_intensity_4);
+                break;
+            case 5:
+                zone = mResources.getDrawable(R.drawable.zone_intensity_5);
+                break;
+            default:
+                zone = mResources.getDrawable(R.drawable.zone_intensity_1);
+                break;
+        }
+        targetZoneIV.setBackground(zone);
     }
 
     public static void updateTime(int newMinutes, int newSeconds) {
         minutes = newMinutes;
         seconds = newSeconds;
+
+        if (minutes != 0 && seconds != 0) {
+            updatePowerZone();
+        }
     }
 
     public static int getProgressBarStartingWidth() {
         return progressStartingWidth * 3;
+    }
+
+    private static void updatePowerZone() {
+        setTargetPowerZoneImage(++currZoneCtr);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        currZoneCtr = 0;
+        minutes = 0;
+        seconds = 0;
+        player.stop();
+
+        if (timerRef != null) {
+            timerRef.cancelTimer();
+        }
+
+        finish();
     }
 }
