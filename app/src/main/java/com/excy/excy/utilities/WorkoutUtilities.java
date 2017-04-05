@@ -7,6 +7,7 @@ package com.excy.excy.utilities;
 public class WorkoutUtilities {
     public static final String WORKOUT_DATA_RES_ID = "WORKOUT_DATA_RES_ID";
     public static final String WORKOUT_DATA_TIME_MILLIS = "WORKOUT_DATA_TIME_MILLIS";
+    public static final String WORKOUT_DATA_AUDIO_RES_ID = "WORKOUT_DATA_AUDIO_RES_ID";
 
     // PowerZone int Arrays
     public static final int[] PZ_ARM_CANDY_ARR = {3, 5, 3, 5, 3, 5, 3};

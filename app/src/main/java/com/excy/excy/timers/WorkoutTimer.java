@@ -14,14 +14,12 @@ import com.excy.excy.utilities.PlayUtilities;
 
 public class WorkoutTimer {
     private CountDownTimer timer;
-    private static long startTime;
     private static long timeRemaining;
 
     private static final int progressTotalWidth = WorkoutActivity.getProgressBarStartingWidth();
     public boolean finished;
 
     public WorkoutTimer(long startTime) {
-        this.startTime = startTime;
         timeRemaining = startTime;
     }
 
@@ -29,12 +27,16 @@ public class WorkoutTimer {
         timer = new CountDownTimer(timeRemaining, 100) {
             int seconds = 0;
             long ms = 0;
+            long zoneMs = 0;
+            boolean hasUpdatedImage = false;
             boolean start = true;
 
             @Override
             public void onTick(long millisUntilFinished) {
                 timeRemaining = millisUntilFinished;
                 ms += 100;
+                zoneMs += 100;
+
 
                 if (!start) {
                     start = false;
@@ -65,6 +67,20 @@ public class WorkoutTimer {
                         updateProgressBar(progressBar, minutes, seconds);
                         ms = 0;
                     }
+
+                    // Try to update the power zone image about once a second. This logic
+                    // is really stupid but needed to not skip a zone.
+                    if (zoneMs >= 800) {
+                        if ((!hasUpdatedImage) && (zoneMs == 800)) {
+                            WorkoutActivity.updatePowerZone();
+                            hasUpdatedImage = true;
+                        }
+
+                        if (zoneMs == 1300) {
+                            hasUpdatedImage = false;
+                            zoneMs = 0;
+                        }
+                    }
                 }
             }
 
@@ -87,7 +103,7 @@ public class WorkoutTimer {
 
     private void updateProgressBar(TextView progressBar, int minutes, int seconds) {
         int totalSeconds = (minutes * 60) + seconds;
-        int startingTime = (int) (startTime / 1000);
+        int startingTime = (int) (WorkoutActivity.getOriginalStartTime() / 1000);
 
         float progress;
         if (startingTime != 0) {

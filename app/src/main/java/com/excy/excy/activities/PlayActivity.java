@@ -430,16 +430,16 @@ public class PlayActivity extends AppCompatActivity {
 
     private void displayResumeDialog(final TextView timerTV) {
         new AlertDialog.Builder(this)
-                .setTitle("Continue?")
-                .setMessage("healthy is... finishing strong!")
-                .setPositiveButton("resume", new DialogInterface.OnClickListener() {
+                .setTitle(R.string.resume_continue)
+                .setMessage(R.string.finish_strong)
+                .setPositiveButton(R.string.resume, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         timer = new PlayTimer(timer.getRemainingTime());
                         timer.startTimer(timerTV, progressBar, false);
                     }
                 })
-                .setNegativeButton("exit", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.exit, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         reset();

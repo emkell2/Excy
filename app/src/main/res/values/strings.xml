@@ -109,6 +109,12 @@
     <string name="tip16">Take a Leisure Excy Spin</string>
     <string name="tip17">Use Excy to Train for Swimming</string>
 
+    <!-- Resume Dialog Strings -->
+    <string name="resume_continue">"Continue?"</string>
+    <string name="finish_strong">"healthy is… finishing strong!"</string>
+    <string name="resume">"resume"</string>
+    <string name="exit">"exit"</string>
+
     <!-- Warm Up Dialog Strings -->
     <string name="warm_up">WARM UP</string>
     <string name="skip">SKIP</string>
