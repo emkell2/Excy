@@ -91,23 +91,41 @@
     <string name="know_zones">KNOW THE ZONES</string>
     <string name="tips">TIPS</string>
 
-    <string name="tip01"><a href="http://excy.com/2015/12/29/easily-exercise-with-excy-while-watching-tv/">Exercise While Watching TV</a></string>
-    <string name="tip02"><a href="http://excy.com/2015/11/17/take-excy-anywhere-for-anytime-exercise/">Take Excy Anywhere for Anytime Exercise</a></string>
-    <string name="tip03"><a href="http://excy.com/2015/11/20/get-more-active-at-work/">Get More Active At Work</a></string>
-    <string name="tip04"><a href="http://excy.com/2015/12/09/hiit-excy-hard-for-total-efficiency/">Hit Excy Hard for Total Efficiency</a></string>
-    <string name="tip05"><a href="http://excy.com/2016/02/07/excy-tip-do-10-short-exercise-cycling-bursts-throughout-the-day/">Do 10 Short Excy Bursts Throughout the Day</a></string>
-    <string name="tip06"><a href="http://excy.com/2016/01/08/multi-task-excy-fitness-to-fit-anywhere/">Multi-Task Excy Fitness to Fit Anywhere</a></string>
-    <string name="tip07"><a href="http://excy.com/2015/11/20/take-the-excy-portable-cycling-system-outside/">Take Excy Outside</a></string>
-    <string name="tip08"><a href="http://excy.com/2015/11/09/use-excy-to-do-strengthening-exercises/">Use Excy To Do Strengthening Exercises</a></string>
-    <string name="tip09"><a href="http://excy.com/2015/11/11/excy-with-others-and-be-a-positive-role-model-to-those-around-you/">Excy with Others</a></string>
-    <string name="tip10"><a href="http://excy.com/2015/11/05/go-barefoot-with-the-excy-portable-exercise-cycle/">Go Barefoot with Excy</a></string>
-    <string name="tip11"><a href="http://excy.com/2015/11/03/excy-cycle-your-upper-body-like-upper-body-ergometer/">Excy Cycle Your Upper Body</a></string>
-    <string name="tip12"><a href="http://excy.com/2015/10/29/workout-on-the-floor-with-the-excy-portable-exercise-cycle/">Workout on the Floor with Excy</a></string>
-    <string name="tip13"><a href="http://excy.com/2015/10/26/vary-your-excy-portable-total-body-cycle-workouts/">Vary Your Excy Workouts</a></string>
-    <string name="tip14"><a href="http://excy.com/2015/11/02/increase-your-weekly-cardiac-output/">Increase Your Weekly Cardiac Output</a></string>
-    <string name="tip15"><a href="http://excy.com/2015/11/15/make-exercise-a-habit-and-be-consistent/">Make Exercise a Habit and Be Consistent</a></string>
-    <string name="tip16"><a href="http://excy.com/2015/11/18/take-excy-for-a-leisure-spin/">Take a Leisure Excy Spin</a></string>
-    <string name="tip17"><a href="http://excy.com/2015/10/30/use-excy-to-train-for-swimming/">Use Excy to Train for Swimming</a></string>
+    <string name="tip01">Exercise While Watching TV</string>
+    <string name="tip02">Take Excy Anywhere for Anytime Exercise</string>
+    <string name="tip03">Get More Active At Work</string>
+    <string name="tip04">Hit Excy Hard for Total Efficiency</string>
+    <string name="tip05">Do 10 Short Excy Bursts Throughout the Day</string>
+    <string name="tip06">Multi-Task Excy Fitness to Fit Anywhere</string>
+    <string name="tip07">Take Excy Outside</string>
+    <string name="tip08">Use Excy To Do Strengthening Exercises</string>
+    <string name="tip09">Excy with Others</string>
+    <string name="tip10">Go Barefoot with Excy</string>
+    <string name="tip11">Excy Cycle Your Upper Body</string>
+    <string name="tip12">Workout on the Floor with Excy</string>
+    <string name="tip13">Vary Your Excy Workouts</string>
+    <string name="tip14">Increase Your Weekly Cardiac Output</string>
+    <string name="tip15">Make Exercise a Habit and Be Consistent</string>
+    <string name="tip16">Take a Leisure Excy Spin</string>
+    <string name="tip17">Use Excy to Train for Swimming</string>
+
+    <string name="tip01Link">"http://excy.com/2015/12/29/easily-exercise-with-excy-while-watching-tv/"</string>
+    <string name="tip02Link">"http://excy.com/2015/11/17/take-excy-anywhere-for-anytime-exercise/"</string>
+    <string name="tip03Link">"http://excy.com/2015/11/20/get-more-active-at-work/"</string>
+    <string name="tip04Link">"http://excy.com/2015/12/09/hiit-excy-hard-for-total-efficiency/"</string>
+    <string name="tip05Link">"http://excy.com/2016/02/07/excy-tip-do-10-short-exercise-cycling-bursts-throughout-the-day/"</string>
+    <string name="tip06Link">"http://excy.com/2016/01/08/multi-task-excy-fitness-to-fit-anywhere/"</string>
+    <string name="tip07Link">"http://excy.com/2015/11/20/take-the-excy-portable-cycling-system-outside/"</string>
+    <string name="tip08Link">"http://excy.com/2015/11/09/use-excy-to-do-strengthening-exercises/"</string>
+    <string name="tip09Link">"http://excy.com/2015/11/11/excy-with-others-and-be-a-positive-role-model-to-those-around-you/"</string>
+    <string name="tip10Link">"http://excy.com/2015/11/05/go-barefoot-with-the-excy-portable-exercise-cycle/"</string>
+    <string name="tip11Link">"http://excy.com/2015/11/03/excy-cycle-your-upper-body-like-upper-body-ergometer/"</string>
+    <string name="tip12Link">"http://excy.com/2015/10/29/workout-on-the-floor-with-the-excy-portable-exercise-cycle/"</string>
+    <string name="tip13Link">"http://excy.com/2015/10/26/vary-your-excy-portable-total-body-cycle-workouts/"</string>
+    <string name="tip14Link">"http://excy.com/2015/11/02/increase-your-weekly-cardiac-output/"</string>
+    <string name="tip15Link">"http://excy.com/2015/11/15/make-exercise-a-habit-and-be-consistent/"</string>
+    <string name="tip16Link">"http://excy.com/2015/11/18/take-excy-for-a-leisure-spin/"</string>
+    <string name="tip17Link">"http://excy.com/2015/10/30/use-excy-to-train-for-swimming/"</string>
 
     <!-- Resume Dialog Strings -->
     <string name="resume_continue">"Continue?"</string>
