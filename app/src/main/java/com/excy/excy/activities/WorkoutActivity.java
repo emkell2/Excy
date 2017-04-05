@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -156,6 +157,10 @@ public class WorkoutActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        /* Set up excy link view  */
+        TextView excyLinkTV = (TextView) findViewById(R.id.tvLink);
+        excyLinkTV.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     private void setWorkoutImages(int workoutResId) {

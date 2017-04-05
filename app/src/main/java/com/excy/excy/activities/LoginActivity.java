@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.excy.excy.R;
 
@@ -39,5 +41,9 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        /* Set up excy link view  */
+        TextView excyLinkTV = (TextView) findViewById(R.id.tvLink);
+        excyLinkTV.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }
