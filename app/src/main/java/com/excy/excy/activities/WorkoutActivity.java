@@ -1,5 +1,7 @@
 package com.excy.excy.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
@@ -27,6 +29,7 @@ import static android.view.View.GONE;
 public class WorkoutActivity extends AppCompatActivity {
     private static int[] powerZoneArr = {0};
 
+    private static long originalStartTime = 0;
     private static int progressStartingWidth;
 
     private static int minutes = 00;
@@ -74,6 +77,7 @@ public class WorkoutActivity extends AppCompatActivity {
 
                         // Start Timer, needed to put this code in here to get progressBar width
                         long timeInMillis = workoutListData.getLongExtra(WorkoutUtilities.WORKOUT_DATA_TIME_MILLIS, 0);
+                        originalStartTime = timeInMillis;
                         final WorkoutTimer timer = new WorkoutTimer(timeInMillis);
                         timer.startTimer(timerTV, progressBar);
                         timerRef = timer;
@@ -100,12 +104,14 @@ public class WorkoutActivity extends AppCompatActivity {
         pauseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                player.pause();
+                audioIcon.setVisibility(GONE);
+
                 if (timerRef != null) {
                     timerRef.cancelTimer();
                 }
 
-                player.pause();
-                audioIcon.setVisibility(GONE);
+                displayResumeDialog(timerTV);
             }
         });
 
@@ -223,18 +229,16 @@ public class WorkoutActivity extends AppCompatActivity {
     public static void updateTime(int newMinutes, int newSeconds) {
         minutes = newMinutes;
         seconds = newSeconds;
-
-        if (minutes != 0 && seconds != 0) {
-            updatePowerZone();
-        }
     }
 
     public static int getProgressBarStartingWidth() {
         return progressStartingWidth * 3;
     }
 
-    private static void updatePowerZone() {
-        setTargetPowerZoneImage(++currZoneCtr);
+    public static void updatePowerZone() {
+        if ((minutes > 0) && (seconds % 60 == 0) && (currZoneCtr < powerZoneArr.length)) {
+            setTargetPowerZoneImage(powerZoneArr[++currZoneCtr]);
+        }
     }
 
     @Override
@@ -244,6 +248,7 @@ public class WorkoutActivity extends AppCompatActivity {
         currZoneCtr = 0;
         minutes = 0;
         seconds = 0;
+        progressStartingWidth = 0;
         player.stop();
 
         if (timerRef != null) {
@@ -251,5 +256,37 @@ public class WorkoutActivity extends AppCompatActivity {
         }
 
         finish();
+    }
+
+    private void displayResumeDialog(final TextView timerTV) {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.resume_continue)
+                .setMessage(R.string.finish_strong)
+                .setPositiveButton(R.string.resume, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        timerRef = new WorkoutTimer(timerRef.getRemainingTime());
+                        timerRef.startTimer(timerTV, progressBar);
+
+                        player.start();
+                        audioIcon.setVisibility(View.VISIBLE);
+                    }
+                })
+                .setNegativeButton(R.string.exit, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        player.stop();
+                        audioIcon.setVisibility(GONE);
+                        if (timerRef != null) {
+                            timerRef.cancelTimer();
+                        }
+                        finish();
+                    }
+                }).show();
+    }
+
+    public static long getOriginalStartTime() {
+        return originalStartTime;
     }
 }

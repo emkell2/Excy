@@ -181,7 +181,8 @@
                         <ImageView
                             android:id="@+id/ivStartingZone"
                             android:layout_width="48dp"
-                            android:layout_height="48dp" />
+                            android:layout_height="48dp"
+                            android:layout_gravity="center"/>
 
                         <TextView
                             android:id="@+id/tvStartingZone"
@@ -205,7 +206,8 @@
                         <ImageView
                             android:id="@+id/ivTargetZone"
                             android:layout_width="48dp"
-                            android:layout_height="48dp" />
+                            android:layout_height="48dp"
+                            android:layout_gravity="center"/>
 
                         <TextView
                             android:id="@+id/tvTargetZone"
