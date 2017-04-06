@@ -17,4 +17,11 @@ public class WorkoutUtilities {
     public static final int[] PZ_ARM_BLAST_ARR = {3, 5, 3, 5, 3, 5, 3, 5, 3, 5};
     public static final int[] PZ_ULTIMATE_ARM_LEG_TONING_ARR = {3, 5, 3, 5, 3, 5, 3};
 
+    // Workout times in milliseconds
+    public static long armCandyTimeMS = 420000;
+    public static long superCycleCardioTimeMS = 1380000;
+    public static long cycleLegBlastTimeMS = 900000;
+    public static long coreFloorExplosionTimeMS = 600000;
+    public static long armBlastTimeMS = 600000;
+    public static long ultimateArmAndLegTimeMS = 420000;
 }

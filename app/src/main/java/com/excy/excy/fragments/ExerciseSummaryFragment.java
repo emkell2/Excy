@@ -1,15 +1,20 @@
 package com.excy.excy.fragments;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.excy.excy.R;
+import com.excy.excy.activities.WorkoutActivity;
+import com.excy.excy.utilities.WorkoutUtilities;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +29,8 @@ public class ExerciseSummaryFragment extends Fragment {
     private static final String RES_ID = "resId";
 
     private int mResId;
+    private int audioResId;
+    private long timeInMillis;
 
     private OnFragmentInteractionListener mListener;
 
@@ -72,39 +79,72 @@ public class ExerciseSummaryFragment extends Fragment {
                     workoutButtons.setImageResource(R.drawable.arm_candy_description_btns);
                     workoutSummary.setImageResource(R.drawable.arm_candy_description_summary);
                     workoutGraph.setImageResource(R.drawable.pz_arm_candy_graph);
+
+                    timeInMillis = WorkoutUtilities.armCandyTimeMS;
+                    audioResId = R.raw.arm_candy;
                     break;
                 case R.id.ibSuperCycleCardio:
                     workoutImage.setImageResource(R.drawable.wb_super_cycle_cardio);
                     workoutButtons.setImageResource(R.drawable.super_cardio_description_btns);
                     workoutSummary.setImageResource(R.drawable.super_cardio_description_summary);
                     workoutGraph.setImageResource(R.drawable.pz_super_cycle_graph);
+
+                    timeInMillis = WorkoutUtilities.superCycleCardioTimeMS;
+                    audioResId = R.raw.super_cycle;
                     break;
                 case R.id.ibCycleLegBlast:
                     workoutImage.setImageResource(R.drawable.wb_cycle_leg_blast);
                     workoutButtons.setImageResource(R.drawable.cycle_blast_description_btns);
                     workoutSummary.setImageResource(R.drawable.cycle_blast_description_summary);
                     workoutGraph.setImageResource(R.drawable.pz_cycle_leg_blast_graph);
+
+                    timeInMillis = WorkoutUtilities.cycleLegBlastTimeMS;
+                    audioResId = R.raw.leg_blast;
                     break;
                 case R.id.ibCoreFloorExplosion:
                     workoutImage.setImageResource(R.drawable.wb_core_floor_explosion);
                     workoutButtons.setImageResource(R.drawable.core_floor_description_btns);
                     workoutSummary.setImageResource(R.drawable.core_floor_description_summary);
                     workoutGraph.setImageResource(R.drawable.pz_core_floor_explosion_graph);
+
+                    timeInMillis = WorkoutUtilities.coreFloorExplosionTimeMS;
+                    audioResId = R.raw.core_floor;
                     break;
                 case R.id.ibArmBlast:
                     workoutImage.setImageResource(R.drawable.wb_arm_blast);
                     workoutButtons.setImageResource(R.drawable.arm_blast_description_btns);
                     workoutSummary.setImageResource(R.drawable.arm_blast_description_summary);
                     workoutGraph.setImageResource(R.drawable.pz_arm_blast_graph);
+
+                    timeInMillis = WorkoutUtilities.armBlastTimeMS;
+                    audioResId = R.raw.arm_blast;
                     break;
                 case R.id.ibUltimateArmAndLegToning:
                     workoutImage.setImageResource(R.drawable.wb_ultimate_arm_leg_tone);
                     workoutButtons.setImageResource(R.drawable.arm_and_leg_description_btns);
                     workoutSummary.setImageResource(R.drawable.arm_leg_description_summary);
                     workoutGraph.setImageResource(R.drawable.pz_ultimate_arm_and_leg_toning_graph);
+
+                    timeInMillis = WorkoutUtilities.ultimateArmAndLegTimeMS;
+                    audioResId = R.raw.ultimate_arm_leg;
                     break;
             }
         }
+
+        Button startBtn = (Button) view.findViewById(R.id.btnStart);
+        startBtn.getBackground().setColorFilter(getResources().getColor(R.color.colorExcyGreen),
+                PorterDuff.Mode.MULTIPLY);
+        startBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), WorkoutActivity.class);
+
+                intent.putExtra(WorkoutUtilities.WORKOUT_DATA_RES_ID, mResId);
+                intent.putExtra(WorkoutUtilities.WORKOUT_DATA_TIME_MILLIS, timeInMillis);
+                intent.putExtra(WorkoutUtilities.WORKOUT_DATA_AUDIO_RES_ID, audioResId);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
