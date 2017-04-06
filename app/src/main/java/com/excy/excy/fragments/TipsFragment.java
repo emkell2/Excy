@@ -1,12 +1,14 @@
 package com.excy.excy.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.excy.excy.R;
 
@@ -67,14 +69,151 @@ public class TipsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tips, container, false);
 
+        ImageView tip01 = (ImageView) view.findViewById(R.id.ivTip01);
+        tip01.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onImagePressed(Uri.parse(getString(R.string.tip01Link)));
+            }
+        });
+
+        ImageView tip02 = (ImageView) view.findViewById(R.id.ivTip02);
+        tip02.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onImagePressed(Uri.parse(getString(R.string.tip02Link)));
+            }
+        });
+
+        ImageView tip03 = (ImageView) view.findViewById(R.id.ivTip03);
+        tip03.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onImagePressed(Uri.parse(getString(R.string.tip03Link)));
+            }
+        });
+
+        ImageView tip04 = (ImageView) view.findViewById(R.id.ivTip04);
+        tip04.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onImagePressed(Uri.parse(getString(R.string.tip04Link)));
+            }
+        });
+
+        ImageView tip05 = (ImageView) view.findViewById(R.id.ivTip05);
+        tip05.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onImagePressed(Uri.parse(getString(R.string.tip05Link)));
+            }
+        });
+
+        ImageView tip06 = (ImageView) view.findViewById(R.id.ivTip06);
+        tip06.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onImagePressed(Uri.parse(getString(R.string.tip06Link)));
+            }
+        });
+
+        ImageView tip07 = (ImageView) view.findViewById(R.id.ivTip07);
+        tip07.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onImagePressed(Uri.parse(getString(R.string.tip07Link)));
+            }
+        });
+
+        ImageView tip08 = (ImageView) view.findViewById(R.id.ivTip08);
+        tip08.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onImagePressed(Uri.parse(getString(R.string.tip08Link)));
+            }
+        });
+
+        ImageView tip09 = (ImageView) view.findViewById(R.id.ivTip09);
+        tip09.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onImagePressed(Uri.parse(getString(R.string.tip09Link)));
+            }
+        });
+
+        ImageView tip10 = (ImageView) view.findViewById(R.id.ivTip10);
+        tip10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onImagePressed(Uri.parse(getString(R.string.tip10Link)));
+            }
+        });
+
+        ImageView tip11 = (ImageView) view.findViewById(R.id.ivTip11);
+        tip11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onImagePressed(Uri.parse(getString(R.string.tip11Link)));
+            }
+        });
+
+        ImageView tip12 = (ImageView) view.findViewById(R.id.ivTip12);
+        tip12.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onImagePressed(Uri.parse(getString(R.string.tip12Link)));
+            }
+        });
+
+        ImageView tip13 = (ImageView) view.findViewById(R.id.ivTip13);
+        tip13.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onImagePressed(Uri.parse(getString(R.string.tip13Link)));
+            }
+        });
+
+        ImageView tip14 = (ImageView) view.findViewById(R.id.ivTip14);
+        tip14.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onImagePressed(Uri.parse(getString(R.string.tip14Link)));
+            }
+        });
+
+        ImageView tip15 = (ImageView) view.findViewById(R.id.ivTip15);
+        tip15.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onImagePressed(Uri.parse(getString(R.string.tip15Link)));
+            }
+        });
+
+        ImageView tip16 = (ImageView) view.findViewById(R.id.ivTip16);
+        tip16.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onImagePressed(Uri.parse(getString(R.string.tip16Link)));
+            }
+        });
+
+        ImageView tip17 = (ImageView) view.findViewById(R.id.ivTip17);
+        tip17.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onImagePressed(Uri.parse(getString(R.string.tip17Link)));
+            }
+        });
+
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onTipSelected(uri);
-        }
+    public void onImagePressed(Uri uri) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+        intent.setData(uri);
+        startActivity(intent);
     }
 
     @Override

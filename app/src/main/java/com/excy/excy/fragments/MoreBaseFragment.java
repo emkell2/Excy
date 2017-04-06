@@ -5,10 +5,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.excy.excy.R;
 
@@ -108,6 +110,10 @@ public class MoreBaseFragment extends Fragment {
                         .commit();
             }
         });
+
+        /* Set up excy link view  */
+        TextView excyLinkTV = (TextView) view.findViewById(R.id.tvLink);
+        excyLinkTV.setMovementMethod(LinkMovementMethod.getInstance());
 
         // Inflate the layout for this fragment
         return view;

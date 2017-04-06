@@ -109,6 +109,24 @@
     <string name="tip16">Take a Leisure Excy Spin</string>
     <string name="tip17">Use Excy to Train for Swimming</string>
 
+    <string name="tip01Link">"http://excy.com/2015/12/29/easily-exercise-with-excy-while-watching-tv/"</string>
+    <string name="tip02Link">"http://excy.com/2015/11/17/take-excy-anywhere-for-anytime-exercise/"</string>
+    <string name="tip03Link">"http://excy.com/2015/11/20/get-more-active-at-work/"</string>
+    <string name="tip04Link">"http://excy.com/2015/12/09/hiit-excy-hard-for-total-efficiency/"</string>
+    <string name="tip05Link">"http://excy.com/2016/02/07/excy-tip-do-10-short-exercise-cycling-bursts-throughout-the-day/"</string>
+    <string name="tip06Link">"http://excy.com/2016/01/08/multi-task-excy-fitness-to-fit-anywhere/"</string>
+    <string name="tip07Link">"http://excy.com/2015/11/20/take-the-excy-portable-cycling-system-outside/"</string>
+    <string name="tip08Link">"http://excy.com/2015/11/09/use-excy-to-do-strengthening-exercises/"</string>
+    <string name="tip09Link">"http://excy.com/2015/11/11/excy-with-others-and-be-a-positive-role-model-to-those-around-you/"</string>
+    <string name="tip10Link">"http://excy.com/2015/11/05/go-barefoot-with-the-excy-portable-exercise-cycle/"</string>
+    <string name="tip11Link">"http://excy.com/2015/11/03/excy-cycle-your-upper-body-like-upper-body-ergometer/"</string>
+    <string name="tip12Link">"http://excy.com/2015/10/29/workout-on-the-floor-with-the-excy-portable-exercise-cycle/"</string>
+    <string name="tip13Link">"http://excy.com/2015/10/26/vary-your-excy-portable-total-body-cycle-workouts/"</string>
+    <string name="tip14Link">"http://excy.com/2015/11/02/increase-your-weekly-cardiac-output/"</string>
+    <string name="tip15Link">"http://excy.com/2015/11/15/make-exercise-a-habit-and-be-consistent/"</string>
+    <string name="tip16Link">"http://excy.com/2015/11/18/take-excy-for-a-leisure-spin/"</string>
+    <string name="tip17Link">"http://excy.com/2015/10/30/use-excy-to-train-for-swimming/"</string>
+
     <!-- Resume Dialog Strings -->
     <string name="resume_continue">"Continue?"</string>
     <string name="finish_strong">"healthy is… finishing strong!"</string>
