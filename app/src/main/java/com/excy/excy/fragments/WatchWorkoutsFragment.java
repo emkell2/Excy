@@ -1,12 +1,15 @@
 package com.excy.excy.fragments;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.excy.excy.R;
 
@@ -65,7 +68,57 @@ public class WatchWorkoutsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_watch_workouts, container, false);
+        View view = inflater.inflate(R.layout.fragment_watch_workouts, container, false);
+
+        ImageButton armCandyBtn = (ImageButton) view.findViewById(R.id.ibArmCandyLink);
+        armCandyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                watchYoutubeVideo(getString(R.string.armCandyYoutubeLink));
+            }
+        });
+
+        ImageButton superCycleBtn = (ImageButton) view.findViewById(R.id.ibSuperCycleCardioLink);
+        superCycleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                watchYoutubeVideo(getString(R.string.superCycleYoutubeLink));
+            }
+        });
+
+        ImageButton cycleLegBtn = (ImageButton) view.findViewById(R.id.ibCycleLegBlastLink);
+        cycleLegBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                watchYoutubeVideo(getString(R.string.cycleLegYoutubeLink));
+            }
+        });
+
+        ImageButton coreFloorBtn = (ImageButton) view.findViewById(R.id.ibCoreFloorExplosionLink);
+        coreFloorBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                watchYoutubeVideo(getString(R.string.coreFloorYoutubeLink));
+            }
+        });
+
+        ImageButton armBlastBtn = (ImageButton) view.findViewById(R.id.ibArmBlastLink);
+        armBlastBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                watchYoutubeVideo(getString(R.string.armBlastYoutubeLink));
+            }
+        });
+
+        ImageButton ultimateArmLegBtn = (ImageButton) view.findViewById(R.id.ivUltimateArmAndLegToningLink);
+        ultimateArmLegBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                watchYoutubeVideo(getString(R.string.ultimateArmLegYoutubeLink));
+            }
+        });
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -105,5 +158,16 @@ public class WatchWorkoutsFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onWorkoutSelected(Uri uri);
+    }
+
+    public void watchYoutubeVideo(String id){
+        Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + id));
+        Intent webIntent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("http://www.youtube.com/watch?v=" + id));
+        try {
+            startActivity(appIntent);
+        } catch (ActivityNotFoundException ex) {
+            startActivity(webIntent);
+        }
     }
 }
