@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.excy.excy.dialogs.TrackResultsDialog;
 import com.excy.excy.timers.PlayTimer;
 import com.excy.excy.R;
 import com.excy.excy.dialogs.WarmUpDialog;
@@ -313,7 +314,9 @@ public class PlayActivity extends AppCompatActivity {
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String timeRemaining = PlayUtilities.createTimerString(minutes, seconds);
                 reset();
+                endWorkout(timeRemaining);
             }
         });
 
@@ -533,5 +536,12 @@ public class PlayActivity extends AppCompatActivity {
 
     public static int getProgressBarStartingWidth() {
         return progressStartingWidth * 3;
+    }
+
+    private void endWorkout(String timeRemaining) {
+        TrackResultsDialog dialog = TrackResultsDialog.newInstance();
+
+        dialog.getArguments().putString(TrackResultsDialog.TRACK_RESULTS_TIME_REMAINING, timeRemaining);
+        dialog.show(getFragmentManager(), TrackResultsDialog.TRACK_RESULTS_DIALOG);
     }
 }

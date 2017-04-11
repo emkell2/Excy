@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import com.excy.excy.R;
 import com.excy.excy.activities.SurveyActivity;
+import com.excy.excy.utilities.WorkoutUtilities;
 
 /**
  * Created by erin.kelley on 4/11/17.
@@ -16,6 +17,7 @@ import com.excy.excy.activities.SurveyActivity;
 
 public class TrackResultsDialog extends DialogFragment {
     public static final String TRACK_RESULTS_DIALOG = "TRACK RESULTS DIALOG";
+    public static final String TRACK_RESULTS_TIME_REMAINING = "TRACK RESULTS TIME REMAINING";
 
     public static TrackResultsDialog newInstance() {
 
@@ -33,8 +35,10 @@ public class TrackResultsDialog extends DialogFragment {
                 .setMessage(R.string.track_results_message)
                 .setPositiveButton(R.string.track, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        String timeRemaining = getArguments().getString(TRACK_RESULTS_TIME_REMAINING);
                         dismiss();
                         Intent intent = new Intent(getActivity(), SurveyActivity.class);
+                        intent.putExtra(WorkoutUtilities.INTENT_TIME_REMAINING, timeRemaining);
                         startActivity(intent);
                     }
                 })
