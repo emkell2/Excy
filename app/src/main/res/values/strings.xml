@@ -140,6 +140,12 @@
     <string name="resume">"resume"</string>
     <string name="exit">"exit"</string>
 
+    <!-- Track Results Dialog -->
+    <string name="track_results_title">"Track results?"</string>
+    <string name="track_results_message">"Please take a moment to track results to monitor your progress."</string>
+    <string name="track">"TRACK"</string>
+    <string name="cancel">"CANCEL"</string>
+
     <!-- Warm Up Dialog Strings -->
     <string name="warm_up">WARM UP</string>
     <string name="skip">SKIP</string>
