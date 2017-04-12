@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.excy.excy.R;
 
@@ -18,6 +19,7 @@ public class SurveyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey);
 
+        final TextView useSilderTV = (TextView) findViewById(R.id.tvUseSlider);
         final ImageView surveyImage = (ImageView) findViewById(R.id.ivSurveyImage);
 
         RadioButton radio1Btn = (RadioButton) findViewById(R.id.radio1);
@@ -118,10 +120,25 @@ public class SurveyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 submitCount++;
 
-                if (submitCount == 2) {
-                    submitBtn.setText(getString(R.string.feedback_btn_complete));
+                switch (submitCount) {
+                    case 1:
+                        useSilderTV.setText(getString(R.string.feedback_location));
+                        surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey2_work));
+                        break;
+                    case 2:
+                        useSilderTV.setText(getString(R.string.feedback_how_you_feel));
+                        surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey3_healthier));
+                        submitBtn.setText(getString(R.string.feedback_btn_complete));
+                        break;
+                    case 3:
+                        submitSurvey();
+                        break;
                 }
             }
         });
+    }
+    
+    private void submitSurvey() {
+        // TODO: Implement this method
     }
 }
