@@ -18,11 +18,13 @@ import com.excy.excy.utilities.WorkoutUtilities;
 public class WarmUpDialog extends DialogFragment {
     public static final String WARM_UP_DIALOG = "WARM UP DIALOG";
     public static final String WARM_UP_DIALOG_INTERVAL_ARG = "WARM UP DIALOG INTERVAL ARG";
+    public static final String WARM_UP_DIALOG_INTENT_STRING = "WARM UP DIALOG INTENT STRING";
 
-    public static WarmUpDialog newInstance(boolean setCurrentInterval) {
+    public static WarmUpDialog newInstance(boolean setCurrentInterval, String intentString) {
 
         Bundle args = new Bundle();
         args.putBoolean(WARM_UP_DIALOG_INTERVAL_ARG, setCurrentInterval);
+        args.putString(WARM_UP_DIALOG_INTENT_STRING, intentString);
 
         WarmUpDialog fragment = new WarmUpDialog();
         fragment.setArguments(args);
@@ -32,6 +34,7 @@ public class WarmUpDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final boolean setInterval = getArguments().getBoolean(WARM_UP_DIALOG_INTERVAL_ARG);
+        final String intentString = getArguments().getString(WARM_UP_DIALOG_INTENT_STRING);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.warm_up_title)
@@ -39,22 +42,22 @@ public class WarmUpDialog extends DialogFragment {
                 .setPositiveButton(R.string.warm_up, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
-                        MinTemperatureDialog.newInstance(setInterval).show(getFragmentManager(),
-                                MinTemperatureDialog.MIN_TEMP_DIALOG);
+                        MinTemperatureDialog.newInstance(setInterval, intentString)
+                                .show(getFragmentManager(), MinTemperatureDialog.MIN_TEMP_DIALOG);
                     }
                 })
                 .setNegativeButton(R.string.skip, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
-                        startTimer(setInterval);
+                        startTimer(setInterval, intentString);
                     }
                 });
 
         return builder.create();
     }
 
-    private void startTimer(boolean setInterval) {
-        Intent intent = new Intent(WorkoutUtilities.INTENT_START_TIMER);
+    private void startTimer(boolean setInterval, String intentString) {
+        Intent intent = new Intent(intentString);
         intent.putExtra(WorkoutUtilities.INTENT_SET_INTERVAL, setInterval);
         LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
     }

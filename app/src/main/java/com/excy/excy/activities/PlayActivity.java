@@ -74,7 +74,7 @@ public class PlayActivity extends AppCompatActivity {
         context = this;
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-                new IntentFilter(WorkoutUtilities.INTENT_START_TIMER));
+                new IntentFilter(WorkoutUtilities.INTENT_START_PLAY_TIMER));
 
         Typeface dosisRegular = Typeface.createFromAsset(getAssets(), "fonts/Dosis-Regular.ttf");
         Typeface dosisMedium = Typeface.createFromAsset(getAssets(), "fonts/Dosis-Medium.ttf");
@@ -310,7 +310,8 @@ public class PlayActivity extends AppCompatActivity {
                 getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 timer = new PlayTimer(startTime);
 
-                WarmUpDialog.newInstance(true).show(getFragmentManager(), WarmUpDialog.WARM_UP_DIALOG);
+                WarmUpDialog.newInstance(true, WorkoutUtilities.INTENT_START_PLAY_TIMER)
+                        .show(getFragmentManager(), WarmUpDialog.WARM_UP_DIALOG);
             }
         });
 

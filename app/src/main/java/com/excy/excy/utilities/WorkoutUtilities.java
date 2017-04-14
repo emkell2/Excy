@@ -14,7 +14,8 @@ public class WorkoutUtilities {
     public static final String INTENT_SET_INTERVAL = "INTENT SET INTERVAL";
 
     // Intent Filters
-    public static final String INTENT_START_TIMER = "INTENT START TIMER";
+    public static final String INTENT_START_PLAY_TIMER = "INTENT START PLAY TIMER";
+    public static final String INTENT_START_WORKOUT_TIMER = "INTENT START WORKOUT TIMER";
 
     // PowerZone int Arrays
     public static final int[] PZ_ARM_CANDY_ARR = {3, 5, 3, 5, 3, 5, 3};
