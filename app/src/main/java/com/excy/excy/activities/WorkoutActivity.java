@@ -21,8 +21,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.excy.excy.R;
+import com.excy.excy.dialogs.TrackResultsDialog;
 import com.excy.excy.timers.WorkoutTimer;
 import com.excy.excy.utilities.AppUtilities;
+import com.excy.excy.utilities.PlayUtilities;
 import com.excy.excy.utilities.WorkoutUtilities;
 
 import static android.view.View.GONE;
@@ -127,7 +129,9 @@ public class WorkoutActivity extends AppCompatActivity {
                 if (timerRef != null) {
                     timerRef.cancelTimer();
                 }
-                finish();
+
+                String timeRemaining = PlayUtilities.createTimerString(minutes, seconds);
+                endWorkout(timeRemaining);
             }
         });
 
@@ -293,5 +297,12 @@ public class WorkoutActivity extends AppCompatActivity {
 
     public static long getOriginalStartTime() {
         return originalStartTime;
+    }
+
+    private void endWorkout(String timeRemaining) {
+        TrackResultsDialog dialog = TrackResultsDialog.newInstance();
+
+        dialog.getArguments().putString(TrackResultsDialog.TRACK_RESULTS_TIME_REMAINING, timeRemaining);
+        dialog.show(getFragmentManager(), TrackResultsDialog.TRACK_RESULTS_DIALOG);
     }
 }

@@ -1,14 +1,17 @@
 package com.excy.excy.activities;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
@@ -22,12 +25,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.excy.excy.dialogs.TrackResultsDialog;
-import com.excy.excy.timers.PlayTimer;
 import com.excy.excy.R;
+import com.excy.excy.dialogs.TrackResultsDialog;
 import com.excy.excy.dialogs.WarmUpDialog;
+import com.excy.excy.timers.PlayTimer;
 import com.excy.excy.utilities.AppUtilities;
 import com.excy.excy.utilities.PlayUtilities;
+import com.excy.excy.utilities.WorkoutUtilities;
 
 import info.hoang8f.widget.FButton;
 
@@ -55,11 +59,22 @@ public class PlayActivity extends AppCompatActivity {
 
     private static int progressStartingWidth;
 
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean setInterval = intent.getBooleanExtra(WorkoutUtilities.INTENT_SET_INTERVAL, false);
+            startTimer(setInterval);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
         context = this;
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                new IntentFilter(WorkoutUtilities.INTENT_START_TIMER));
 
         Typeface dosisRegular = Typeface.createFromAsset(getAssets(), "fonts/Dosis-Regular.ttf");
         Typeface dosisMedium = Typeface.createFromAsset(getAssets(), "fonts/Dosis-Medium.ttf");
@@ -294,9 +309,8 @@ public class PlayActivity extends AppCompatActivity {
                 startingTime = startTime;
                 getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 timer = new PlayTimer(startTime);
-                timer.startTimer(timerTV, progressBar, true);
 
-                WarmUpDialog.newInstance().show(getFragmentManager(), WarmUpDialog.WARM_UP_DIALOG);
+                WarmUpDialog.newInstance(true).show(getFragmentManager(), WarmUpDialog.WARM_UP_DIALOG);
             }
         });
 
@@ -372,6 +386,8 @@ public class PlayActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+        reset();
         super.onDestroy();
     }
 
@@ -427,7 +443,7 @@ public class PlayActivity extends AppCompatActivity {
             timer = new PlayTimer(startTime);
             startingTime = startTime;
 
-            timer.startTimer(timerTV, progressBar, false);
+            startTimer(false);
         }
     }
 
@@ -439,7 +455,7 @@ public class PlayActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         timer = new PlayTimer(timer.getRemainingTime());
-                        timer.startTimer(timerTV, progressBar, false);
+                        startTimer(false);
                     }
                 })
                 .setNegativeButton(R.string.exit, new DialogInterface.OnClickListener() {
@@ -543,5 +559,9 @@ public class PlayActivity extends AppCompatActivity {
 
         dialog.getArguments().putString(TrackResultsDialog.TRACK_RESULTS_TIME_REMAINING, timeRemaining);
         dialog.show(getFragmentManager(), TrackResultsDialog.TRACK_RESULTS_DIALOG);
+    }
+
+    public void startTimer(boolean setCurrentInterval) {
+        timer.startTimer(timerTV, progressBar, setCurrentInterval);
     }
 }

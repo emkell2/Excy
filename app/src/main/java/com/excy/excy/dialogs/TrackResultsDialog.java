@@ -37,6 +37,8 @@ public class TrackResultsDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         String timeRemaining = getArguments().getString(TRACK_RESULTS_TIME_REMAINING);
                         dismiss();
+                        getActivity().finish();
+
                         Intent intent = new Intent(getActivity(), SurveyActivity.class);
                         intent.putExtra(WorkoutUtilities.INTENT_TIME_REMAINING, timeRemaining);
                         startActivity(intent);
