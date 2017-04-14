@@ -13,11 +13,15 @@ import com.excy.excy.R;
 
 public class SurveyActivity extends AppCompatActivity {
     private int submitCount = 0;
+    private int option = 3;         // Radio Button selected
+    private int[] optionsSelected;  // Store all selected user feedback options
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey);
+
+        optionsSelected = new int[3];
 
         final TextView useSilderTV = (TextView) findViewById(R.id.tvUseSlider);
         final ImageView surveyImage = (ImageView) findViewById(R.id.ivSurveyImage);
@@ -26,6 +30,7 @@ public class SurveyActivity extends AppCompatActivity {
         radio1Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                option = 1;
                 switch (submitCount) {
                     case 0:
                         surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey1_awful));
@@ -44,6 +49,7 @@ public class SurveyActivity extends AppCompatActivity {
         radio2Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                option = 2;
                 switch (submitCount) {
                     case 0:
                         surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey1_bad));
@@ -62,6 +68,7 @@ public class SurveyActivity extends AppCompatActivity {
         radio3Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                option = 3;
                 switch (submitCount) {
                     case 0:
                         surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey1_good));
@@ -80,6 +87,7 @@ public class SurveyActivity extends AppCompatActivity {
         radio4Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                option = 4;
                 switch (submitCount) {
                     case 0:
                         surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey1_great));
@@ -98,6 +106,7 @@ public class SurveyActivity extends AppCompatActivity {
         radio5Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                option = 5;
                 switch (submitCount) {
                     case 0:
                         surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey1_amazing));
@@ -118,6 +127,7 @@ public class SurveyActivity extends AppCompatActivity {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                optionsSelected[submitCount] = option;
                 submitCount++;
 
                 switch (submitCount) {
@@ -134,10 +144,12 @@ public class SurveyActivity extends AppCompatActivity {
                         submitSurvey();
                         break;
                 }
+
+                option = 3;
             }
         });
     }
-    
+
     private void submitSurvey() {
         // TODO: Implement this method
     }
