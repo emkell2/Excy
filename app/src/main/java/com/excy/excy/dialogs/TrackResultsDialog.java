@@ -19,9 +19,9 @@ public class TrackResultsDialog extends DialogFragment {
     public static final String TRACK_RESULTS_DIALOG = "TRACK RESULTS DIALOG";
     public static final String TRACK_RESULTS_TIME_REMAINING = "TRACK RESULTS TIME REMAINING";
 
-    public static TrackResultsDialog newInstance() {
-
+    public static TrackResultsDialog newInstance(String timeRemaining) {
         Bundle args = new Bundle();
+        args.putString(TRACK_RESULTS_TIME_REMAINING, timeRemaining);
 
         TrackResultsDialog fragment = new TrackResultsDialog();
         fragment.setArguments(args);
@@ -37,6 +37,8 @@ public class TrackResultsDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         String timeRemaining = getArguments().getString(TRACK_RESULTS_TIME_REMAINING);
                         dismiss();
+                        getActivity().finish();
+
                         Intent intent = new Intent(getActivity(), SurveyActivity.class);
                         intent.putExtra(WorkoutUtilities.INTENT_TIME_REMAINING, timeRemaining);
                         startActivity(intent);
@@ -45,6 +47,7 @@ public class TrackResultsDialog extends DialogFragment {
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
+                        getActivity().finish();
                     }
                 });
 

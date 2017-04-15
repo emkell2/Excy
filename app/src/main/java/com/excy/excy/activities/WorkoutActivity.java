@@ -1,8 +1,11 @@
 package com.excy.excy.activities;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -11,6 +14,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
@@ -21,8 +25,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.excy.excy.R;
+import com.excy.excy.dialogs.MaxTemperatureDialog;
+import com.excy.excy.dialogs.WarmUpDialog;
 import com.excy.excy.timers.WorkoutTimer;
 import com.excy.excy.utilities.AppUtilities;
+import com.excy.excy.utilities.PlayUtilities;
 import com.excy.excy.utilities.WorkoutUtilities;
 
 import static android.view.View.GONE;
@@ -48,11 +55,21 @@ public class WorkoutActivity extends AppCompatActivity {
 
     static ImageView targetZoneIV;
 
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            startTimer();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout);
         mResources = getResources();
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                new IntentFilter(WorkoutUtilities.INTENT_START_WORKOUT_TIMER));
 
         final Intent workoutListData = getIntent();
 
@@ -80,12 +97,7 @@ public class WorkoutActivity extends AppCompatActivity {
                         long timeInMillis = workoutListData.getLongExtra(WorkoutUtilities.WORKOUT_DATA_TIME_MILLIS, 0);
                         originalStartTime = timeInMillis;
                         final WorkoutTimer timer = new WorkoutTimer(timeInMillis);
-                        timer.startTimer(timerTV, progressBar);
                         timerRef = timer;
-
-                        // Start media audio
-                        audioIcon.setVisibility(View.VISIBLE);
-                        player.start();
 
                         progressBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                     }
@@ -127,7 +139,9 @@ public class WorkoutActivity extends AppCompatActivity {
                 if (timerRef != null) {
                     timerRef.cancelTimer();
                 }
-                finish();
+
+                String timeRemaining = PlayUtilities.createTimerString(minutes, seconds);
+                endWorkout(timeRemaining);
             }
         });
 
@@ -161,6 +175,9 @@ public class WorkoutActivity extends AppCompatActivity {
         /* Set up excy link view  */
         TextView excyLinkTV = (TextView) findViewById(R.id.tvLink);
         excyLinkTV.setMovementMethod(LinkMovementMethod.getInstance());
+
+        WarmUpDialog.newInstance(false, WorkoutUtilities.INTENT_START_WORKOUT_TIMER)
+                .show(getFragmentManager(), WarmUpDialog.WARM_UP_DIALOG);
     }
 
     private void setWorkoutImages(int workoutResId) {
@@ -272,10 +289,7 @@ public class WorkoutActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
 
                         timerRef = new WorkoutTimer(timerRef.getRemainingTime());
-                        timerRef.startTimer(timerTV, progressBar);
-
-                        player.start();
-                        audioIcon.setVisibility(View.VISIBLE);
+                        startTimer();
                     }
                 })
                 .setNegativeButton(R.string.exit, new DialogInterface.OnClickListener() {
@@ -293,5 +307,18 @@ public class WorkoutActivity extends AppCompatActivity {
 
     public static long getOriginalStartTime() {
         return originalStartTime;
+    }
+
+    private void endWorkout(String timeRemaining) {
+        MaxTemperatureDialog.newInstance(timeRemaining).show(getFragmentManager(),
+                MaxTemperatureDialog.MAX_TEMP_DIALOG);
+    }
+
+    public void startTimer() {
+        timerRef.startTimer(timerTV, progressBar);
+
+        // Start media audio
+        audioIcon.setVisibility(View.VISIBLE);
+        player.start();
     }
 }
