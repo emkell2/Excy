@@ -25,7 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.excy.excy.R;
-import com.excy.excy.dialogs.TrackResultsDialog;
+import com.excy.excy.dialogs.MaxTemperatureDialog;
 import com.excy.excy.dialogs.WarmUpDialog;
 import com.excy.excy.timers.WorkoutTimer;
 import com.excy.excy.utilities.AppUtilities;
@@ -310,10 +310,8 @@ public class WorkoutActivity extends AppCompatActivity {
     }
 
     private void endWorkout(String timeRemaining) {
-        TrackResultsDialog dialog = TrackResultsDialog.newInstance();
-
-        dialog.getArguments().putString(TrackResultsDialog.TRACK_RESULTS_TIME_REMAINING, timeRemaining);
-        dialog.show(getFragmentManager(), TrackResultsDialog.TRACK_RESULTS_DIALOG);
+        MaxTemperatureDialog.newInstance(timeRemaining).show(getFragmentManager(),
+                MaxTemperatureDialog.MAX_TEMP_DIALOG);
     }
 
     public void startTimer() {

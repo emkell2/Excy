@@ -19,9 +19,11 @@ import com.excy.excy.R;
 
 public class MaxTemperatureDialog extends DialogFragment {
     public static final String MAX_TEMP_DIALOG = "MAX TEMP DIALOG";
+    public static final String MAX_TEMP_DIALOG_TIME_REMAINING = "MAX TEMP DIALOG TIME REMAINING";
 
-    public static MaxTemperatureDialog newInstance() {
+    public static MaxTemperatureDialog newInstance(String timeRemaining) {
         Bundle args = new Bundle();
+        args.putString(MAX_TEMP_DIALOG_TIME_REMAINING, timeRemaining);
 
         MaxTemperatureDialog fragment = new MaxTemperatureDialog();
         fragment.setArguments(args);
@@ -30,6 +32,7 @@ public class MaxTemperatureDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        final String timeRemaining = getArguments().getString(MAX_TEMP_DIALOG_TIME_REMAINING);
         final EditText input = new EditText(getActivity());
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -47,11 +50,15 @@ public class MaxTemperatureDialog extends DialogFragment {
                 .setPositiveButton(R.string.enter, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
+                        TrackResultsDialog.newInstance(timeRemaining).show(getFragmentManager(),
+                                TrackResultsDialog.TRACK_RESULTS_DIALOG);
                     }
                 })
                 .setNegativeButton(R.string.skip, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
+                        TrackResultsDialog.newInstance(timeRemaining).show(getFragmentManager(),
+                                TrackResultsDialog.TRACK_RESULTS_DIALOG);
                     }
                 });
 
