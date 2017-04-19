@@ -18,6 +18,9 @@ import java.lang.reflect.Field;
 
 public class AppUtilities {
 
+    public static final String TABLE_NAME_USERS = "users";
+    public static final String TABLE_NAME_WORKOUTS = "workouts";
+
     public static void setBottomNavBarIconActive(Activity activity, int resId) {
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 activity.findViewById(R.id.bottomNavigationView);

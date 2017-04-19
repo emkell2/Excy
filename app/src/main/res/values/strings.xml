@@ -173,6 +173,10 @@
     <string name="bottom_nav_view_me">me</string>
     <string name="bottom_nav_view_more">more</string>
 
+    <!-- Authentication Strings -->
+    <string name="auth_failed">Authentication Failed.</string>
+    <string name="creating_account">Creating your account...</string>
+
     <!-- Strings related to login -->
     <string name="user_email">Email</string>
     <string name="user_password">Password</string>

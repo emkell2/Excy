@@ -127,25 +127,27 @@ public class SurveyActivity extends AppCompatActivity {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                optionsSelected[submitCount] = option;
-                submitCount++;
+                if (submitCount <= 2) {
+                    optionsSelected[submitCount] = option;
+                    submitCount++;
 
-                switch (submitCount) {
-                    case 1:
-                        useSilderTV.setText(getString(R.string.feedback_location));
-                        surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey2_work));
-                        break;
-                    case 2:
-                        useSilderTV.setText(getString(R.string.feedback_how_you_feel));
-                        surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey3_healthier));
-                        submitBtn.setText(getString(R.string.feedback_btn_complete));
-                        break;
-                    case 3:
-                        submitSurvey();
-                        break;
+                    switch (submitCount) {
+                        case 1:
+                            useSilderTV.setText(getString(R.string.feedback_location));
+                            surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey2_work));
+                            break;
+                        case 2:
+                            useSilderTV.setText(getString(R.string.feedback_how_you_feel));
+                            surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey3_healthier));
+                            submitBtn.setText(getString(R.string.feedback_btn_complete));
+                            break;
+                        case 3:
+                            submitSurvey();
+                            break;
+                    }
+
+                    option = 3;
                 }
-
-                option = 3;
             }
         });
     }
