@@ -1,8 +1,10 @@
 package com.excy.excy.activities;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +15,7 @@ import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -116,16 +119,17 @@ public class LoginActivity extends AppCompatActivity {
                 input.setLayoutParams(params);
                 input.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                 input.setGravity(Gravity.CENTER);
+                input.setTextColor(Color.BLACK);
 
-                new AlertDialog.Builder(LoginActivity.this)
+                Dialog dialog = new AlertDialog.Builder(LoginActivity.this)
                         .setTitle(R.string.forgot_password)
                         .setMessage(R.string.forgot_password_message)
                         .setView(input)
-                        .setPositiveButton(R.string.reset_password, new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.reset, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 FirebaseAuth auth = FirebaseAuth.getInstance();
-                                String emailAddress = input.getText().toString();
+                                String emailAddress = input.getText().toString().trim();
 
                                 if (!TextUtils.isEmpty(emailAddress)) {
                                     auth.sendPasswordResetEmail(emailAddress)
@@ -134,9 +138,20 @@ public class LoginActivity extends AppCompatActivity {
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
                                                         Log.d(AUTH_TAG, "Email sent.");
+                                                        Toast.makeText(LoginActivity.this, R.string.email_sent,
+                                                                Toast.LENGTH_SHORT).show();
+                                                    } else {
+                                                        Toast.makeText(LoginActivity.this, R.string.email_sent_failed,
+                                                                Toast.LENGTH_SHORT).show();
                                                     }
                                                 }
-                                            });
+                                            })
+                                    .addOnFailureListener(LoginActivity.this, new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.d(AUTH_TAG, "Reset password email failed to send: " + e.getMessage());
+                                        }
+                                    });;
                                     dialog.dismiss();
                                 } else {
                                     Toast.makeText(LoginActivity.this, R.string.enter_valid_email,
@@ -150,8 +165,13 @@ public class LoginActivity extends AppCompatActivity {
                                 dialog.dismiss();
                             }
                         })
-                        .create()
-                        .show();
+                        .create();
+
+                // Allows soft keyboard to show without it being clunky and taking forever to show
+                dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                        | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+
+                dialog.show();
             }
         });
 
