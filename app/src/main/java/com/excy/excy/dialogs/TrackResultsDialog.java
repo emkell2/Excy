@@ -19,7 +19,8 @@ public class TrackResultsDialog extends DialogFragment {
     public static final String TRACK_RESULTS_DIALOG = "TRACK RESULTS DIALOG";
     public static final String TRACK_RESULTS_TIME_REMAINING = "TRACK RESULTS TIME REMAINING";
 
-    public static TrackResultsDialog newInstance(String timeRemaining) {
+    public static TrackResultsDialog newInstance(String timeRemaining, String workoutName,
+                                                 String maxTemp) {
         Bundle args = new Bundle();
         args.putString(TRACK_RESULTS_TIME_REMAINING, timeRemaining);
 

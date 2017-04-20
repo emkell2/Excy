@@ -5,6 +5,9 @@ package com.excy.excy.utilities;
  */
 
 public class WorkoutUtilities {
+    public static final String WORKOUT_DATA = "WORKOUT DATA";
+
+    // Workout Keys
     public static final String WORKOUT_DATA_RES_ID = "WORKOUT_DATA_RES_ID";
     public static final String WORKOUT_DATA_TIME_MILLIS = "WORKOUT_DATA_TIME_MILLIS";
     public static final String WORKOUT_DATA_AUDIO_RES_ID = "WORKOUT_DATA_AUDIO_RES_ID";
@@ -16,6 +19,15 @@ public class WorkoutUtilities {
     // Intent Filters
     public static final String INTENT_START_PLAY_TIMER = "INTENT START PLAY TIMER";
     public static final String INTENT_START_WORKOUT_TIMER = "INTENT START WORKOUT TIMER";
+
+    // Workout Names
+    public static final String WORKOUT_ARM_CANDY = "Arm Candy";
+    public static final String WORKOUT_SUPER_CYCLE_CARDIO = "Super Cycle Cardio";
+    public static final String WORKOUT_CYCLE_LEG_BLAST = "Cycle Leg Blast";
+    public static final String WORKOUT_CORE_FLOOR_EXPLOSION = "Core Floor Explosion";
+    public static final String WORKOUT_ARM_BLAST = "Arm Blast";
+    public static final String WORKOUT_ULTIMATE_ARM_LEG_TONING = "Ultimate Arm & Leg Toning";
+    public static final String WORKOUT_INTERVAL = "Interval Workout";
 
     // PowerZone int Arrays
     public static final int[] PZ_ARM_CANDY_ARR = {3, 5, 3, 5, 3, 5, 3};

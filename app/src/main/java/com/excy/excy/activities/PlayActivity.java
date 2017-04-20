@@ -33,6 +33,8 @@ import com.excy.excy.utilities.AppUtilities;
 import com.excy.excy.utilities.PlayUtilities;
 import com.excy.excy.utilities.WorkoutUtilities;
 
+import java.util.HashMap;
+
 import info.hoang8f.widget.FButton;
 
 public class PlayActivity extends AppCompatActivity {
@@ -59,10 +61,13 @@ public class PlayActivity extends AppCompatActivity {
 
     private static int progressStartingWidth;
 
+    private HashMap<String, Object> workout;
+
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             boolean setInterval = intent.getBooleanExtra(WorkoutUtilities.INTENT_SET_INTERVAL, false);
+            workout = (HashMap<String, Object>) intent.getSerializableExtra(WorkoutUtilities.WORKOUT_DATA);
             startTimer(setInterval);
         }
     };
@@ -310,7 +315,8 @@ public class PlayActivity extends AppCompatActivity {
                 getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 timer = new PlayTimer(startTime);
 
-                WarmUpDialog.newInstance(true, WorkoutUtilities.INTENT_START_PLAY_TIMER)
+                HashMap<String, Object> workout = new HashMap<>();
+                WarmUpDialog.newInstance(true, WorkoutUtilities.INTENT_START_PLAY_TIMER, workout)
                         .show(getFragmentManager(), WarmUpDialog.WARM_UP_DIALOG);
             }
         });
@@ -556,8 +562,8 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void endWorkout(String timeRemaining) {
-        MaxTemperatureDialog.newInstance(timeRemaining).show(getFragmentManager(),
-                MaxTemperatureDialog.MAX_TEMP_DIALOG);
+        MaxTemperatureDialog.newInstance(timeRemaining, WorkoutUtilities.WORKOUT_INTERVAL)
+                .show(getFragmentManager(), MaxTemperatureDialog.MAX_TEMP_DIALOG);
     }
 
     public void startTimer(boolean setCurrentInterval) {

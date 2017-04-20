@@ -32,6 +32,8 @@ import com.excy.excy.utilities.AppUtilities;
 import com.excy.excy.utilities.PlayUtilities;
 import com.excy.excy.utilities.WorkoutUtilities;
 
+import java.util.HashMap;
+
 import static android.view.View.GONE;
 
 public class WorkoutActivity extends AppCompatActivity {
@@ -46,6 +48,9 @@ public class WorkoutActivity extends AppCompatActivity {
 
     private static Resources mResources;
 
+    private String workoutName = "";
+    HashMap<String, Object> workout;
+
     MediaPlayer player;
     WorkoutTimer timerRef; // Needed to have a reference to the timer
 
@@ -58,6 +63,7 @@ public class WorkoutActivity extends AppCompatActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            workout = (HashMap<String, Object>) intent.getSerializableExtra(WorkoutUtilities.WORKOUT_DATA);
             startTimer();
         }
     };
@@ -176,7 +182,8 @@ public class WorkoutActivity extends AppCompatActivity {
         TextView excyLinkTV = (TextView) findViewById(R.id.tvLink);
         excyLinkTV.setMovementMethod(LinkMovementMethod.getInstance());
 
-        WarmUpDialog.newInstance(false, WorkoutUtilities.INTENT_START_WORKOUT_TIMER)
+        HashMap<String, Object> workout = new HashMap<>();
+        WarmUpDialog.newInstance(false, WorkoutUtilities.INTENT_START_WORKOUT_TIMER, workout)
                 .show(getFragmentManager(), WarmUpDialog.WARM_UP_DIALOG);
     }
 
@@ -190,31 +197,37 @@ public class WorkoutActivity extends AppCompatActivity {
                     workoutImage.setImageResource(R.drawable.wb_arm_candy);
                     powerZoneImage.setImageResource(R.drawable.pz_arm_candy_graph);
                     powerZoneArr = WorkoutUtilities.PZ_ARM_CANDY_ARR;
+                    workoutName = WorkoutUtilities.WORKOUT_ARM_CANDY;
                     break;
                 case R.id.ibSuperCycleCardio:
                     workoutImage.setImageResource(R.drawable.wb_super_cycle_cardio);
                     powerZoneImage.setImageResource(R.drawable.pz_super_cycle_graph);
                     powerZoneArr = WorkoutUtilities.PZ_SUPER_CYCLE_CARDIO_ARR;
+                    workoutName = WorkoutUtilities.WORKOUT_SUPER_CYCLE_CARDIO;
                     break;
                 case R.id.ibCycleLegBlast:
                     workoutImage.setImageResource(R.drawable.wb_cycle_leg_blast);
                     powerZoneImage.setImageResource(R.drawable.pz_cycle_leg_blast_graph);
                     powerZoneArr = WorkoutUtilities.PZ_CYCLE_LEG_BLAST_ARR;
+                    workoutName = WorkoutUtilities.WORKOUT_CYCLE_LEG_BLAST;
                     break;
                 case R.id.ibCoreFloorExplosion:
                     workoutImage.setImageResource(R.drawable.wb_core_floor_explosion);
                     powerZoneImage.setImageResource(R.drawable.pz_core_floor_explosion_graph);
                     powerZoneArr = WorkoutUtilities.PZ_CORE_FLOOR_EXPLOSION_ARR;
+                    workoutName = WorkoutUtilities.WORKOUT_CORE_FLOOR_EXPLOSION;
                     break;
                 case R.id.ibArmBlast:
                     workoutImage.setImageResource(R.drawable.wb_arm_blast);
                     powerZoneImage.setImageResource(R.drawable.pz_arm_blast_graph);
                     powerZoneArr = WorkoutUtilities.PZ_ARM_BLAST_ARR;
+                    workoutName = WorkoutUtilities.WORKOUT_ARM_BLAST;
                     break;
                 case R.id.ibUltimateArmAndLegToning:
                     workoutImage.setImageResource(R.drawable.wb_ultimate_arm_leg_tone);
                     powerZoneImage.setImageResource(R.drawable.pz_ultimate_arm_and_leg_toning_graph);
                     powerZoneArr = WorkoutUtilities.PZ_ULTIMATE_ARM_LEG_TONING_ARR;
+                    workoutName = WorkoutUtilities.WORKOUT_ULTIMATE_ARM_LEG_TONING;
                     break;
             }
 
@@ -310,7 +323,8 @@ public class WorkoutActivity extends AppCompatActivity {
     }
 
     private void endWorkout(String timeRemaining) {
-        MaxTemperatureDialog.newInstance(timeRemaining).show(getFragmentManager(),
+        workout.put("workoutTitle", workoutName);
+        MaxTemperatureDialog.newInstance(timeRemaining, workoutName).show(getFragmentManager(),
                 MaxTemperatureDialog.MAX_TEMP_DIALOG);
     }
 

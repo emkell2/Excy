@@ -11,6 +11,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import com.excy.excy.R;
 import com.excy.excy.utilities.WorkoutUtilities;
 
+import java.util.HashMap;
+
 /**
  * Created by erin.kelley on 3/14/17.
  */
@@ -20,11 +22,13 @@ public class WarmUpDialog extends DialogFragment {
     public static final String WARM_UP_DIALOG_INTERVAL_ARG = "WARM UP DIALOG INTERVAL ARG";
     public static final String WARM_UP_DIALOG_INTENT_STRING = "WARM UP DIALOG INTENT STRING";
 
-    public static WarmUpDialog newInstance(boolean setCurrentInterval, String intentString) {
+    public static WarmUpDialog newInstance(boolean setCurrentInterval, String intentString,
+                                           HashMap workout) {
 
         Bundle args = new Bundle();
         args.putBoolean(WARM_UP_DIALOG_INTERVAL_ARG, setCurrentInterval);
         args.putString(WARM_UP_DIALOG_INTENT_STRING, intentString);
+        args.putSerializable(WorkoutUtilities.WORKOUT_DATA, workout);
 
         WarmUpDialog fragment = new WarmUpDialog();
         fragment.setArguments(args);
@@ -35,6 +39,7 @@ public class WarmUpDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final boolean setInterval = getArguments().getBoolean(WARM_UP_DIALOG_INTERVAL_ARG);
         final String intentString = getArguments().getString(WARM_UP_DIALOG_INTENT_STRING);
+        final HashMap map = (HashMap) getArguments().getSerializable(WorkoutUtilities.WORKOUT_DATA);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.warm_up_title)
@@ -42,7 +47,7 @@ public class WarmUpDialog extends DialogFragment {
                 .setPositiveButton(R.string.warm_up, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
-                        MinTemperatureDialog.newInstance(setInterval, intentString)
+                        MinTemperatureDialog.newInstance(setInterval, intentString, map)
                                 .show(getFragmentManager(), MinTemperatureDialog.MIN_TEMP_DIALOG);
                     }
                 })

@@ -20,10 +20,12 @@ import com.excy.excy.R;
 public class MaxTemperatureDialog extends DialogFragment {
     public static final String MAX_TEMP_DIALOG = "MAX TEMP DIALOG";
     public static final String MAX_TEMP_DIALOG_TIME_REMAINING = "MAX TEMP DIALOG TIME REMAINING";
+    public static final String MAX_TEMP_DIALOG_WORKOUT_NAME= "MAX TEMP DIALOG WORKOUT NAME";
 
-    public static MaxTemperatureDialog newInstance(String timeRemaining) {
+    public static MaxTemperatureDialog newInstance(String timeRemaining, String workoutName) {
         Bundle args = new Bundle();
         args.putString(MAX_TEMP_DIALOG_TIME_REMAINING, timeRemaining);
+        args.putString(MAX_TEMP_DIALOG_WORKOUT_NAME, workoutName);
 
         MaxTemperatureDialog fragment = new MaxTemperatureDialog();
         fragment.setArguments(args);
@@ -33,6 +35,7 @@ public class MaxTemperatureDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final String timeRemaining = getArguments().getString(MAX_TEMP_DIALOG_TIME_REMAINING);
+        final String workoutName = getArguments().getString(MAX_TEMP_DIALOG_WORKOUT_NAME);
         final EditText input = new EditText(getActivity());
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -49,16 +52,17 @@ public class MaxTemperatureDialog extends DialogFragment {
                 .setView(input)
                 .setPositiveButton(R.string.enter, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        String maxTemp = input.getText().toString();
                         dismiss();
-                        TrackResultsDialog.newInstance(timeRemaining).show(getFragmentManager(),
-                                TrackResultsDialog.TRACK_RESULTS_DIALOG);
+                        TrackResultsDialog.newInstance(timeRemaining, MAX_TEMP_DIALOG_WORKOUT_NAME, maxTemp)
+                                .show(getFragmentManager(), TrackResultsDialog.TRACK_RESULTS_DIALOG);
                     }
                 })
                 .setNegativeButton(R.string.skip, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
-                        TrackResultsDialog.newInstance(timeRemaining).show(getFragmentManager(),
-                                TrackResultsDialog.TRACK_RESULTS_DIALOG);
+                        TrackResultsDialog.newInstance(timeRemaining, MAX_TEMP_DIALOG_WORKOUT_NAME, "")
+                                .show(getFragmentManager(), TrackResultsDialog.TRACK_RESULTS_DIALOG);
                     }
                 });
 
