@@ -335,4 +335,15 @@ public class WorkoutActivity extends AppCompatActivity {
         audioIcon.setVisibility(View.VISIBLE);
         player.start();
     }
+
+    private String calculateElapsedTime(long startTimeMillis, int min, int sec) {
+        int startTimeSecs = (int) (startTimeMillis / 1000);
+
+        int secondsRemaining = (min * 60) + sec;
+        int elaspedSeconds = startTimeSecs - secondsRemaining;
+        int totalMin = elaspedSeconds / 60;
+        int totalSec = elaspedSeconds % 60;
+
+        return PlayUtilities.createTimerString(totalMin, totalSec);
+    }
 }
