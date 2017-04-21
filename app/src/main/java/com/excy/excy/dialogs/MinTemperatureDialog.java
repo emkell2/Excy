@@ -43,7 +43,7 @@ public class MinTemperatureDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final boolean setInterval = getArguments().getBoolean(MIN_TEMP_DIALOG_INTERVAL_ARG);
         final String intentString = getArguments().getString(MIN_TEMP_DIALOG_INTENT_STRING);
-        final HashMap map = (HashMap) getArguments().getSerializable(WorkoutUtilities.WORKOUT_DATA);
+        final HashMap workout = (HashMap) getArguments().getSerializable(WorkoutUtilities.WORKOUT_DATA);
 
         final EditText input = new EditText(getActivity());
 
@@ -62,15 +62,15 @@ public class MinTemperatureDialog extends DialogFragment {
                 .setPositiveButton(R.string.enter, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         String minTemp = input.getText().toString();
-                        map.put("minTemp", minTemp);
+                        workout.put("minTemp", minTemp);
                         dismiss();
-                        startTimer(setInterval, intentString, map);
+                        startTimer(setInterval, intentString, workout);
                     }
                 })
                 .setNegativeButton(R.string.skip, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
-                        startTimer(setInterval, intentString, map);
+                        startTimer(setInterval, intentString, workout);
                     }
                 });
 

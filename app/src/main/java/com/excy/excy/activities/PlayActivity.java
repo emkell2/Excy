@@ -32,6 +32,7 @@ import com.excy.excy.timers.PlayTimer;
 import com.excy.excy.utilities.AppUtilities;
 import com.excy.excy.utilities.PlayUtilities;
 import com.excy.excy.utilities.WorkoutUtilities;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.HashMap;
 
@@ -58,6 +59,8 @@ public class PlayActivity extends AppCompatActivity {
     private static int seconds = 00;
     private static int fastInterval;    // in seconds
     private static int slowInterval;    // in seconds
+
+    private long originalStartTime = 0;
 
     private static int progressStartingWidth;
 
@@ -311,6 +314,7 @@ public class PlayActivity extends AppCompatActivity {
 
                 long startTime = convertStringTimeToMillis(timerTV.getText().toString());
 
+                originalStartTime = startTime;
                 startingTime = startTime;
                 getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 timer = new PlayTimer(startTime);
@@ -335,9 +339,8 @@ public class PlayActivity extends AppCompatActivity {
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String timeRemaining = PlayUtilities.createTimerString(minutes, seconds);
+                endWorkout();
                 reset();
-                endWorkout(timeRemaining);
             }
         });
 
@@ -561,9 +564,18 @@ public class PlayActivity extends AppCompatActivity {
         return progressStartingWidth * 3;
     }
 
-    private void endWorkout(String timeRemaining) {
-        MaxTemperatureDialog.newInstance(timeRemaining, WorkoutUtilities.WORKOUT_INTERVAL)
-                .show(getFragmentManager(), MaxTemperatureDialog.MAX_TEMP_DIALOG);
+    private void endWorkout() {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String date = WorkoutUtilities.getCurrentTimeStamp();
+        String totalTime = WorkoutUtilities.calculateElapsedTime(originalStartTime, minutes, seconds);
+        int calsBurned = WorkoutUtilities.calculateCaloriesBurned(minutes, seconds);
+        workout.put("uid", userId);
+        workout.put("dateCompleted", date);
+        workout.put("workoutTitle", WorkoutUtilities.WORKOUT_INTERVAL);
+        workout.put("totalTime", totalTime);
+        workout.put("caloriesBurned", calsBurned);
+        MaxTemperatureDialog.newInstance(workout).show(getFragmentManager(),
+                MaxTemperatureDialog.MAX_TEMP_DIALOG);
     }
 
     public void startTimer(boolean setCurrentInterval) {

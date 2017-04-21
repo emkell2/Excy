@@ -10,16 +10,22 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.excy.excy.R;
+import com.excy.excy.utilities.WorkoutUtilities;
+
+import java.util.HashMap;
 
 public class SurveyActivity extends AppCompatActivity {
     private int submitCount = 0;
     private int option = 3;         // Radio Button selected
     private int[] optionsSelected;  // Store all selected user feedback options
+    private HashMap<String, Object> workout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey);
+
+        workout = (HashMap<String, Object>) getIntent().getSerializableExtra(WorkoutUtilities.WORKOUT_DATA);
 
         optionsSelected = new int[3];
 

@@ -1,5 +1,8 @@
 package com.excy.excy.utilities;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by erin.kelley on 2/26/17.
  */
@@ -44,4 +47,24 @@ public class WorkoutUtilities {
     public static long coreFloorExplosionTimeMS = 600000;
     public static long armBlastTimeMS = 600000;
     public static long ultimateArmAndLegTimeMS = 420000;
+
+    public static String calculateElapsedTime(long originalStartTime, int min, int sec) {
+        int startTimeSecs = (int) (originalStartTime / 1000);
+
+        int secondsRemaining = (min * 60) + sec;
+        int elaspedSeconds = startTimeSecs - secondsRemaining;
+        int totalMin = elaspedSeconds / 60;
+        int totalSec = elaspedSeconds % 60;
+
+        return PlayUtilities.createTimerString(totalMin, totalSec);
+    }
+
+    public static int calculateCaloriesBurned(int min, int sec) {
+        int seconds = (min * 60) + sec;
+        return ((seconds / 60) * 12);
+    }
+
+    public static String getCurrentTimeStamp() {
+        return new SimpleDateFormat("EEEE hh:mm a").format(new Date());
+    }
 }

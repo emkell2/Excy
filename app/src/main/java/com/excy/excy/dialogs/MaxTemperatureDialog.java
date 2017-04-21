@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.excy.excy.R;
+import com.excy.excy.utilities.WorkoutUtilities;
+
+import java.util.HashMap;
 
 /**
  * Created by erin.kelley on 4/14/17.
@@ -19,13 +22,10 @@ import com.excy.excy.R;
 
 public class MaxTemperatureDialog extends DialogFragment {
     public static final String MAX_TEMP_DIALOG = "MAX TEMP DIALOG";
-    public static final String MAX_TEMP_DIALOG_TIME_REMAINING = "MAX TEMP DIALOG TIME REMAINING";
-    public static final String MAX_TEMP_DIALOG_WORKOUT_NAME= "MAX TEMP DIALOG WORKOUT NAME";
 
-    public static MaxTemperatureDialog newInstance(String timeRemaining, String workoutName) {
+    public static MaxTemperatureDialog newInstance(HashMap<String, Object> workout) {
         Bundle args = new Bundle();
-        args.putString(MAX_TEMP_DIALOG_TIME_REMAINING, timeRemaining);
-        args.putString(MAX_TEMP_DIALOG_WORKOUT_NAME, workoutName);
+        args.putSerializable(WorkoutUtilities.WORKOUT_DATA, workout);
 
         MaxTemperatureDialog fragment = new MaxTemperatureDialog();
         fragment.setArguments(args);
@@ -34,8 +34,7 @@ public class MaxTemperatureDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final String timeRemaining = getArguments().getString(MAX_TEMP_DIALOG_TIME_REMAINING);
-        final String workoutName = getArguments().getString(MAX_TEMP_DIALOG_WORKOUT_NAME);
+        final HashMap workout = (HashMap) getArguments().getSerializable(WorkoutUtilities.WORKOUT_DATA);
         final EditText input = new EditText(getActivity());
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -53,16 +52,17 @@ public class MaxTemperatureDialog extends DialogFragment {
                 .setPositiveButton(R.string.enter, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         String maxTemp = input.getText().toString();
+                        workout.put("maxTemp", maxTemp);
                         dismiss();
-                        TrackResultsDialog.newInstance(timeRemaining, MAX_TEMP_DIALOG_WORKOUT_NAME, maxTemp)
-                                .show(getFragmentManager(), TrackResultsDialog.TRACK_RESULTS_DIALOG);
+                        TrackResultsDialog.newInstance(workout).show(getFragmentManager(),
+                                TrackResultsDialog.TRACK_RESULTS_DIALOG);
                     }
                 })
                 .setNegativeButton(R.string.skip, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
-                        TrackResultsDialog.newInstance(timeRemaining, MAX_TEMP_DIALOG_WORKOUT_NAME, "")
-                                .show(getFragmentManager(), TrackResultsDialog.TRACK_RESULTS_DIALOG);
+                        TrackResultsDialog.newInstance(workout).show(getFragmentManager(),
+                                TrackResultsDialog.TRACK_RESULTS_DIALOG);
                     }
                 });
 

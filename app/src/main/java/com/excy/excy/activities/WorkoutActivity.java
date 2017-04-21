@@ -29,8 +29,8 @@ import com.excy.excy.dialogs.MaxTemperatureDialog;
 import com.excy.excy.dialogs.WarmUpDialog;
 import com.excy.excy.timers.WorkoutTimer;
 import com.excy.excy.utilities.AppUtilities;
-import com.excy.excy.utilities.PlayUtilities;
 import com.excy.excy.utilities.WorkoutUtilities;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.HashMap;
 
@@ -146,8 +146,7 @@ public class WorkoutActivity extends AppCompatActivity {
                     timerRef.cancelTimer();
                 }
 
-                String timeRemaining = PlayUtilities.createTimerString(minutes, seconds);
-                endWorkout(timeRemaining);
+                endWorkout();
             }
         });
 
@@ -322,9 +321,17 @@ public class WorkoutActivity extends AppCompatActivity {
         return originalStartTime;
     }
 
-    private void endWorkout(String timeRemaining) {
+    private void endWorkout() {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String date = WorkoutUtilities.getCurrentTimeStamp();
+        String totalTime = WorkoutUtilities.calculateElapsedTime(originalStartTime, minutes, seconds);
+        int calsBurned = WorkoutUtilities.calculateCaloriesBurned(minutes, seconds);
+        workout.put("uid", userId);
+        workout.put("dateCompleted", date);
         workout.put("workoutTitle", workoutName);
-        MaxTemperatureDialog.newInstance(timeRemaining, workoutName).show(getFragmentManager(),
+        workout.put("totalTime", totalTime);
+        workout.put("caloriesBurned", calsBurned);
+        MaxTemperatureDialog.newInstance(workout).show(getFragmentManager(),
                 MaxTemperatureDialog.MAX_TEMP_DIALOG);
     }
 
@@ -334,16 +341,5 @@ public class WorkoutActivity extends AppCompatActivity {
         // Start media audio
         audioIcon.setVisibility(View.VISIBLE);
         player.start();
-    }
-
-    private String calculateElapsedTime(long startTimeMillis, int min, int sec) {
-        int startTimeSecs = (int) (startTimeMillis / 1000);
-
-        int secondsRemaining = (min * 60) + sec;
-        int elaspedSeconds = startTimeSecs - secondsRemaining;
-        int totalMin = elaspedSeconds / 60;
-        int totalSec = elaspedSeconds % 60;
-
-        return PlayUtilities.createTimerString(totalMin, totalSec);
     }
 }
