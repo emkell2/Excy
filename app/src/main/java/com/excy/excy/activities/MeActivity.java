@@ -9,13 +9,22 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.excy.excy.R;
+import com.excy.excy.models.Workout;
 import com.excy.excy.utilities.AppUtilities;
+
+import java.util.ArrayList;
 
 public class MeActivity extends AppCompatActivity {
 
@@ -73,5 +82,69 @@ public class MeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.rvRecentWorkouts);
+    }
+}
+
+class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
+    ArrayList<Workout> workouts;
+
+    RVAdapter(ArrayList<Workout> workoutList){
+        this.workouts = workoutList;
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.workout_card, parent, false);
+
+        ViewHolder vh = new ViewHolder(v);
+        return vh;
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.workoutTitle.setText(workouts.get(position).getWorkoutTitle());
+        holder.workoutDate.setText(workouts.get(position).getDateCompleted());
+        holder.workoutTime.setText(workouts.get(position).getWorkoutTime());
+        holder.minTemp.setText("min: " + String.valueOf(workouts.get(position).getMinTemp()));
+        holder.maxTemp.setText("max: " + String.valueOf(workouts.get(position).getMaxTemp()));
+        holder.caloriesBurned.setText(workouts.get(position).getCaloriesBurned());
+        holder.enjoyment.setText(workouts.get(position).getEnjoyment());
+        holder.location.setText(workouts.get(position).getLocation());
+    }
+
+    @Override
+    public int getItemCount() {
+        return workouts.size();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        CardView cv;
+        TextView workoutTitle;
+        TextView workoutDate;
+        TextView workoutTime;
+        TextView minTemp;
+        TextView maxTemp;
+        TextView caloriesBurned;
+        TextView enjoyment;
+        TextView location;
+        ImageView faceImage;
+        ImageView locationImage;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+            cv = (CardView) itemView.findViewById(R.id.cvWorkout);
+            workoutTitle = (TextView) itemView.findViewById(R.id.tvCardWorkoutName);
+            workoutDate = (TextView) itemView.findViewById(R.id.tvCardWorkoutDate);
+            workoutTime = (TextView) itemView.findViewById(R.id.tvWorkoutTime);
+            minTemp = (TextView) itemView.findViewById(R.id.tvMin);
+            maxTemp = (TextView) itemView.findViewById(R.id.tvMax);
+            caloriesBurned = (TextView) itemView.findViewById(R.id.tvBurn);
+            enjoyment = (TextView) itemView.findViewById(R.id.tvFace);
+            location = (TextView) itemView.findViewById(R.id.tvWorkoutLocation);
+            faceImage = (ImageView) itemView.findViewById(R.id.ivFace);
+            locationImage = (ImageView) itemView.findViewById(R.id.ivLocation);
+        }
     }
 }
