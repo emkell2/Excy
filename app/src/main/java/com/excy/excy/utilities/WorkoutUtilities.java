@@ -48,20 +48,26 @@ public class WorkoutUtilities {
     public static long armBlastTimeMS = 600000;
     public static long ultimateArmAndLegTimeMS = 420000;
 
-    public static String calculateElapsedTime(long originalStartTime, int min, int sec) {
-        int startTimeSecs = (int) (originalStartTime / 1000);
-
-        int secondsRemaining = (min * 60) + sec;
-        int elaspedSeconds = startTimeSecs - secondsRemaining;
+    public static String getElapsedTime(long originalStartTime, int min, int sec) {
+        int elaspedSeconds = calculateElapsedTime(originalStartTime, min, sec);
         int totalMin = elaspedSeconds / 60;
         int totalSec = elaspedSeconds % 60;
 
         return PlayUtilities.createTimerString(totalMin, totalSec);
     }
 
-    public static int calculateCaloriesBurned(int min, int sec) {
-        int seconds = (min * 60) + sec;
-        return ((seconds / 60) * 12);
+    public static int calculateCaloriesBurned(long originalStartTime, int min, int sec) {
+        int totalSecs = calculateElapsedTime(originalStartTime, min, sec);
+        return ((totalSecs / 60) * 12);
+    }
+
+    public static int calculateElapsedTime(long originalStartTime, int min, int sec) {
+        int startTimeSecs = (int) (originalStartTime / 1000);
+
+        int secondsRemaining = (min * 60) + sec;
+        int elaspedSeconds = startTimeSecs - secondsRemaining;
+
+        return elaspedSeconds;
     }
 
     public static String getCurrentTimeStamp() {

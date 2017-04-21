@@ -567,8 +567,8 @@ public class PlayActivity extends AppCompatActivity {
     private void endWorkout() {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String date = WorkoutUtilities.getCurrentTimeStamp();
-        String totalTime = WorkoutUtilities.calculateElapsedTime(originalStartTime, minutes, seconds);
-        int calsBurned = WorkoutUtilities.calculateCaloriesBurned(minutes, seconds);
+        String totalTime = WorkoutUtilities.getElapsedTime(originalStartTime, minutes, seconds);
+        int calsBurned = WorkoutUtilities.calculateCaloriesBurned(originalStartTime, minutes, seconds);
         workout.put("uid", userId);
         workout.put("dateCompleted", date);
         workout.put("workoutTitle", WorkoutUtilities.WORKOUT_INTERVAL);

@@ -1,8 +1,10 @@
 package com.excy.excy.activities;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -10,15 +12,23 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.excy.excy.R;
+import com.excy.excy.utilities.AppUtilities;
 import com.excy.excy.utilities.WorkoutUtilities;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 
 public class SurveyActivity extends AppCompatActivity {
     private int submitCount = 0;
     private int option = 3;         // Radio Button selected
+    private String enjoyment;
+    private String location;
     private int[] optionsSelected;  // Store all selected user feedback options
     private HashMap<String, Object> workout;
+
+    public static final String SURVEY_TAG = "SURVEY TAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +50,11 @@ public class SurveyActivity extends AppCompatActivity {
                 switch (submitCount) {
                     case 0:
                         surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey1_awful));
+                        enjoyment = "awful";
                         break;
                     case 1:
                         surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey2_home_tv));
+                        location = "at home";
                         break;
                     case 2:
                         surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey3_unaccomplished));
@@ -59,9 +71,11 @@ public class SurveyActivity extends AppCompatActivity {
                 switch (submitCount) {
                     case 0:
                         surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey1_bad));
+                        enjoyment = "bad";
                         break;
                     case 1:
                         surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey2_home_no_tv));
+                        location = "at home";
                         break;
                     case 2:
                         surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey3_satisfied));
@@ -78,9 +92,11 @@ public class SurveyActivity extends AppCompatActivity {
                 switch (submitCount) {
                     case 0:
                         surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey1_good));
+                        enjoyment = "good";
                         break;
                     case 1:
                         surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey2_work));
+                        location = "at work";
                         break;
                     case 2:
                         surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey3_healthier));
@@ -97,9 +113,11 @@ public class SurveyActivity extends AppCompatActivity {
                 switch (submitCount) {
                     case 0:
                         surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey1_great));
+                        enjoyment = "great";
                         break;
                     case 1:
                         surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey2_traveling));
+                        location = "traveling";
                         break;
                     case 2:
                         surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey3_proud));
@@ -116,9 +134,11 @@ public class SurveyActivity extends AppCompatActivity {
                 switch (submitCount) {
                     case 0:
                         surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey1_amazing));
+                        enjoyment = "amazing";
                         break;
                     case 1:
                         surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey2_on_the_go));
+                        location = "on the go";
                         break;
                     case 2:
                         surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey3_energy));
@@ -159,6 +179,22 @@ public class SurveyActivity extends AppCompatActivity {
     }
 
     private void submitSurvey() {
-        // TODO: Implement this method
+        workout.put("location", location);
+        workout.put("enjoyment", enjoyment);
+
+        String userId = workout.get("uid").toString();
+        DatabaseReference mDataBaseReference = FirebaseDatabase.getInstance().getReference();
+        mDataBaseReference.child(AppUtilities.TABLE_NAME_WORKOUTS).child(userId).push()
+                .setValue(workout, new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                        if (databaseError != null) {
+                            Log.d(SURVEY_TAG, "Database Error message: " + databaseError.getMessage());
+                            Log.d(SURVEY_TAG, "Database Error details : " + databaseError.getDetails());
+                        }
+                        Intent intent = new Intent(getBaseContext(), WorkoutListActivity.class);
+                        startActivity(intent);
+                    }
+                });
     }
 }
