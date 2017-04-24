@@ -54,16 +54,18 @@ public class WarmUpDialog extends DialogFragment {
                 .setNegativeButton(R.string.skip, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
-                        startTimer(setInterval, intentString);
+                        startTimer(setInterval, intentString, map);
                     }
                 });
 
         return builder.create();
     }
 
-    private void startTimer(boolean setInterval, String intentString) {
+    private void startTimer(boolean setInterval, String intentString,
+                            HashMap<String, Object> workout) {
         Intent intent = new Intent(intentString);
         intent.putExtra(WorkoutUtilities.INTENT_SET_INTERVAL, setInterval);
+        intent.putExtra(WorkoutUtilities.WORKOUT_DATA, workout);
         LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
     }
 }

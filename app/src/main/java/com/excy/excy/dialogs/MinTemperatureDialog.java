@@ -83,7 +83,8 @@ public class MinTemperatureDialog extends DialogFragment {
         return dialog;
     }
 
-    private void startTimer(boolean setInterval, String intentString, HashMap<String, Object> workout) {
+    private void startTimer(boolean setInterval, String intentString,
+                            HashMap<String, Object> workout) {
         Intent intent = new Intent(intentString);
         intent.putExtra(WorkoutUtilities.INTENT_SET_INTERVAL, setInterval);
         intent.putExtra(WorkoutUtilities.WORKOUT_DATA, workout);

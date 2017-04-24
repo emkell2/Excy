@@ -222,7 +222,8 @@
             android:id="@+id/rvRecentWorkouts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvRecentHistory">
+            android:layout_below="@id/tvRecentHistory"
+            android:layout_marginBottom="32dp">
         </android.support.v7.widget.RecyclerView>
 
     </RelativeLayout>

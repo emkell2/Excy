@@ -64,6 +64,11 @@ public class WorkoutActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             workout = (HashMap<String, Object>) intent.getSerializableExtra(WorkoutUtilities.WORKOUT_DATA);
+
+            if (workout == null) {
+                workout = new HashMap<>();
+            }
+
             startTimer();
         }
     };
@@ -282,6 +287,7 @@ public class WorkoutActivity extends AppCompatActivity {
         currZoneCtr = 0;
         minutes = 0;
         seconds = 0;
+        originalStartTime = 0;
         progressStartingWidth = 0;
         player.stop();
 

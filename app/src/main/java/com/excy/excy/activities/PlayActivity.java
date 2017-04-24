@@ -71,6 +71,11 @@ public class PlayActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             boolean setInterval = intent.getBooleanExtra(WorkoutUtilities.INTENT_SET_INTERVAL, false);
             workout = (HashMap<String, Object>) intent.getSerializableExtra(WorkoutUtilities.WORKOUT_DATA);
+
+            if (workout == null) {
+                workout = new HashMap<>();
+            }
+
             startTimer(setInterval);
         }
     };

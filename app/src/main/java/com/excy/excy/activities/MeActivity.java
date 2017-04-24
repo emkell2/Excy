@@ -178,12 +178,14 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                             .getDrawable(R.drawable.ic_smilie_satisfied));
                     break;
                 case WorkoutUtilities.BAD:
+                case WorkoutUtilities.AWFUL:
                     holder.faceImage.setImageDrawable(getContext().getResources()
                             .getDrawable(R.drawable.ic_smilie_sad));
                     break;
                 default:
                     holder.faceImage.setImageDrawable(getContext().getResources()
                             .getDrawable(R.drawable.ic_smilie_happy));
+                    break;
             }
         }
 
@@ -196,6 +198,7 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 case WorkoutUtilities.AT_HOME:
                     holder.locationImage.setImageDrawable(getContext().getResources()
                             .getDrawable(R.drawable.account_home));
+                    break;
                 case WorkoutUtilities.AT_WORK:
                     holder.locationImage.setImageDrawable(getContext().getResources()
                             .getDrawable(R.drawable.account_work));
@@ -211,6 +214,7 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 default:
                     holder.locationImage.setImageDrawable(getContext().getResources()
                             .getDrawable(R.drawable.account_home));
+                    break;
             }
         }
     }

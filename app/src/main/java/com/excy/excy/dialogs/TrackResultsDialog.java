@@ -43,6 +43,7 @@ public class TrackResultsDialog extends DialogFragment {
 
                         Intent intent = new Intent(getActivity(), SurveyActivity.class);
                         intent.putExtra(WorkoutUtilities.WORKOUT_DATA, workout);
+                        getActivity().finish();
                         startActivity(intent);
                     }
                 })
