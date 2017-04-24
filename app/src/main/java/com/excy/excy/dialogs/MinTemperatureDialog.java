@@ -61,7 +61,7 @@ public class MinTemperatureDialog extends DialogFragment {
                 .setView(input)
                 .setPositiveButton(R.string.enter, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        String minTemp = input.getText().toString();
+                        int minTemp = Integer.valueOf(input.getText().toString());
                         workout.put("minTemp", minTemp);
                         dismiss();
                         startTimer(setInterval, intentString, workout);

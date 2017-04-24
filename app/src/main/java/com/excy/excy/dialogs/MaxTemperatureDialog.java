@@ -51,7 +51,7 @@ public class MaxTemperatureDialog extends DialogFragment {
                 .setView(input)
                 .setPositiveButton(R.string.enter, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        String maxTemp = input.getText().toString();
+                        int maxTemp = Integer.valueOf(input.getText().toString());
                         workout.put("maxTemp", maxTemp);
                         dismiss();
                         TrackResultsDialog.newInstance(workout).show(getFragmentManager(),

@@ -23,10 +23,19 @@ import android.widget.TextView;
 import com.excy.excy.R;
 import com.excy.excy.models.Workout;
 import com.excy.excy.utilities.AppUtilities;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
 public class MeActivity extends AppCompatActivity {
+    public static final String DB_TAG = "READING FROM DB";
+    private ArrayList<Workout> workoutList;
+    RVAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +71,40 @@ public class MeActivity extends AppCompatActivity {
             }
         });
 
+        if (workoutList == null) {
+            workoutList = new ArrayList<>();
+        }
+
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.rvRecentWorkouts);
+        mAdapter = new RVAdapter(workoutList);
+        mRecyclerView.setAdapter(mAdapter);
+
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance()
+                .getReference(AppUtilities.TABLE_NAME_WORKOUTS + "/" + userId);
+
+        mDatabaseRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                Workout workout = dataSnapshot.getValue(Workout.class);
+                workout.setId(dataSnapshot.getKey());
+                workoutList.add(workout);
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
         Button quickStatsBtn = (Button) findViewById(R.id.btnQuickStats);
 
         quickStatsBtn.getBackground().setColorFilter(getResources().getColor(R.color.colorAccent),
@@ -82,8 +125,6 @@ public class MeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.rvRecentWorkouts);
     }
 }
 
@@ -106,10 +147,10 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.workoutTitle.setText(workouts.get(position).getWorkoutTitle());
         holder.workoutDate.setText(workouts.get(position).getDateCompleted());
-        holder.workoutTime.setText(workouts.get(position).getWorkoutTime());
+        holder.totalTime.setText(workouts.get(position).getTotalTime());
         holder.minTemp.setText("min: " + String.valueOf(workouts.get(position).getMinTemp()));
         holder.maxTemp.setText("max: " + String.valueOf(workouts.get(position).getMaxTemp()));
-        holder.caloriesBurned.setText(workouts.get(position).getCaloriesBurned());
+        holder.caloriesBurned.setText(String.valueOf(workouts.get(position).getCaloriesBurned()));
         holder.enjoyment.setText(workouts.get(position).getEnjoyment());
         holder.location.setText(workouts.get(position).getLocation());
     }
@@ -123,7 +164,7 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         CardView cv;
         TextView workoutTitle;
         TextView workoutDate;
-        TextView workoutTime;
+        TextView totalTime;
         TextView minTemp;
         TextView maxTemp;
         TextView caloriesBurned;
@@ -137,7 +178,7 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
             cv = (CardView) itemView.findViewById(R.id.cvWorkout);
             workoutTitle = (TextView) itemView.findViewById(R.id.tvCardWorkoutName);
             workoutDate = (TextView) itemView.findViewById(R.id.tvCardWorkoutDate);
-            workoutTime = (TextView) itemView.findViewById(R.id.tvWorkoutTime);
+            totalTime = (TextView) itemView.findViewById(R.id.tvWorkoutTime);
             minTemp = (TextView) itemView.findViewById(R.id.tvMin);
             maxTemp = (TextView) itemView.findViewById(R.id.tvMax);
             caloriesBurned = (TextView) itemView.findViewById(R.id.tvBurn);

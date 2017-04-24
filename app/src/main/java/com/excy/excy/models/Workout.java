@@ -5,9 +5,9 @@ package com.excy.excy.models;
  */
 
 public class Workout {
+    String id;
     String workoutTitle;
     String dateCompleted;
-    String workoutTime;
     String totalTime;
     int minTemp;
     int maxTemp;
@@ -21,7 +21,7 @@ public class Workout {
 
     public Workout(String name, String date, String time, int minTemp, int maxTemp, int caloriesBurned,
                    String enjoyment, String location) {
-        this.workoutTime = name;
+        this.workoutTitle = name;
         this.dateCompleted = date;
         this.totalTime = time;
         this.minTemp = minTemp;
@@ -29,6 +29,14 @@ public class Workout {
         this.caloriesBurned = caloriesBurned;
         this.enjoyment = enjoyment;
         this.location = location;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getWorkoutTitle() {
@@ -45,14 +53,6 @@ public class Workout {
 
     public void setDateCompleted(String dateCompleted) {
         this.dateCompleted = dateCompleted;
-    }
-
-    public String getWorkoutTime() {
-        return workoutTime;
-    }
-
-    public void setWorkoutTime(String workoutTime) {
-        this.workoutTime = workoutTime;
     }
 
     public String getTotalTime() {
