@@ -40,6 +40,19 @@ public class WorkoutUtilities {
     public static final int[] PZ_ARM_BLAST_ARR = {3, 5, 3, 5, 3, 5, 3, 5, 3, 5};
     public static final int[] PZ_ULTIMATE_ARM_LEG_TONING_ARR = {3, 5, 3, 5, 3, 5, 3};
 
+    // Enjoyment Strings
+    public static final String AMAZING = "amazing";
+    public static final String GREAT = "great";
+    public static final String GOOD = "good";
+    public static final String BAD = "bad";
+    public static final String AWFUL = "awful";
+
+    // Location Strings
+    public static final String AT_HOME = "at home";
+    public static final String ON_THE_GO = "on the go";
+    public static final String TRAVELING = "traveling";
+    public static final String AT_WORK = "at work";
+
     // Workout times in milliseconds
     public static long armCandyTimeMS = 420000;
     public static long superCycleCardioTimeMS = 1380000;
