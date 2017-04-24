@@ -38,8 +38,9 @@ import java.util.ArrayList;
 import static com.excy.excy.activities.PlayActivity.getContext;
 
 public class MeActivity extends AppCompatActivity {
-    public static final String DB_TAG = "READING FROM DB";
     private ArrayList<Workout> workoutList;
+    private int workoutListSize = 5;
+    private int count = 0;
     RVAdapter mAdapter;
 
     @Override
@@ -77,13 +78,14 @@ public class MeActivity extends AppCompatActivity {
         });
 
         if (workoutList == null) {
-            workoutList = new ArrayList<>();
+            workoutList = new ArrayList<>(workoutListSize);
         }
 
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.rvRecentWorkouts);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new RVAdapter(workoutList);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setHasFixedSize(true);
 
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance()
@@ -95,6 +97,12 @@ public class MeActivity extends AppCompatActivity {
                 Workout workout = dataSnapshot.getValue(Workout.class);
                 workout.setId(dataSnapshot.getKey());
                 workoutList.add(workout);
+                count++;
+
+                if (count > workoutListSize) {
+                    workoutList.remove(0);
+                }
+
                 mAdapter.notifyDataSetChanged();
             }
 
