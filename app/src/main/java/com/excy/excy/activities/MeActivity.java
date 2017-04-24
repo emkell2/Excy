@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -31,6 +32,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+
+import static com.excy.excy.activities.PlayActivity.getContext;
 
 public class MeActivity extends AppCompatActivity {
     public static final String DB_TAG = "READING FROM DB";
@@ -76,6 +79,7 @@ public class MeActivity extends AppCompatActivity {
         }
 
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.rvRecentWorkouts);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new RVAdapter(workoutList);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -96,7 +100,11 @@ public class MeActivity extends AppCompatActivity {
             public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Workout workout = dataSnapshot.getValue(Workout.class);
+                workoutList.remove(workout);
+                mAdapter.notifyDataSetChanged();
+            }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}

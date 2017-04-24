@@ -54,12 +54,14 @@
                     <ImageView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
+                        android:layout_gravity="center"
                         android:src="@drawable/clock"/>
 
                     <TextView
                         android:id="@+id/tvWorkoutTime"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -71,18 +73,21 @@
                     <ImageView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
+                        android:layout_gravity="center"
                         android:src="@drawable/lightning_icon"/>
 
                     <TextView
                         android:id="@+id/tvMin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:text="@string/minimum"/>
 
                     <TextView
                         android:id="@+id/tvMax"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:text="@string/maximum"/>
                 </LinearLayout>
 
@@ -95,12 +100,14 @@
                     <ImageView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
+                        android:layout_gravity="center"
                         android:src="@drawable/flame"/>
 
                     <TextView
                         android:id="@+id/tvBurn"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -112,12 +119,14 @@
                     <ImageView
                         android:id="@+id/ivFace"
                         android:layout_width="48dp"
-                        android:layout_height="48dp" />
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"/>
 
                     <TextView
                         android:id="@+id/tvFace"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -129,12 +138,14 @@
                     <ImageView
                         android:id="@+id/ivLocation"
                         android:layout_width="48dp"
-                        android:layout_height="48dp" />
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"/>
 
                     <TextView
                         android:id="@+id/tvWorkoutLocation"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"/>
                 </LinearLayout>
 
             </LinearLayout>
