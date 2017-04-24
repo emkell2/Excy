@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -61,8 +62,11 @@ public class MinTemperatureDialog extends DialogFragment {
                 .setView(input)
                 .setPositiveButton(R.string.enter, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        int minTemp = Integer.valueOf(input.getText().toString());
-                        workout.put("minTemp", minTemp);
+                        String text = input.getText().toString();
+                        if (!TextUtils.isEmpty(text)) {
+                            int minTemp = Integer.valueOf(text);
+                            workout.put("minTemp", minTemp);
+                        }
                         dismiss();
                         startTimer(setInterval, intentString, workout);
                     }

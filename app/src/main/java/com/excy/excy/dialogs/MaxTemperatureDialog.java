@@ -6,6 +6,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -51,8 +52,11 @@ public class MaxTemperatureDialog extends DialogFragment {
                 .setView(input)
                 .setPositiveButton(R.string.enter, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        int maxTemp = Integer.valueOf(input.getText().toString());
-                        workout.put("maxTemp", maxTemp);
+                        String text = input.getText().toString();
+                        if (!TextUtils.isEmpty(text)) {
+                            int maxTemp = Integer.valueOf(text);
+                            workout.put("maxTemp", maxTemp);
+                        }
                         dismiss();
                         TrackResultsDialog.newInstance(workout).show(getFragmentManager(),
                                 TrackResultsDialog.TRACK_RESULTS_DIALOG);
