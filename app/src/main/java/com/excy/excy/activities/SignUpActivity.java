@@ -106,7 +106,8 @@ public class SignUpActivity extends AppCompatActivity {
                 str = emailET.getText().toString();
                 if (!TextUtils.isEmpty(str)) {
                     email = str;
-                    WorkoutUtilities.persistString(this, WorkoutUtilities.KEY_USER_EMAIL, email);
+                    WorkoutUtilities.persistString(SignUpActivity.this,
+                            WorkoutUtilities.KEY_USER_EMAIL, email);
                 }
 
                 str = passwordET.getText().toString();
