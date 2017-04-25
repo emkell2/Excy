@@ -11,14 +11,17 @@ import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.excy.excy.R;
-import com.excy.excy.models.WorkoutsAdapter;
 import com.excy.excy.models.Workout;
+import com.excy.excy.models.WorkoutsAdapter;
 import com.excy.excy.utilities.AppUtilities;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -26,12 +29,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 import static com.excy.excy.activities.PlayActivity.getContext;
 
 public class MeActivity extends AppCompatActivity {
+    public static final String MEMBER_SINCE = "memberSince";
+
     private ArrayList<Workout> workoutList;
     private int workoutListSize = 5;
     private int count = 0;
@@ -82,10 +88,11 @@ public class MeActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
 
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance()
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference mWorkoutsDatabaseRef = database
                 .getReference(AppUtilities.TABLE_NAME_WORKOUTS + "/" + userId);
 
-        mDatabaseRef.addChildEventListener(new ChildEventListener() {
+        mWorkoutsDatabaseRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 Workout workout = dataSnapshot.getValue(Workout.class);
@@ -115,6 +122,30 @@ public class MeActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {}
+        });
+
+        // Set friend since TextView
+        final TextView memberSinceTV = (TextView) findViewById(R.id.tvFriendSince);
+
+        DatabaseReference mUserDatabaseRef = database
+                .getReference(AppUtilities.TABLE_NAME_USERS + "/" + userId);
+
+        mUserDatabaseRef.child(MEMBER_SINCE).
+                addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String friendSince = dataSnapshot.getValue().toString();
+                if (!TextUtils.isEmpty(friendSince)) {
+                    memberSinceTV.setText(memberSinceTV.getText() + " " + friendSince);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                if (databaseError != null) {
+                    Log.d("DB Error", "Error retrieving memberSince field: " + databaseError.getMessage());
+                }
+            }
         });
 
         Button quickStatsBtn = (Button) findViewById(R.id.btnQuickStats);
