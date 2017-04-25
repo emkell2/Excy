@@ -329,7 +329,7 @@ public class WorkoutActivity extends AppCompatActivity {
 
     private void endWorkout() {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String date = WorkoutUtilities.getCurrentTimeStamp();
+        String date = WorkoutUtilities.getWorkoutTimestamp();
         String totalTime = WorkoutUtilities.getElapsedTime(originalStartTime, minutes, seconds);
         int calsBurned = WorkoutUtilities.calculateCaloriesBurned(originalStartTime, minutes, seconds);
         workout.put("uid", userId);

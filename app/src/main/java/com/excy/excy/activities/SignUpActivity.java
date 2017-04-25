@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.excy.excy.R;
 import com.excy.excy.models.User;
 import com.excy.excy.utilities.AppUtilities;
+import com.excy.excy.utilities.WorkoutUtilities;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -119,6 +120,7 @@ public class SignUpActivity extends AppCompatActivity {
                 map.put("weight", weight);
                 map.put("height", height);
                 map.put("age", age);
+                map.put("memberSince", WorkoutUtilities.getMemberSinceTimestamp());
                 map.put("username", username);
                 map.put("email", email);
 

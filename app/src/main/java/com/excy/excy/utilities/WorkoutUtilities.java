@@ -83,7 +83,11 @@ public class WorkoutUtilities {
         return elaspedSeconds;
     }
 
-    public static String getCurrentTimeStamp() {
+    public static String getWorkoutTimestamp() {
         return new SimpleDateFormat("EEEE hh:mm a").format(new Date());
+    }
+
+    public static String getMemberSinceTimestamp() {
+        return new SimpleDateFormat("MMM d yyyy").format(new Date());
     }
 }
