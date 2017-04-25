@@ -23,6 +23,7 @@ import com.excy.excy.R;
 import com.excy.excy.models.Workout;
 import com.excy.excy.models.WorkoutsAdapter;
 import com.excy.excy.utilities.AppUtilities;
+import com.excy.excy.utilities.WorkoutUtilities;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -159,6 +160,25 @@ public class MeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Set all TextView text from persisted data
+        TextView healthyDescTV = (TextView) findViewById(R.id.tvHealthyDescription);
+        String healthDesc = WorkoutUtilities.getPersistedString(this, WorkoutUtilities.KEY_HEALTHY_DESC);
+        if (!TextUtils.isEmpty(healthDesc)) {
+            healthyDescTV.setText(healthDesc);
+        }
+
+        TextView calsPerWeekTV = (TextView) findViewById(R.id.tvNumCalsPerWeek);
+        String numCalsPerWeek = WorkoutUtilities.getPersistedString(this, WorkoutUtilities.KEY_CALS_PER_WEEK);
+        if (!TextUtils.isEmpty(numCalsPerWeek)) {
+            calsPerWeekTV.setText(numCalsPerWeek);
+        }
+
+        TextView workoutsPerWeekTV = (TextView) findViewById(R.id.tvNumWorkoutsPerWeek);
+        String numWorkoutsPerWeek = WorkoutUtilities.getPersistedString(this, WorkoutUtilities.KEY_WORKOUTS_PER_WEEK);
+        if (!TextUtils.isEmpty(numWorkoutsPerWeek)) {
+            workoutsPerWeekTV.setText(numWorkoutsPerWeek);
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabEditProfile);
 
