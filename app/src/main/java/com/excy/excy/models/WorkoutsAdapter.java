@@ -19,23 +19,23 @@ import static com.excy.excy.activities.PlayActivity.getContext;
 /**
  * Created by erin.kelley on 4/24/17.
  */
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
+public class WorkoutsAdapter extends RecyclerView.Adapter<WorkoutsAdapter.ViewHolder> {
     ArrayList<Workout> workouts;
 
-    public RVAdapter(ArrayList<Workout> workoutList){
+    public WorkoutsAdapter(ArrayList<Workout> workoutList){
         this.workouts = workoutList;
     }
 
     @Override
-    public RVAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public WorkoutsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.workout_card, parent, false);
 
-        RVAdapter.ViewHolder vh = new RVAdapter.ViewHolder(v);
+        WorkoutsAdapter.ViewHolder vh = new WorkoutsAdapter.ViewHolder(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(RVAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(WorkoutsAdapter.ViewHolder holder, int position) {
         holder.workoutTitle.setText(workouts.get(position).getWorkoutTitle());
         holder.workoutDate.setText(workouts.get(position).getDateCompleted());
         holder.totalTime.setText(workouts.get(position).getTotalTime());

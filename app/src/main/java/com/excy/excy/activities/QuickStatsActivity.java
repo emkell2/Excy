@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.excy.excy.R;
-import com.excy.excy.models.RVAdapter;
+import com.excy.excy.models.WorkoutsAdapter;
 import com.excy.excy.models.Workout;
 import com.excy.excy.utilities.AppUtilities;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,7 +24,7 @@ public class QuickStatsActivity extends AppCompatActivity {
     private ArrayList<Workout> workoutList;
     private int workoutListSize = 20;
     private int count = 0;
-    RVAdapter mAdapter;
+    WorkoutsAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class QuickStatsActivity extends AppCompatActivity {
 
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.rvRecentWorkouts);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new RVAdapter(workoutList);
+        mAdapter = new WorkoutsAdapter(workoutList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
 
