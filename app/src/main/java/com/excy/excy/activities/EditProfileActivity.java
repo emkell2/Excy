@@ -1,6 +1,8 @@
 package com.excy.excy.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -72,6 +74,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 // Sign user out
                 FirebaseAuth.getInstance().signOut();
 
+                deleteSharedPreferences();
+
                 // Kill Task stack and go back to Login Activity
                 Intent intent = new Intent(getBaseContext(), LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -125,5 +129,17 @@ public class EditProfileActivity extends AppCompatActivity {
         String numWorkouts = numWorkoutsET.getText().toString();
 
         // Report back to last activity (onActivityResult?) or database
+    }
+
+    private void deleteSharedPreferences() {
+        SharedPreferences sharePrefs = getPreferences(Context.MODE_PRIVATE);
+        sharePrefs.edit()
+                .remove(WorkoutUtilities.KEY_USER_EMAIL)
+                .remove(WorkoutUtilities.KEY_MEMBER_SINCE)
+                .remove(WorkoutUtilities.KEY_CALS_PER_WEEK)
+                .remove(WorkoutUtilities.KEY_WORKOUTS_PER_WEEK)
+                .remove(WorkoutUtilities.KEY_HEALTHY_DESC)
+                .remove(WorkoutUtilities.KEY_MY_INSPIRATION)
+                .apply();
     }
 }
