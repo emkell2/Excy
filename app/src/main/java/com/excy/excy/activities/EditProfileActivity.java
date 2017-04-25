@@ -50,6 +50,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         // Set Healthy Description TextView
         healthDescET = (EditText) findViewById(R.id.etHealthyDescription);
+        healthDescET.requestFocus();
         String savedDesc = WorkoutUtilities.getPersistedString(this, WorkoutUtilities.KEY_HEALTHY_DESC);
         if (!TextUtils.isEmpty(savedDesc)) {
             healthDescET.setText(savedDesc);
@@ -57,12 +58,16 @@ public class EditProfileActivity extends AppCompatActivity {
 
         // Set Goals TextViews
         numCalsET = (EditText) findViewById(R.id.etNumCals);
-        int calsPerWeek = WorkoutUtilities.getPersistedInt(this, WorkoutUtilities.KEY_CALS_PER_WEEK);
-        numCalsET.setText(calsPerWeek);
+        String calsPerWeek = WorkoutUtilities.getPersistedString(this, WorkoutUtilities.KEY_CALS_PER_WEEK);
+        if (!TextUtils.isEmpty(calsPerWeek)) {
+            numCalsET.setText(calsPerWeek);
+        }
 
         numWorkoutsET = (EditText) findViewById(R.id.etNumWorkouts);
-        int workoutsPerWeek = WorkoutUtilities.getPersistedInt(this, WorkoutUtilities.KEY_WORKOUTS_PER_WEEK);
-        numWorkoutsET.setText(workoutsPerWeek);
+        String workoutsPerWeek = WorkoutUtilities.getPersistedString(this, WorkoutUtilities.KEY_WORKOUTS_PER_WEEK);
+        if (!TextUtils.isEmpty(workoutsPerWeek)) {
+            numWorkoutsET.setText(workoutsPerWeek);
+        }
 
         Button logOutBtn = (Button) findViewById(R.id.btnLogOut);
 
@@ -74,6 +79,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 // Sign user out
                 FirebaseAuth.getInstance().signOut();
 
+                // Delete any persisted data
                 deleteSharedPreferences();
 
                 // Kill Task stack and go back to Login Activity
@@ -125,8 +131,19 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void saveChanges() {
         String healthyDesc = healthDescET.getText().toString();
+        if (!TextUtils.isEmpty(healthyDesc)) {
+            WorkoutUtilities.persistString(this, WorkoutUtilities.KEY_HEALTHY_DESC, healthyDesc);
+        }
+
         String numCals = numCalsET.getText().toString();
+        if (!TextUtils.isEmpty(numCals)) {
+            WorkoutUtilities.persistString(this, WorkoutUtilities.KEY_CALS_PER_WEEK, numCals);
+        }
+
         String numWorkouts = numWorkoutsET.getText().toString();
+        if (!TextUtils.isEmpty(numWorkouts)) {
+            WorkoutUtilities.persistString(this, WorkoutUtilities.KEY_WORKOUTS_PER_WEEK, numWorkouts);
+        }
 
         // Report back to last activity (onActivityResult?) or database
     }

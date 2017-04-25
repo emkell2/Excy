@@ -123,7 +123,7 @@ public class WorkoutUtilities {
 
     public static int getPersistedInt(Activity activity, String key) {
         SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
-        return sharedPref.getInt(key, 0);
+        return sharedPref.getInt(key, -1);
     }
 
     public static void persistBoolean(Activity activity, String key, boolean data) {
