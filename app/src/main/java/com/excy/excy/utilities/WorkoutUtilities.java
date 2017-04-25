@@ -1,5 +1,9 @@
 package com.excy.excy.utilities;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -16,12 +20,19 @@ public class WorkoutUtilities {
     public static final String WORKOUT_DATA_AUDIO_RES_ID = "WORKOUT_DATA_AUDIO_RES_ID";
 
     // Intent Keys
-    public static final String INTENT_TIME_REMAINING = "INTENT TIME REMAINING";
     public static final String INTENT_SET_INTERVAL = "INTENT SET INTERVAL";
 
     // Intent Filters
     public static final String INTENT_START_PLAY_TIMER = "INTENT START PLAY TIMER";
     public static final String INTENT_START_WORKOUT_TIMER = "INTENT START WORKOUT TIMER";
+
+    // Persist Keys
+    public static final String KEY_MEMBER_SINCE = "Key Member Since";
+    public static final String KEY_USER_EMAIL = "Key User Email";
+    public static final String KEY_HEALTHY_DESC = "Key Healthy Description";
+    public static final String KEY_CALS_PER_WEEK = "Key Calories a week";
+    public static final String KEY_WORKOUTS_PER_WEEK = "Key Workouts a week";
+    public static final String KEY_MY_INSPIRATION = "Key My Inspiration";
 
     // Workout Names
     public static final String WORKOUT_ARM_CANDY = "Arm Candy";
@@ -89,5 +100,41 @@ public class WorkoutUtilities {
 
     public static String getMemberSinceTimestamp() {
         return new SimpleDateFormat("MMM d yyyy").format(new Date());
+    }
+
+    public static void persistString(Activity activity, String key, String data) {
+        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(key, data);
+        editor.commit();
+    }
+
+    public static String getPersistedString(Activity activity, String key) {
+        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        return sharedPref.getString(key, "");
+    }
+
+    public static void persistInteger(Activity activity, String key, int data) {
+        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(key, data);
+        editor.commit();
+    }
+
+    public static int getPersistedInt(Activity activity, String key) {
+        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        return sharedPref.getInt(key, 0);
+    }
+
+    public static void persistBoolean(Activity activity, String key, boolean data) {
+        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(key, data);
+        editor.commit();
+    }
+
+    public static boolean getPersistedBoolean(Activity activity, String key) {
+        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        return sharedPref.getBoolean(key, false);
     }
 }

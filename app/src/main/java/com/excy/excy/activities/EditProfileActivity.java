@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 
 import com.excy.excy.R;
 import com.excy.excy.utilities.AppUtilities;
+import com.excy.excy.utilities.WorkoutUtilities;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class EditProfileActivity extends AppCompatActivity {
@@ -29,10 +31,36 @@ public class EditProfileActivity extends AppCompatActivity {
 
         AppUtilities.setBottomNavBarIconActive(this, R.id.action_me);
 
+        // Set Email TextView
         emailET = (EditText) findViewById(R.id.etEmail);
+        String userEmail = "";
+        String savedEmail = WorkoutUtilities.getPersistedString(this, WorkoutUtilities.KEY_USER_EMAIL);
+        if (!TextUtils.isEmpty(savedEmail)) {
+            userEmail = savedEmail;
+        } else {
+            userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+            WorkoutUtilities.persistString(this, WorkoutUtilities.KEY_USER_EMAIL, userEmail);
+        }
+
+        if (!TextUtils.isEmpty(userEmail)) {
+            emailET.setText(userEmail);
+        }
+
+        // Set Healthy Description TextView
         healthDescET = (EditText) findViewById(R.id.etHealthyDescription);
+        String savedDesc = WorkoutUtilities.getPersistedString(this, WorkoutUtilities.KEY_HEALTHY_DESC);
+        if (!TextUtils.isEmpty(savedDesc)) {
+            healthDescET.setText(savedDesc);
+        }
+
+        // Set Goals TextViews
         numCalsET = (EditText) findViewById(R.id.etNumCals);
+        int calsPerWeek = WorkoutUtilities.getPersistedInt(this, WorkoutUtilities.KEY_CALS_PER_WEEK);
+        numCalsET.setText(calsPerWeek);
+
         numWorkoutsET = (EditText) findViewById(R.id.etNumWorkouts);
+        int workoutsPerWeek = WorkoutUtilities.getPersistedInt(this, WorkoutUtilities.KEY_WORKOUTS_PER_WEEK);
+        numWorkoutsET.setText(workoutsPerWeek);
 
         Button logOutBtn = (Button) findViewById(R.id.btnLogOut);
 
@@ -92,7 +120,6 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void saveChanges() {
-        String email = emailET.getText().toString();
         String healthyDesc = healthDescET.getText().toString();
         String numCals = numCalsET.getText().toString();
         String numWorkouts = numWorkoutsET.getText().toString();
