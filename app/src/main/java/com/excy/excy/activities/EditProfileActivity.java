@@ -145,7 +145,7 @@ public class EditProfileActivity extends AppCompatActivity {
             WorkoutUtilities.persistString(this, WorkoutUtilities.KEY_WORKOUTS_PER_WEEK, numWorkouts);
         }
 
-        // Report back to last activity (onActivityResult?) or database
+        finish();
     }
 
     private void deleteSharedPreferences() {

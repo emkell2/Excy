@@ -83,6 +83,8 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="8dp"
                 android:text="@string/healthy_is"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 android:textColor="@android:color/darker_gray"/>
 
             <TextView
@@ -90,6 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="8dp"
+                android:textSize="18sp"
                 android:textColor="@android:color/darker_gray"/>
 
         </LinearLayout>
@@ -115,6 +118,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/my_goals"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
                     android:textColor="@android:color/darker_gray"
                     android:layout_alignParentTop="true"/>
 
@@ -132,12 +137,16 @@
                     android:id="@+id/tvNumCalsPerWeek"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
                     android:textColor="@android:color/darker_gray"/>
 
                 <TextView
                     android:id="@+id/tvNumWorkoutsPerWeek"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
                     android:textColor="@android:color/darker_gray"/>
             </LinearLayout>
 
@@ -155,6 +164,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/calories_a_week"
+                    android:textSize="18sp"
                     android:textColor="@android:color/darker_gray"/>
 
                 <TextView
@@ -162,6 +172,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/workouts_a_week"
+                    android:textSize="18sp"
                     android:textColor="@android:color/darker_gray" />
             </LinearLayout>
         </LinearLayout>
@@ -182,6 +193,8 @@
                 android:layout_marginBottom="4dp"
                 android:paddingLeft="8dp"
                 android:text="@string/my_inspiration"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 android:textColor="@android:color/darker_gray"/>
 
             <LinearLayout

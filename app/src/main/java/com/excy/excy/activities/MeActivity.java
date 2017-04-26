@@ -44,6 +44,10 @@ public class MeActivity extends AppCompatActivity {
     private int count = 0;
     WorkoutsAdapter mAdapter;
 
+    TextView healthyDescTV;
+    TextView calsPerWeekTV;
+    TextView workoutsPerWeekTV;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -161,24 +165,9 @@ public class MeActivity extends AppCompatActivity {
             }
         });
 
-        // Set all TextView text from persisted data
-        TextView healthyDescTV = (TextView) findViewById(R.id.tvHealthyDescription);
-        String healthDesc = WorkoutUtilities.getPersistedString(this, WorkoutUtilities.KEY_HEALTHY_DESC);
-        if (!TextUtils.isEmpty(healthDesc)) {
-            healthyDescTV.setText(healthDesc);
-        }
-
-        TextView calsPerWeekTV = (TextView) findViewById(R.id.tvNumCalsPerWeek);
-        String numCalsPerWeek = WorkoutUtilities.getPersistedString(this, WorkoutUtilities.KEY_CALS_PER_WEEK);
-        if (!TextUtils.isEmpty(numCalsPerWeek)) {
-            calsPerWeekTV.setText(numCalsPerWeek);
-        }
-
-        TextView workoutsPerWeekTV = (TextView) findViewById(R.id.tvNumWorkoutsPerWeek);
-        String numWorkoutsPerWeek = WorkoutUtilities.getPersistedString(this, WorkoutUtilities.KEY_WORKOUTS_PER_WEEK);
-        if (!TextUtils.isEmpty(numWorkoutsPerWeek)) {
-            workoutsPerWeekTV.setText(numWorkoutsPerWeek);
-        }
+        healthyDescTV = (TextView) findViewById(R.id.tvHealthyDescription);
+        calsPerWeekTV = (TextView) findViewById(R.id.tvNumCalsPerWeek);
+        workoutsPerWeekTV = (TextView) findViewById(R.id.tvNumWorkoutsPerWeek);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabEditProfile);
 
@@ -195,6 +184,28 @@ public class MeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Set all TextView text from persisted data
+
+        String healthDesc = WorkoutUtilities.getPersistedString(this, WorkoutUtilities.KEY_HEALTHY_DESC);
+        if (!TextUtils.isEmpty(healthDesc)) {
+            healthyDescTV.setText(healthDesc);
+        }
+
+        String numCalsPerWeek = WorkoutUtilities.getPersistedString(this, WorkoutUtilities.KEY_CALS_PER_WEEK);
+        if (!TextUtils.isEmpty(numCalsPerWeek)) {
+            calsPerWeekTV.setText(numCalsPerWeek);
+        }
+
+        String numWorkoutsPerWeek = WorkoutUtilities.getPersistedString(this, WorkoutUtilities.KEY_WORKOUTS_PER_WEEK);
+        if (!TextUtils.isEmpty(numWorkoutsPerWeek)) {
+            workoutsPerWeekTV.setText(numWorkoutsPerWeek);
+        }
     }
 }
 

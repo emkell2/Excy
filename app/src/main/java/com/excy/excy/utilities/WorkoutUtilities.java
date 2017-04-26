@@ -13,6 +13,7 @@ import java.util.Date;
 
 public class WorkoutUtilities {
     public static final String WORKOUT_DATA = "WORKOUT DATA";
+    public static final String SHARED_PREFS = "Shared Prefs";
 
     // Workout Keys
     public static final String WORKOUT_DATA_RES_ID = "WORKOUT_DATA_RES_ID";
@@ -103,38 +104,38 @@ public class WorkoutUtilities {
     }
 
     public static void persistString(Activity activity, String key, String data) {
-        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = activity.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(key, data);
         editor.commit();
     }
 
     public static String getPersistedString(Activity activity, String key) {
-        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = activity.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         return sharedPref.getString(key, "");
     }
 
     public static void persistInteger(Activity activity, String key, int data) {
-        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = activity.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(key, data);
         editor.commit();
     }
 
     public static int getPersistedInt(Activity activity, String key) {
-        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = activity.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         return sharedPref.getInt(key, -1);
     }
 
     public static void persistBoolean(Activity activity, String key, boolean data) {
-        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = activity.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean(key, data);
         editor.commit();
     }
 
     public static boolean getPersistedBoolean(Activity activity, String key) {
-        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = activity.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         return sharedPref.getBoolean(key, false);
     }
 }
