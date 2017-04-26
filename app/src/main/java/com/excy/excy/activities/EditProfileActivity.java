@@ -1,10 +1,14 @@
 package com.excy.excy.activities;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.excy.excy.R;
 import com.excy.excy.utilities.AppUtilities;
@@ -25,6 +30,14 @@ public class EditProfileActivity extends AppCompatActivity {
     EditText healthDescET;
     EditText numCalsET;
     EditText numWorkoutsET;
+    ImageButton imageLeft;
+    ImageButton imageCenter;
+    ImageButton imageRight;
+
+    private static final int REQUEST_CAMERA = 1;
+    private static final int SELECT_FILE = 2;
+
+    private int selectedImageButton = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +81,35 @@ public class EditProfileActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(workoutsPerWeek)) {
             numWorkoutsET.setText(workoutsPerWeek);
         }
+
+        // Set Images for "My Inspiration" ImageButtons
+        imageLeft = (ImageButton) findViewById(R.id.ibImageLeft);
+        imageLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedImageButton = 1;
+                showFileChooser();
+            }
+        });
+
+        imageCenter = (ImageButton) findViewById(R.id.ibImageCenter);
+        imageCenter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedImageButton = 2;
+                showFileChooser();
+
+            }
+        });
+
+        imageRight = (ImageButton) findViewById(R.id.ibImageRight);
+        imageRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedImageButton = 3;
+                showFileChooser();
+            }
+        });
 
         Button logOutBtn = (Button) findViewById(R.id.btnLogOut);
 
@@ -158,5 +200,58 @@ public class EditProfileActivity extends AppCompatActivity {
                 .remove(WorkoutUtilities.KEY_HEALTHY_DESC)
                 .remove(WorkoutUtilities.KEY_MY_INSPIRATION)
                 .apply();
+    }
+
+    private void showFileChooser() {
+        final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Add Photo!");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+
+                if (items[item].equals("Take Photo")) {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, REQUEST_CAMERA);
+                } else if (items[item].equals("Choose from Library")) {
+                    Intent intent = new Intent(
+                            Intent.ACTION_PICK,
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, SELECT_FILE);
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if ((requestCode == REQUEST_CAMERA) || (requestCode == SELECT_FILE)) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                Uri selectedImage = data.getData();
+
+                ImageButton imageButton;
+                switch (selectedImageButton) {
+                    case 1:
+                        imageButton = imageLeft;
+                        break;
+                    case 2:
+                        imageButton = imageCenter;
+                        break;
+                    case 3:
+                        imageButton = imageRight;
+                        break;
+                    default:
+                        imageButton = imageLeft;
+                        break;
+                }
+                
+                imageButton.setImageURI(selectedImage);
+            }
+        }
     }
 }
