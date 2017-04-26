@@ -30,6 +30,7 @@ public class EditProfileActivity extends AppCompatActivity {
     EditText healthDescET;
     EditText numCalsET;
     EditText numWorkoutsET;
+    ImageButton userProfile;
     ImageButton imageLeft;
     ImageButton imageCenter;
     ImageButton imageRight;
@@ -45,6 +46,16 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
 
         AppUtilities.setBottomNavBarIconActive(this, R.id.action_me);
+
+        // Set user profile image
+        userProfile = (ImageButton) findViewById(R.id.ibChangeProfileImage);
+        userProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedImageButton = 4;
+                showFileChooser();
+            }
+        });
 
         // Set Email TextView
         emailET = (EditText) findViewById(R.id.etEmail);
@@ -245,11 +256,14 @@ public class EditProfileActivity extends AppCompatActivity {
                     case 3:
                         imageButton = imageRight;
                         break;
+                    case 4:
+                        imageButton = userProfile;
+                        break;
                     default:
-                        imageButton = imageLeft;
+                        imageButton = userProfile;
                         break;
                 }
-                
+
                 imageButton.setImageURI(selectedImage);
             }
         }
