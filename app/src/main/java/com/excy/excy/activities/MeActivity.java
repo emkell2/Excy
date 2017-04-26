@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import static com.excy.excy.activities.PlayActivity.getContext;
 
 public class MeActivity extends AppCompatActivity {
+    public static final String USERNAME = "username";
     public static final String MEMBER_SINCE = "memberSince";
 
     private ArrayList<Workout> workoutList;
@@ -129,11 +130,30 @@ public class MeActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {}
         });
 
-        // Set friend since TextView
+        // Set username and friend since TextView
+        final TextView userNameTV = (TextView) findViewById(R.id.tvUserName);
         final TextView memberSinceTV = (TextView) findViewById(R.id.tvFriendSince);
 
         DatabaseReference mUserDatabaseRef = database
                 .getReference(AppUtilities.TABLE_NAME_USERS + "/" + userId);
+
+        mUserDatabaseRef.child(USERNAME).
+                addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String userName = dataSnapshot.getValue().toString();
+                        if (!TextUtils.isEmpty(userName)) {
+                            userNameTV.setText(userName);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        if (databaseError != null) {
+                            Log.d("DB Error", "Error retrieving username field: " + databaseError.getMessage());
+                        }
+                    }
+                });
 
         mUserDatabaseRef.child(MEMBER_SINCE).
                 addListenerForSingleValueEvent(new ValueEventListener() {
