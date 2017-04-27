@@ -5,12 +5,20 @@ package com.excy.excy.models;
  */
 
 public class User {
+    private String username;
+    private String email;
     private String gender;
     private int weight;
     private int height;
     private int age;
-    private String username;
-    private String email;
+    private String profileImageUrl;
+    private String inspiringImage1;
+    private String inspiringImage2;
+    private String inspiringImage3;
+    private String manifesto;
+    private String calorieGoal;
+    private String workoutGoal;
+    private String memberSince;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -71,5 +79,69 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
+
+    public String getInspiringImage1() {
+        return inspiringImage1;
+    }
+
+    public void setInspiringImage1(String inspiringImage1) {
+        this.inspiringImage1 = inspiringImage1;
+    }
+
+    public String getInspiringImage2() {
+        return inspiringImage2;
+    }
+
+    public void setInspiringImage2(String inspiringImage2) {
+        this.inspiringImage2 = inspiringImage2;
+    }
+
+    public String getInspiringImage3() {
+        return inspiringImage3;
+    }
+
+    public void setInspiringImage3(String inspiringImage3) {
+        this.inspiringImage3 = inspiringImage3;
+    }
+
+    public String getManifesto() {
+        return manifesto;
+    }
+
+    public void setManifesto(String manifesto) {
+        this.manifesto = manifesto;
+    }
+
+    public String getCalorieGoal() {
+        return calorieGoal;
+    }
+
+    public void setCalorieGoal(String calorieGoal) {
+        this.calorieGoal = calorieGoal;
+    }
+
+    public String getWorkoutGoal() {
+        return workoutGoal;
+    }
+
+    public void setWorkoutGoal(String workoutGoal) {
+        this.workoutGoal = workoutGoal;
+    }
+
+    public String getMemberSince() {
+        return memberSince;
+    }
+
+    public void setMemberSince(String memberSince) {
+        this.memberSince = memberSince;
     }
 }

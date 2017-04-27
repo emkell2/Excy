@@ -24,6 +24,8 @@ import com.excy.excy.utilities.AppUtilities;
 import com.excy.excy.utilities.WorkoutUtilities;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.HashMap;
+
 public class EditProfileActivity extends AppCompatActivity {
 
     EditText emailET;
@@ -183,19 +185,23 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void saveChanges() {
+        HashMap<String, Object> map = new HashMap<>();
         String healthyDesc = healthDescET.getText().toString();
         if (!TextUtils.isEmpty(healthyDesc)) {
-            WorkoutUtilities.persistString(this, WorkoutUtilities.KEY_HEALTHY_DESC, healthyDesc);
+            map.put("manifesto", healthyDesc);
+            //WorkoutUtilities.persistString(this, WorkoutUtilities.KEY_HEALTHY_DESC, healthyDesc);
         }
 
         String numCals = numCalsET.getText().toString();
         if (!TextUtils.isEmpty(numCals)) {
-            WorkoutUtilities.persistString(this, WorkoutUtilities.KEY_CALS_PER_WEEK, numCals);
+            map.put("calorieGoal", numCals);
+            //WorkoutUtilities.persistString(this, WorkoutUtilities.KEY_CALS_PER_WEEK, numCals);
         }
 
         String numWorkouts = numWorkoutsET.getText().toString();
         if (!TextUtils.isEmpty(numWorkouts)) {
-            WorkoutUtilities.persistString(this, WorkoutUtilities.KEY_WORKOUTS_PER_WEEK, numWorkouts);
+            map.put("workoutGoal", numWorkouts);
+            //WorkoutUtilities.persistString(this, WorkoutUtilities.KEY_WORKOUTS_PER_WEEK, numWorkouts);
         }
 
         finish();
@@ -205,11 +211,14 @@ public class EditProfileActivity extends AppCompatActivity {
         SharedPreferences sharePrefs = getPreferences(Context.MODE_PRIVATE);
         sharePrefs.edit()
                 .remove(WorkoutUtilities.KEY_USER_EMAIL)
-                .remove(WorkoutUtilities.KEY_MEMBER_SINCE)
-                .remove(WorkoutUtilities.KEY_CALS_PER_WEEK)
-                .remove(WorkoutUtilities.KEY_WORKOUTS_PER_WEEK)
-                .remove(WorkoutUtilities.KEY_HEALTHY_DESC)
-                .remove(WorkoutUtilities.KEY_MY_INSPIRATION)
+//                .remove(WorkoutUtilities.KEY_MEMBER_SINCE)
+//                .remove(WorkoutUtilities.KEY_CALS_PER_WEEK)
+//                .remove(WorkoutUtilities.KEY_WORKOUTS_PER_WEEK)
+//                .remove(WorkoutUtilities.KEY_HEALTHY_DESC)
+//                .remove(WorkoutUtilities.KEY_PROFILE_IMAGE)
+//                .remove(WorkoutUtilities.KEY_INSPIRATION_IMAGE_LEFT)
+//                .remove(WorkoutUtilities.KEY_INSPIRATION_IMAGE_CENTER)
+//                .remove(WorkoutUtilities.KEY_INSPIRATION_IMAGE_RIGHT)
                 .apply();
     }
 
