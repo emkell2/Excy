@@ -13,16 +13,23 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.excy.excy.R;
 import com.excy.excy.utilities.AppUtilities;
 import com.excy.excy.utilities.WorkoutUtilities;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 
@@ -32,6 +39,10 @@ public class EditProfileActivity extends AppCompatActivity {
     EditText healthDescET;
     EditText numCalsET;
     EditText numWorkoutsET;
+    TextView changeImageTV;
+    TextView imageOneTV;
+    TextView imageTwoTV;
+    TextView imageThreeTV;
     ImageButton userProfile;
     ImageButton imageLeft;
     ImageButton imageCenter;
@@ -41,6 +52,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private static final int SELECT_FILE = 2;
 
     private int selectedImageButton = 0;
+
+    private HashMap<String, Object> map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +107,11 @@ public class EditProfileActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(workoutsPerWeek)) {
             numWorkoutsET.setText(workoutsPerWeek);
         }
+
+        changeImageTV = (TextView) findViewById(R.id.tvChangeProfileImage);
+        imageOneTV = (TextView) findViewById(R.id.tvImageOne);
+        imageTwoTV = (TextView) findViewById(R.id.tvImageTwo);
+        imageThreeTV = (TextView) findViewById(R.id.tvImageThree);
 
         // Set Images for "My Inspiration" ImageButtons
         imageLeft = (ImageButton) findViewById(R.id.ibImageLeft);
@@ -185,24 +203,41 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void saveChanges() {
-        HashMap<String, Object> map = new HashMap<>();
+        if (map == null) {
+            map = new HashMap<>();
+        }
+
         String healthyDesc = healthDescET.getText().toString();
         if (!TextUtils.isEmpty(healthyDesc)) {
             map.put("manifesto", healthyDesc);
-            //WorkoutUtilities.persistString(this, WorkoutUtilities.KEY_HEALTHY_DESC, healthyDesc);
         }
 
         String numCals = numCalsET.getText().toString();
         if (!TextUtils.isEmpty(numCals)) {
             map.put("calorieGoal", numCals);
-            //WorkoutUtilities.persistString(this, WorkoutUtilities.KEY_CALS_PER_WEEK, numCals);
         }
 
         String numWorkouts = numWorkoutsET.getText().toString();
         if (!TextUtils.isEmpty(numWorkouts)) {
             map.put("workoutGoal", numWorkouts);
-            //WorkoutUtilities.persistString(this, WorkoutUtilities.KEY_WORKOUTS_PER_WEEK, numWorkouts);
         }
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = user.getUid();
+
+        DatabaseReference mDataBaseReference = FirebaseDatabase.getInstance().getReference();
+        mDataBaseReference.child(AppUtilities.TABLE_NAME_USERS).child(userId).updateChildren(map,
+                new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                        if (databaseError != null) {
+                            Log.d("EDIT PROFILE DATA", "Database Error message: " + databaseError.getMessage());
+                            Log.d("EDIT PROFILE DATA", "Database Error details : " + databaseError.getDetails());
+                        }
+                        Intent intent = new Intent(getBaseContext(), MeActivity.class);
+                        startActivity(intent);
+                    }
+                });
 
         finish();
     }
@@ -211,14 +246,6 @@ public class EditProfileActivity extends AppCompatActivity {
         SharedPreferences sharePrefs = getPreferences(Context.MODE_PRIVATE);
         sharePrefs.edit()
                 .remove(WorkoutUtilities.KEY_USER_EMAIL)
-//                .remove(WorkoutUtilities.KEY_MEMBER_SINCE)
-//                .remove(WorkoutUtilities.KEY_CALS_PER_WEEK)
-//                .remove(WorkoutUtilities.KEY_WORKOUTS_PER_WEEK)
-//                .remove(WorkoutUtilities.KEY_HEALTHY_DESC)
-//                .remove(WorkoutUtilities.KEY_PROFILE_IMAGE)
-//                .remove(WorkoutUtilities.KEY_INSPIRATION_IMAGE_LEFT)
-//                .remove(WorkoutUtilities.KEY_INSPIRATION_IMAGE_CENTER)
-//                .remove(WorkoutUtilities.KEY_INSPIRATION_IMAGE_RIGHT)
                 .apply();
     }
 
@@ -244,6 +271,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
             }
         });
+        builder.create();
+        builder.show();
     }
 
     @Override
@@ -252,27 +281,46 @@ public class EditProfileActivity extends AppCompatActivity {
         if ((requestCode == REQUEST_CAMERA) || (requestCode == SELECT_FILE)) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
+                if (map == null) {
+                    map = new HashMap<>();
+                }
+
                 Uri selectedImage = data.getData();
 
                 ImageButton imageButton;
+
                 switch (selectedImageButton) {
                     case 1:
                         imageButton = imageLeft;
+                        imageOneTV.setText("");
+                        map.put("inspiringImage1", selectedImage.toString());
                         break;
                     case 2:
                         imageButton = imageCenter;
+                        imageTwoTV.setText("");
+                        map.put("inspiringImage2", selectedImage.toString());
                         break;
                     case 3:
                         imageButton = imageRight;
+                        imageThreeTV.setText("");
+                        map.put("inspiringImage3", selectedImage.toString());
                         break;
                     case 4:
                         imageButton = userProfile;
+                        changeImageTV.setText("");
+                        map.put("profileImageUrl", selectedImage.toString());
                         break;
                     default:
                         imageButton = userProfile;
+                        changeImageTV.setText("");
+                        map.put("profileImageUrl", selectedImage.toString());
                         break;
                 }
 
+                imageButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageButton.setAdjustViewBounds(false);
+                imageButton.setPadding(0,0,0,0);
+                imageButton.setImageResource(0);
                 imageButton.setImageURI(selectedImage);
             }
         }

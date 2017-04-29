@@ -10,7 +10,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -25,20 +24,20 @@ import com.excy.excy.models.User;
 import com.excy.excy.models.Workout;
 import com.excy.excy.models.WorkoutsAdapter;
 import com.excy.excy.utilities.AppUtilities;
+import com.excy.excy.utilities.NonScrollableLinearLayoutManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 import static com.excy.excy.activities.PlayActivity.getContext;
 
 public class MeActivity extends AppCompatActivity {
-    public static final String USERNAME = "username";
-    public static final String MEMBER_SINCE = "memberSince";
 
     private ArrayList<Workout> workoutList;
     private int workoutListSize = 5;
@@ -83,8 +82,13 @@ public class MeActivity extends AppCompatActivity {
             workoutList = new ArrayList<>(workoutListSize);
         }
 
+        // Setup RecyclerView
+        NonScrollableLinearLayoutManager nonScrollableLinearLayoutManager
+                = new NonScrollableLinearLayoutManager(getContext());
+        nonScrollableLinearLayoutManager.setScrollEnabled(false);
+
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.rvRecentWorkouts);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setLayoutManager(nonScrollableLinearLayoutManager);
         mAdapter = new WorkoutsAdapter(workoutList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
@@ -140,19 +144,16 @@ public class MeActivity extends AppCompatActivity {
         DatabaseReference mUserDatabaseRef = database
                 .getReference(AppUtilities.TABLE_NAME_USERS + "/" + userId);
 
-        mUserDatabaseRef.addChildEventListener(new ChildEventListener() {
+        mUserDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {}
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
 
                 String profileStr = user.getProfileImageUrl();
                 if (!TextUtils.isEmpty(profileStr)) {
                     Uri profileImageUri = Uri.parse(profileStr);
                     if (profileImageUri != null) {
-                        profileImage.setImageURI(profileImageUri);
+                        setupImage(profileImageUri, profileImage);
                     }
                 }
 
@@ -185,7 +186,7 @@ public class MeActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(imageOneStr)) {
                     Uri inspirationOneUri = Uri.parse(imageOneStr);
                     if (inspirationOneUri != null) {
-                        inspirationImage1.setImageURI(inspirationOneUri);
+                        setupImage(inspirationOneUri, inspirationImage1);
                     }
                 }
 
@@ -193,7 +194,7 @@ public class MeActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(imageTwoStr)) {
                     Uri inspirationTwoUri = Uri.parse(imageTwoStr);
                     if (inspirationTwoUri != null) {
-                        inspirationImage2.setImageURI(inspirationTwoUri);
+                        setupImage(inspirationTwoUri, inspirationImage2);
                     }
                 }
 
@@ -201,25 +202,15 @@ public class MeActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(imageThreeStr)) {
                     Uri inspirationThreeUri = Uri.parse(imageThreeStr);
                     if (inspirationThreeUri != null) {
-                        inspirationImage3.setImageURI(inspirationThreeUri);
+                        setupImage(inspirationThreeUri, inspirationImage3);
                     }
                 }
             }
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                userNameTV.setText("");
-                memberSinceTV.setText("");
-                healthyDescTV.setText("");
-                calsPerWeekTV.setText("");
-                workoutsPerWeekTV.setText("");
+            public void onCancelled(DatabaseError databaseError) {
+
             }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
         });
 
         Button quickStatsBtn = (Button) findViewById(R.id.btnQuickStats);
@@ -249,6 +240,13 @@ public class MeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void setupImage(Uri uri, ImageView image) {
+        image.setImageURI(uri);
+        image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        image.setAdjustViewBounds(false);
+        image.setPadding(0,0,0,0);
     }
 }
 
