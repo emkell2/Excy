@@ -1,6 +1,8 @@
 package com.excy.excy.activities;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +10,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.excy.excy.R;
 import com.excy.excy.models.User;
@@ -39,10 +44,16 @@ import static com.excy.excy.activities.PlayActivity.getContext;
 
 public class MeActivity extends AppCompatActivity {
 
+    User user;
     private ArrayList<Workout> workoutList;
     private int workoutListSize = 5;
     private int count = 0;
     WorkoutsAdapter mAdapter;
+
+    ImageView profileImage;
+    ImageView inspirationImage1;
+    ImageView inspirationImage2;
+    ImageView inspirationImage3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,15 +142,16 @@ public class MeActivity extends AppCompatActivity {
         });
 
         // Set fields from User data
-        final ImageView profileImage = (ImageView) findViewById(R.id.ivProfileImage);
         final TextView userNameTV = (TextView) findViewById(R.id.tvUserName);
         final TextView memberSinceTV = (TextView) findViewById(R.id.tvFriendSince);
         final TextView healthyDescTV = (TextView) findViewById(R.id.tvHealthyDescription);
         final TextView calsPerWeekTV = (TextView) findViewById(R.id.tvNumCalsPerWeek);
         final TextView workoutsPerWeekTV = (TextView) findViewById(R.id.tvNumWorkoutsPerWeek);
-        final ImageView inspirationImage1 = (ImageView) findViewById(R.id.ivInspirationOne);
-        final ImageView inspirationImage2 = (ImageView) findViewById(R.id.ivInspirationTwo);
-        final ImageView inspirationImage3 = (ImageView) findViewById(R.id.ivInspirationThree);
+
+        profileImage = (ImageView) findViewById(R.id.ivProfileImage);
+        inspirationImage1 = (ImageView) findViewById(R.id.ivInspirationOne);
+        inspirationImage2 = (ImageView) findViewById(R.id.ivInspirationTwo);
+        inspirationImage3 = (ImageView) findViewById(R.id.ivInspirationThree);
 
         DatabaseReference mUserDatabaseRef = database
                 .getReference(AppUtilities.TABLE_NAME_USERS + "/" + userId);
@@ -147,15 +159,7 @@ public class MeActivity extends AppCompatActivity {
         mUserDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-
-                String profileStr = user.getProfileImageUrl();
-                if (!TextUtils.isEmpty(profileStr)) {
-                    Uri profileImageUri = Uri.parse(profileStr);
-                    if (profileImageUri != null) {
-                        setupImage(profileImageUri, profileImage);
-                    }
-                }
+                user = dataSnapshot.getValue(User.class);
 
                 String userName = user.getUsername();
                 if (!TextUtils.isEmpty(userName)) {
@@ -182,28 +186,13 @@ public class MeActivity extends AppCompatActivity {
                     workoutsPerWeekTV.setText(numWorkoutsPerWeek);
                 }
 
-                String imageOneStr = user.getInspiringImage1();
-                if (!TextUtils.isEmpty(imageOneStr)) {
-                    Uri inspirationOneUri = Uri.parse(imageOneStr);
-                    if (inspirationOneUri != null) {
-                        setupImage(inspirationOneUri, inspirationImage1);
-                    }
-                }
-
-                String imageTwoStr = user.getInspiringImage2();
-                if (!TextUtils.isEmpty(imageTwoStr)) {
-                    Uri inspirationTwoUri = Uri.parse(imageTwoStr);
-                    if (inspirationTwoUri != null) {
-                        setupImage(inspirationTwoUri, inspirationImage2);
-                    }
-                }
-
-                String imageThreeStr = user.getInspiringImage3();
-                if (!TextUtils.isEmpty(imageThreeStr)) {
-                    Uri inspirationThreeUri = Uri.parse(imageThreeStr);
-                    if (inspirationThreeUri != null) {
-                        setupImage(inspirationThreeUri, inspirationImage3);
-                    }
+                if (ContextCompat.checkSelfPermission(MeActivity.this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(MeActivity.this, new String[] {
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                } else {
+                    displayImages();
                 }
             }
 
@@ -240,6 +229,58 @@ public class MeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    displayImages();
+                } else {
+                    Toast.makeText(MeActivity.this, R.string.grant_perm_to_load_images,
+                            Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+        }
+    }
+
+    private void displayImages() {
+        String profileStr = user.getProfileImageUrl();
+        if (!TextUtils.isEmpty(profileStr)) {
+            Uri profileImageUri = Uri.parse(profileStr);
+            if (profileImageUri != null) {
+                setupImage(profileImageUri, profileImage);
+            }
+        }
+
+        String imageOneStr = user.getInspiringImage1();
+        if (!TextUtils.isEmpty(imageOneStr)) {
+            Uri inspirationOneUri = Uri.parse(imageOneStr);
+            if (inspirationOneUri != null) {
+                setupImage(inspirationOneUri, inspirationImage1);
+            }
+        }
+
+        String imageTwoStr = user.getInspiringImage2();
+        if (!TextUtils.isEmpty(imageTwoStr)) {
+            Uri inspirationTwoUri = Uri.parse(imageTwoStr);
+            if (inspirationTwoUri != null) {
+                setupImage(inspirationTwoUri, inspirationImage2);
+            }
+        }
+
+        String imageThreeStr = user.getInspiringImage3();
+        if (!TextUtils.isEmpty(imageThreeStr)) {
+            Uri inspirationThreeUri = Uri.parse(imageThreeStr);
+            if (inspirationThreeUri != null) {
+                setupImage(inspirationThreeUri, inspirationImage3);
+            }
+        }
     }
 
     private void setupImage(Uri uri, ImageView image) {

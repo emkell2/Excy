@@ -58,6 +58,8 @@ public class WorkoutActivity extends AppCompatActivity {
     TextView progressBar;
     ImageView audioIcon;
 
+    boolean audioIconEnabled = true;
+
     static ImageView targetZoneIV;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -87,11 +89,26 @@ public class WorkoutActivity extends AppCompatActivity {
         timerTV = (TextView) findViewById(R.id.tvTimer);
         progressBar = (TextView) findViewById(R.id.tvProgressBar);
         targetZoneIV = (ImageView) findViewById(R.id.ivTargetZone);
-        audioIcon = (ImageView) findViewById(R.id.ivAudioIcon);
 
         player = MediaPlayer.create(getBaseContext(), workoutListData.getIntExtra(
                 WorkoutUtilities.WORKOUT_DATA_AUDIO_RES_ID, 0));
         player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+        audioIcon = (ImageView) findViewById(R.id.ivAudioIcon);
+        audioIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (audioIconEnabled) {
+                    audioIconEnabled = false;
+                    audioIcon.setAlpha(0.30f);
+                    player.pause();
+                } else {
+                    audioIconEnabled = true;
+                    audioIcon.setAlpha(1f);
+                    player.start();
+                }
+            }
+        });
 
         progressBar.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {

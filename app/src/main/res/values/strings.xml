@@ -63,10 +63,12 @@
     <string name="workouts_a_week">workouts a week</string>
     <string name="my_inspiration">My Inspiration:</string>
     <string name="recent_history">Recent History</string>
+    <string name="grant_perm_to_load_images">Can not load images without permission being granted.</string>
 
     <!-- EditProfileActivity Strings -->
     <string name="change_image">Change image</string>
     <string name="sign_me_up">Sign me up to be among the first to hear about new things with excy</string>
+    <string name="grant_perm_to_choose_images">Can not choose images without permission being granted.</string>
 
     <string name="i_will_burn">I will burn</string>
     <string name="colories_every_week">calories every week</string>
