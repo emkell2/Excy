@@ -28,15 +28,10 @@ public class WorkoutUtilities {
     public static final String INTENT_START_WORKOUT_TIMER = "INTENT START WORKOUT TIMER";
 
     // Persist Keys
-    public static final String KEY_MEMBER_SINCE = "Key Member Since";
     public static final String KEY_USER_EMAIL = "Key User Email";
     public static final String KEY_HEALTHY_DESC = "Key Healthy Description";
     public static final String KEY_CALS_PER_WEEK = "Key Calories a week";
     public static final String KEY_WORKOUTS_PER_WEEK = "Key Workouts a week";
-    public static final String KEY_PROFILE_IMAGE = "Key Profile Image";
-    public static final String KEY_INSPIRATION_IMAGE_LEFT = "Key Inspiration Image Left";
-    public static final String KEY_INSPIRATION_IMAGE_CENTER = "Key Inspiration Image Center";
-    public static final String KEY_INSPIRATION_IMAGE_RIGHT = "Key Inspiration Image Right";
 
     // Workout Names
     public static final String WORKOUT_ARM_CANDY = "Arm Candy";
