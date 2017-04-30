@@ -215,6 +215,13 @@ public class WorkoutActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+
+        getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
 
@@ -371,6 +378,9 @@ public class WorkoutActivity extends AppCompatActivity {
         workout.put("workoutTitle", workoutName);
         workout.put("totalTime", totalTime);
         workout.put("caloriesBurned", calsBurned);
+
+        getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         MaxTemperatureDialog.newInstance(workout).show(getFragmentManager(),
                 MaxTemperatureDialog.MAX_TEMP_DIALOG);
     }
@@ -381,5 +391,7 @@ public class WorkoutActivity extends AppCompatActivity {
         // Start media audio
         audioIcon.setVisibility(View.VISIBLE);
         player.start();
+
+        getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 }

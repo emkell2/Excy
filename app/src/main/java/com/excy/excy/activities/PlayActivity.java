@@ -398,11 +398,6 @@ public class PlayActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-//        if (timer != null) {
-//            timer.cancelTimer(true);
-//            timer = null;
-//        }
-
         getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 

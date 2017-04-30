@@ -54,6 +54,8 @@ public class WarmUpActivity extends AppCompatActivity {
                         timerRef.startTimer(timerTV, progressBar);
 
                         progressBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                        getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                     }
                 }
         );
@@ -83,6 +85,13 @@ public class WarmUpActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     @Override
