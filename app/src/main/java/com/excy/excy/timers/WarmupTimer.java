@@ -5,21 +5,21 @@ import android.text.TextUtils;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.excy.excy.activities.WorkoutActivity;
+import com.excy.excy.activities.WarmUpActivity;
 import com.excy.excy.utilities.PlayUtilities;
 
 /**
- * Created by erin.kelley on 3/22/17.
+ * Created by erin.kelley on 4/30/17.
  */
 
-public class WorkoutTimer {
+public class WarmupTimer {
     private CountDownTimer timer;
     private static long timeRemaining;
 
-    private static final int progressTotalWidth = WorkoutActivity.getProgressBarStartingWidth();
+    private static final int progressTotalWidth = WarmUpActivity.getProgressBarStartingWidth();
     public boolean finished;
 
-    public WorkoutTimer(long startTime) {
+    public WarmupTimer(long startTime) {
         timeRemaining = startTime;
     }
 
@@ -27,15 +27,12 @@ public class WorkoutTimer {
         timer = new CountDownTimer(timeRemaining, 100) {
             int seconds = 0;
             long ms = 0;
-            long zoneMs = 0;
-            boolean hasUpdatedImage = false;
             boolean start = true;
 
             @Override
             public void onTick(long millisUntilFinished) {
                 timeRemaining = millisUntilFinished;
                 ms += 100;
-                zoneMs += 100;
 
                 if (!start) {
                     start = false;
@@ -58,27 +55,11 @@ public class WorkoutTimer {
 //                            + " secs=" + seconds + " prevSecs=" + prevSeconds
 //                            + " slowCtr=" + slowIntCtr + " fastCtr=" + fastIntCtr);
 
-
-                    WorkoutActivity.updateTime(minutes, seconds);
-
                     // Update progress approximately every half a second
                     if (ms >= 500) {
+                        WarmUpActivity.updateTime(minutes, seconds);
                         updateProgressBar(progressBar, minutes, seconds);
                         ms = 0;
-                    }
-
-                    // Try to update the power zone image about once a second. This logic
-                    // is really stupid but needed to not skip a zone.
-                    if (zoneMs >= 800) {
-                        if ((!hasUpdatedImage) && (zoneMs == 800)) {
-                            WorkoutActivity.updatePowerZone();
-                            hasUpdatedImage = true;
-                        }
-
-                        if (zoneMs == 1300) {
-                            hasUpdatedImage = false;
-                            zoneMs = 0;
-                        }
                     }
                 }
             }
@@ -102,7 +83,7 @@ public class WorkoutTimer {
 
     private void updateProgressBar(TextView progressBar, int minutes, int seconds) {
         int totalSeconds = (minutes * 60) + seconds;
-        int startingTime = (int) (WorkoutActivity.getOriginalStartTime() / 1000);
+        int startingTime = (int) (WarmUpActivity.getOriginalStartTime() / 1000);
 
         float progress;
         if (startingTime != 0) {

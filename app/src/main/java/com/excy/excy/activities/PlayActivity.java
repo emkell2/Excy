@@ -32,6 +32,9 @@ import com.excy.excy.timers.PlayTimer;
 import com.excy.excy.utilities.AppUtilities;
 import com.excy.excy.utilities.PlayUtilities;
 import com.excy.excy.utilities.WorkoutUtilities;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.HashMap;
 
 import info.hoang8f.widget.FButton;
 
@@ -57,13 +60,30 @@ public class PlayActivity extends AppCompatActivity {
     private static int fastInterval;    // in seconds
     private static int slowInterval;    // in seconds
 
+    private long originalStartTime = 0;
+    private boolean setInterval;
+
     private static int progressStartingWidth;
+
+    private HashMap<String, Object> workout;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            boolean setInterval = intent.getBooleanExtra(WorkoutUtilities.INTENT_SET_INTERVAL, false);
-            startTimer(setInterval);
+            setInterval = intent.getBooleanExtra(WorkoutUtilities.INTENT_SET_INTERVAL, false);
+            boolean warmup = intent.getBooleanExtra(WorkoutUtilities.INTENT_WARMUP, false);
+            workout = (HashMap<String, Object>) intent.getSerializableExtra(WorkoutUtilities.WORKOUT_DATA);
+
+            if (workout == null) {
+                workout = new HashMap<>();
+            }
+
+            if (warmup) {
+                Intent launchWarmupIntent = new Intent(PlayActivity.this, WarmUpActivity.class);
+                startActivityForResult(launchWarmupIntent, AppUtilities.REQUEST_CODE_WARMUP);
+            } else {
+                startTimer(setInterval);
+            }
         }
     };
 
@@ -306,11 +326,13 @@ public class PlayActivity extends AppCompatActivity {
 
                 long startTime = convertStringTimeToMillis(timerTV.getText().toString());
 
+                originalStartTime = startTime;
                 startingTime = startTime;
                 getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 timer = new PlayTimer(startTime);
 
-                WarmUpDialog.newInstance(true, WorkoutUtilities.INTENT_START_PLAY_TIMER)
+                HashMap<String, Object> workout = new HashMap<>();
+                WarmUpDialog.newInstance(true, WorkoutUtilities.INTENT_START_PLAY_TIMER, workout)
                         .show(getFragmentManager(), WarmUpDialog.WARM_UP_DIALOG);
             }
         });
@@ -329,9 +351,8 @@ public class PlayActivity extends AppCompatActivity {
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String timeRemaining = PlayUtilities.createTimerString(minutes, seconds);
+                endWorkout();
                 reset();
-                endWorkout(timeRemaining);
             }
         });
 
@@ -377,11 +398,6 @@ public class PlayActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        if (timer != null) {
-            timer.cancelTimer(true);
-            timer = null;
-        }
-
         getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
@@ -412,6 +428,27 @@ public class PlayActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if ((requestCode == AppUtilities.REQUEST_CODE_WARMUP) && (resultCode == RESULT_OK)) {
+            startTimer(setInterval);
+        } else {
+            showStartButton();
+        }
+    }
+
+    private void showStartButton() {
+        pauseBtn.setClickable(false);
+        stopBtn.setClickable(false);
+        pauseBtn.setVisibility(View.GONE);
+        stopBtn.setVisibility(View.GONE);
+
+        startBtn.setClickable(true);
+        startBtn.setVisibility(View.VISIBLE);
     }
 
     private long convertStringTimeToMillis(String startTimeString) {
@@ -555,8 +592,17 @@ public class PlayActivity extends AppCompatActivity {
         return progressStartingWidth * 3;
     }
 
-    private void endWorkout(String timeRemaining) {
-        MaxTemperatureDialog.newInstance(timeRemaining).show(getFragmentManager(),
+    private void endWorkout() {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String date = WorkoutUtilities.getWorkoutTimestamp();
+        String totalTime = WorkoutUtilities.getElapsedTime(originalStartTime, minutes, seconds);
+        int calsBurned = WorkoutUtilities.calculateCaloriesBurned(originalStartTime, minutes, seconds);
+        workout.put("uid", userId);
+        workout.put("dateCompleted", date);
+        workout.put("workoutTitle", WorkoutUtilities.WORKOUT_INTERVAL);
+        workout.put("totalTime", totalTime);
+        workout.put("caloriesBurned", calsBurned);
+        MaxTemperatureDialog.newInstance(workout).show(getFragmentManager(),
                 MaxTemperatureDialog.MAX_TEMP_DIALOG);
     }
 

@@ -2,31 +2,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cvWorkout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:background="@color/white">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp">
 
             <LinearLayout
                 android:id="@+id/llCardHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
                 android:weightSum="2">
 
                 <TextView
+                    android:id="@+id/tvCardWorkoutName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="@string/interval_workout"/>
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/tvCardWorkoutDate"
@@ -53,12 +60,17 @@
                     <ImageView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="4dp"
                         android:src="@drawable/clock"/>
 
                     <TextView
                         android:id="@+id/tvWorkoutTime"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/colorExcyGreen"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -70,19 +82,27 @@
                     <ImageView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="4dp"
                         android:src="@drawable/lightning_icon"/>
 
                     <TextView
                         android:id="@+id/tvMin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/minimum"/>
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/minimum"
+                        android:textColor="@color/colorExcyGreen"/>
 
                     <TextView
                         android:id="@+id/tvMax"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/maximum"/>
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/maximum"
+                        android:textColor="@color/colorExcyGreen"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -94,12 +114,17 @@
                     <ImageView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="4dp"
                         android:src="@drawable/flame"/>
 
                     <TextView
                         android:id="@+id/tvBurn"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/colorExcyGreen"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -109,13 +134,19 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/ivFace"
                         android:layout_width="48dp"
-                        android:layout_height="48dp" />
+                        android:layout_height="48dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_gravity="center"/>
 
                     <TextView
                         android:id="@+id/tvFace"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/colorExcyGreen"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -125,13 +156,19 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/ivLocation"
                         android:layout_width="48dp"
-                        android:layout_height="48dp" />
+                        android:layout_height="48dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_gravity="center"/>
 
                     <TextView
                         android:id="@+id/tvWorkoutLocation"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/colorExcyGreen"/>
                 </LinearLayout>
 
             </LinearLayout>

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "974192858023",
+    "firebase_url": "https://excy.firebaseio.com",
+    "project_id": "firebase-excy",
+    "storage_bucket": "firebase-excy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:974192858023:android:1c49b6c7d314d2ac",
+        "android_client_info": {
+          "package_name": "com.excy.excy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "974192858023-cf7t20s1pr7komb0gf5s7ocd28mhre5s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfLam-bPmnat5pIpDFRCt_VLP66_PkRr4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

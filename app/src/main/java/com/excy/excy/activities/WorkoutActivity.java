@@ -29,8 +29,10 @@ import com.excy.excy.dialogs.MaxTemperatureDialog;
 import com.excy.excy.dialogs.WarmUpDialog;
 import com.excy.excy.timers.WorkoutTimer;
 import com.excy.excy.utilities.AppUtilities;
-import com.excy.excy.utilities.PlayUtilities;
 import com.excy.excy.utilities.WorkoutUtilities;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.HashMap;
 
 import static android.view.View.GONE;
 
@@ -46,6 +48,9 @@ public class WorkoutActivity extends AppCompatActivity {
 
     private static Resources mResources;
 
+    private String workoutName = "";
+    HashMap<String, Object> workout;
+
     MediaPlayer player;
     WorkoutTimer timerRef; // Needed to have a reference to the timer
 
@@ -53,12 +58,26 @@ public class WorkoutActivity extends AppCompatActivity {
     TextView progressBar;
     ImageView audioIcon;
 
+    boolean audioIconEnabled = true;
+
     static ImageView targetZoneIV;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            startTimer();
+            workout = (HashMap<String, Object>) intent.getSerializableExtra(WorkoutUtilities.WORKOUT_DATA);
+            boolean warmup = intent.getBooleanExtra(WorkoutUtilities.INTENT_WARMUP, false);
+
+            if (workout == null) {
+                workout = new HashMap<>();
+            }
+
+            if (warmup) {
+                Intent launchWarmupIntent = new Intent(WorkoutActivity.this, WarmUpActivity.class);
+                startActivityForResult(launchWarmupIntent, 10);
+            } else {
+                startTimer();
+            }
         }
     };
 
@@ -76,11 +95,26 @@ public class WorkoutActivity extends AppCompatActivity {
         timerTV = (TextView) findViewById(R.id.tvTimer);
         progressBar = (TextView) findViewById(R.id.tvProgressBar);
         targetZoneIV = (ImageView) findViewById(R.id.ivTargetZone);
-        audioIcon = (ImageView) findViewById(R.id.ivAudioIcon);
 
         player = MediaPlayer.create(getBaseContext(), workoutListData.getIntExtra(
                 WorkoutUtilities.WORKOUT_DATA_AUDIO_RES_ID, 0));
         player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+        audioIcon = (ImageView) findViewById(R.id.ivAudioIcon);
+        audioIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (audioIconEnabled) {
+                    audioIconEnabled = false;
+                    audioIcon.setAlpha(0.30f);
+                    player.pause();
+                } else {
+                    audioIconEnabled = true;
+                    audioIcon.setAlpha(1f);
+                    player.start();
+                }
+            }
+        });
 
         progressBar.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -140,8 +174,7 @@ public class WorkoutActivity extends AppCompatActivity {
                     timerRef.cancelTimer();
                 }
 
-                String timeRemaining = PlayUtilities.createTimerString(minutes, seconds);
-                endWorkout(timeRemaining);
+                endWorkout();
             }
         });
 
@@ -176,8 +209,45 @@ public class WorkoutActivity extends AppCompatActivity {
         TextView excyLinkTV = (TextView) findViewById(R.id.tvLink);
         excyLinkTV.setMovementMethod(LinkMovementMethod.getInstance());
 
-        WarmUpDialog.newInstance(false, WorkoutUtilities.INTENT_START_WORKOUT_TIMER)
+        HashMap<String, Object> workout = new HashMap<>();
+        WarmUpDialog.newInstance(false, WorkoutUtilities.INTENT_START_WORKOUT_TIMER, workout)
                 .show(getFragmentManager(), WarmUpDialog.WARM_UP_DIALOG);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        currZoneCtr = 0;
+        minutes = 0;
+        seconds = 0;
+        originalStartTime = 0;
+        progressStartingWidth = 0;
+        player.stop();
+
+        if (timerRef != null) {
+            timerRef.cancelTimer();
+        }
+
+        finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if ((requestCode == AppUtilities.REQUEST_CODE_WARMUP) && (resultCode == RESULT_OK)) {
+            startTimer();
+        } else {
+            finish();
+        }
     }
 
     private void setWorkoutImages(int workoutResId) {
@@ -190,31 +260,37 @@ public class WorkoutActivity extends AppCompatActivity {
                     workoutImage.setImageResource(R.drawable.wb_arm_candy);
                     powerZoneImage.setImageResource(R.drawable.pz_arm_candy_graph);
                     powerZoneArr = WorkoutUtilities.PZ_ARM_CANDY_ARR;
+                    workoutName = WorkoutUtilities.WORKOUT_ARM_CANDY;
                     break;
                 case R.id.ibSuperCycleCardio:
                     workoutImage.setImageResource(R.drawable.wb_super_cycle_cardio);
                     powerZoneImage.setImageResource(R.drawable.pz_super_cycle_graph);
                     powerZoneArr = WorkoutUtilities.PZ_SUPER_CYCLE_CARDIO_ARR;
+                    workoutName = WorkoutUtilities.WORKOUT_SUPER_CYCLE_CARDIO;
                     break;
                 case R.id.ibCycleLegBlast:
                     workoutImage.setImageResource(R.drawable.wb_cycle_leg_blast);
                     powerZoneImage.setImageResource(R.drawable.pz_cycle_leg_blast_graph);
                     powerZoneArr = WorkoutUtilities.PZ_CYCLE_LEG_BLAST_ARR;
+                    workoutName = WorkoutUtilities.WORKOUT_CYCLE_LEG_BLAST;
                     break;
                 case R.id.ibCoreFloorExplosion:
                     workoutImage.setImageResource(R.drawable.wb_core_floor_explosion);
                     powerZoneImage.setImageResource(R.drawable.pz_core_floor_explosion_graph);
                     powerZoneArr = WorkoutUtilities.PZ_CORE_FLOOR_EXPLOSION_ARR;
+                    workoutName = WorkoutUtilities.WORKOUT_CORE_FLOOR_EXPLOSION;
                     break;
                 case R.id.ibArmBlast:
                     workoutImage.setImageResource(R.drawable.wb_arm_blast);
                     powerZoneImage.setImageResource(R.drawable.pz_arm_blast_graph);
                     powerZoneArr = WorkoutUtilities.PZ_ARM_BLAST_ARR;
+                    workoutName = WorkoutUtilities.WORKOUT_ARM_BLAST;
                     break;
                 case R.id.ibUltimateArmAndLegToning:
                     workoutImage.setImageResource(R.drawable.wb_ultimate_arm_leg_tone);
                     powerZoneImage.setImageResource(R.drawable.pz_ultimate_arm_and_leg_toning_graph);
                     powerZoneArr = WorkoutUtilities.PZ_ULTIMATE_ARM_LEG_TONING_ARR;
+                    workoutName = WorkoutUtilities.WORKOUT_ULTIMATE_ARM_LEG_TONING;
                     break;
             }
 
@@ -263,23 +339,6 @@ public class WorkoutActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        currZoneCtr = 0;
-        minutes = 0;
-        seconds = 0;
-        progressStartingWidth = 0;
-        player.stop();
-
-        if (timerRef != null) {
-            timerRef.cancelTimer();
-        }
-
-        finish();
-    }
-
     private void displayResumeDialog(final TextView timerTV) {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.resume_continue)
@@ -309,8 +368,20 @@ public class WorkoutActivity extends AppCompatActivity {
         return originalStartTime;
     }
 
-    private void endWorkout(String timeRemaining) {
-        MaxTemperatureDialog.newInstance(timeRemaining).show(getFragmentManager(),
+    private void endWorkout() {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String date = WorkoutUtilities.getWorkoutTimestamp();
+        String totalTime = WorkoutUtilities.getElapsedTime(originalStartTime, minutes, seconds);
+        int calsBurned = WorkoutUtilities.calculateCaloriesBurned(originalStartTime, minutes, seconds);
+        workout.put("uid", userId);
+        workout.put("dateCompleted", date);
+        workout.put("workoutTitle", workoutName);
+        workout.put("totalTime", totalTime);
+        workout.put("caloriesBurned", calsBurned);
+
+        getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        MaxTemperatureDialog.newInstance(workout).show(getFragmentManager(),
                 MaxTemperatureDialog.MAX_TEMP_DIALOG);
     }
 
@@ -320,5 +391,7 @@ public class WorkoutActivity extends AppCompatActivity {
         // Start media audio
         audioIcon.setVisibility(View.VISIBLE);
         player.start();
+
+        getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 }

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -15,6 +16,8 @@ import android.widget.LinearLayout;
 
 import com.excy.excy.R;
 import com.excy.excy.utilities.WorkoutUtilities;
+
+import java.util.HashMap;
 
 /**
  * Created by erin.kelley on 3/14/17.
@@ -24,11 +27,15 @@ public class MinTemperatureDialog extends DialogFragment {
     public static final String MIN_TEMP_DIALOG = "MIN TEMP DIALOG";
     public static final String MIN_TEMP_DIALOG_INTERVAL_ARG = "MIN TEMP DIALOG INTERVAL ARG";
     public static final String MIN_TEMP_DIALOG_INTENT_STRING = "MIN TEMP DIALOG INTENT STRING";
+    public static final String MIN_TEMP_DIALOG_WARMUP = "MIN TEMP DIALOG INTENT WARMUP";
 
-    public static MinTemperatureDialog newInstance(boolean setInveral, String intentString) {
+    public static MinTemperatureDialog newInstance(boolean setInveral, String intentString,
+                                                   boolean warmup, HashMap<String, Object> workout) {
         Bundle args = new Bundle();
         args.putBoolean(MIN_TEMP_DIALOG_INTERVAL_ARG, setInveral);
         args.putString(MIN_TEMP_DIALOG_INTENT_STRING, intentString);
+        args.putBoolean(MIN_TEMP_DIALOG_WARMUP, warmup);
+        args.putSerializable(WorkoutUtilities.WORKOUT_DATA, workout);
 
         MinTemperatureDialog fragment = new MinTemperatureDialog();
         fragment.setArguments(args);
@@ -38,7 +45,9 @@ public class MinTemperatureDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final boolean setInterval = getArguments().getBoolean(MIN_TEMP_DIALOG_INTERVAL_ARG);
+        final boolean warmup = getArguments().getBoolean(MIN_TEMP_DIALOG_WARMUP);
         final String intentString = getArguments().getString(MIN_TEMP_DIALOG_INTENT_STRING);
+        final HashMap workout = (HashMap) getArguments().getSerializable(WorkoutUtilities.WORKOUT_DATA);
 
         final EditText input = new EditText(getActivity());
 
@@ -56,14 +65,19 @@ public class MinTemperatureDialog extends DialogFragment {
                 .setView(input)
                 .setPositiveButton(R.string.enter, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        String text = input.getText().toString();
+                        if (!TextUtils.isEmpty(text)) {
+                            int minTemp = Integer.valueOf(text);
+                            workout.put("minTemp", minTemp);
+                        }
                         dismiss();
-                        startTimer(setInterval, intentString);
+                        startTimer(setInterval, intentString, warmup, workout);
                     }
                 })
                 .setNegativeButton(R.string.skip, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
-                        startTimer(setInterval, intentString);
+                        startTimer(setInterval, intentString, warmup, workout);
                     }
                 });
 
@@ -76,9 +90,12 @@ public class MinTemperatureDialog extends DialogFragment {
         return dialog;
     }
 
-    private void startTimer(boolean setInterval, String intentString) {
+    private void startTimer(boolean setInterval, String intentString, boolean warmup,
+                            HashMap<String, Object> workout) {
         Intent intent = new Intent(intentString);
         intent.putExtra(WorkoutUtilities.INTENT_SET_INTERVAL, setInterval);
+        intent.putExtra(WorkoutUtilities.WORKOUT_DATA, workout);
+        intent.putExtra(WorkoutUtilities.INTENT_WARMUP, warmup);
         LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
     }
 }

@@ -11,17 +11,18 @@ import com.excy.excy.R;
 import com.excy.excy.activities.SurveyActivity;
 import com.excy.excy.utilities.WorkoutUtilities;
 
+import java.util.HashMap;
+
 /**
  * Created by erin.kelley on 4/11/17.
  */
 
 public class TrackResultsDialog extends DialogFragment {
     public static final String TRACK_RESULTS_DIALOG = "TRACK RESULTS DIALOG";
-    public static final String TRACK_RESULTS_TIME_REMAINING = "TRACK RESULTS TIME REMAINING";
 
-    public static TrackResultsDialog newInstance(String timeRemaining) {
+    public static TrackResultsDialog newInstance(HashMap<String, Object> workout) {
         Bundle args = new Bundle();
-        args.putString(TRACK_RESULTS_TIME_REMAINING, timeRemaining);
+        args.putSerializable(WorkoutUtilities.WORKOUT_DATA, workout);
 
         TrackResultsDialog fragment = new TrackResultsDialog();
         fragment.setArguments(args);
@@ -30,17 +31,19 @@ public class TrackResultsDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        final HashMap workout = (HashMap) getArguments().getSerializable(WorkoutUtilities.WORKOUT_DATA);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.track_results_title)
                 .setMessage(R.string.track_results_message)
                 .setPositiveButton(R.string.track, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        String timeRemaining = getArguments().getString(TRACK_RESULTS_TIME_REMAINING);
                         dismiss();
                         getActivity().finish();
 
                         Intent intent = new Intent(getActivity(), SurveyActivity.class);
-                        intent.putExtra(WorkoutUtilities.INTENT_TIME_REMAINING, timeRemaining);
+                        intent.putExtra(WorkoutUtilities.WORKOUT_DATA, workout);
+                        getActivity().finish();
                         startActivity(intent);
                     }
                 })

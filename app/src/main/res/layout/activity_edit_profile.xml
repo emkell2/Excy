@@ -37,6 +37,7 @@
                     android:src="@drawable/rsz_placeholder_user"/>
 
                 <TextView
+                    android:id="@+id/tvChangeProfileImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -120,6 +121,7 @@
                 android:textSize="18sp"/>
 
             <EditText
+                android:id="@+id/etNumCals"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -158,6 +160,7 @@
                 android:textSize="18sp"/>
 
             <EditText
+                android:id="@+id/etNumWorkouts"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
