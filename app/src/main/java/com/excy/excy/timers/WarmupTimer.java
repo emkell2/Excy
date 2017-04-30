@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.excy.excy.activities.WorkoutActivity;
+import com.excy.excy.activities.WarmUpActivity;
 import com.excy.excy.utilities.PlayUtilities;
 
 /**
@@ -16,7 +16,7 @@ public class WarmupTimer {
     private CountDownTimer timer;
     private static long timeRemaining;
 
-    private static final int progressTotalWidth = WorkoutActivity.getProgressBarStartingWidth();
+    private static final int progressTotalWidth = WarmUpActivity.getProgressBarStartingWidth();
     public boolean finished;
 
     public WarmupTimer(long startTime) {
@@ -56,7 +56,7 @@ public class WarmupTimer {
 //                            + " slowCtr=" + slowIntCtr + " fastCtr=" + fastIntCtr);
 
 
-                    WorkoutActivity.updateTime(minutes, seconds);
+                    WarmUpActivity.updateTime(minutes, seconds);
 
                     // Update progress approximately every half a second
                     if (ms >= 500) {
@@ -85,7 +85,7 @@ public class WarmupTimer {
 
     private void updateProgressBar(TextView progressBar, int minutes, int seconds) {
         int totalSeconds = (minutes * 60) + seconds;
-        int startingTime = (int) (WorkoutActivity.getOriginalStartTime() / 1000);
+        int startingTime = (int) (WarmUpActivity.getOriginalStartTime() / 1000);
 
         float progress;
         if (startingTime != 0) {
