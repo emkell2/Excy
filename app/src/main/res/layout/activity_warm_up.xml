@@ -132,6 +132,17 @@
                     android:layout_weight="1"/>
 
             </LinearLayout>
+            
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/llButtonsLayout"
+                android:paddingTop="8dp"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:text="@string/warmup"
+                android:textSize="20sp"
+                android:textColor="@color/white"/>
         </RelativeLayout>
     </ScrollView>
 

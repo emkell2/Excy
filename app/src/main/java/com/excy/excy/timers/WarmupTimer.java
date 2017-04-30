@@ -55,11 +55,9 @@ public class WarmupTimer {
 //                            + " secs=" + seconds + " prevSecs=" + prevSeconds
 //                            + " slowCtr=" + slowIntCtr + " fastCtr=" + fastIntCtr);
 
-
-                    WarmUpActivity.updateTime(minutes, seconds);
-
                     // Update progress approximately every half a second
                     if (ms >= 500) {
+                        WarmUpActivity.updateTime(minutes, seconds);
                         updateProgressBar(progressBar, minutes, seconds);
                         ms = 0;
                     }

@@ -66,12 +66,18 @@ public class WorkoutActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             workout = (HashMap<String, Object>) intent.getSerializableExtra(WorkoutUtilities.WORKOUT_DATA);
+            boolean warmup = intent.getBooleanExtra(WorkoutUtilities.INTENT_WARMUP, false);
 
             if (workout == null) {
                 workout = new HashMap<>();
             }
 
-            startTimer();
+            if (warmup) {
+                Intent launchWarmupIntent = new Intent(WorkoutActivity.this, WarmUpActivity.class);
+                startActivityForResult(launchWarmupIntent, 10);
+            } else {
+                startTimer();
+            }
         }
     };
 
@@ -208,6 +214,35 @@ public class WorkoutActivity extends AppCompatActivity {
                 .show(getFragmentManager(), WarmUpDialog.WARM_UP_DIALOG);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        currZoneCtr = 0;
+        minutes = 0;
+        seconds = 0;
+        originalStartTime = 0;
+        progressStartingWidth = 0;
+        player.stop();
+
+        if (timerRef != null) {
+            timerRef.cancelTimer();
+        }
+
+        finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if ((requestCode == AppUtilities.REQUEST_CODE_WARMUP) && (resultCode == RESULT_OK)) {
+            startTimer();
+        } else {
+            finish();
+        }
+    }
+
     private void setWorkoutImages(int workoutResId) {
         if (workoutResId > 0) {
             ImageView workoutImage = (ImageView) findViewById(R.id.ivWorkoutImage);
@@ -295,24 +330,6 @@ public class WorkoutActivity extends AppCompatActivity {
         if ((minutes > 0) && (seconds % 60 == 0) && (currZoneCtr < powerZoneArr.length)) {
             setTargetPowerZoneImage(powerZoneArr[++currZoneCtr]);
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        currZoneCtr = 0;
-        minutes = 0;
-        seconds = 0;
-        originalStartTime = 0;
-        progressStartingWidth = 0;
-        player.stop();
-
-        if (timerRef != null) {
-            timerRef.cancelTimer();
-        }
-
-        finish();
     }
 
     private void displayResumeDialog(final TextView timerTV) {

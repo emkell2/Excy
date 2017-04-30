@@ -61,6 +61,7 @@ public class PlayActivity extends AppCompatActivity {
     private static int slowInterval;    // in seconds
 
     private long originalStartTime = 0;
+    private boolean setInterval;
 
     private static int progressStartingWidth;
 
@@ -69,14 +70,20 @@ public class PlayActivity extends AppCompatActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            boolean setInterval = intent.getBooleanExtra(WorkoutUtilities.INTENT_SET_INTERVAL, false);
+            setInterval = intent.getBooleanExtra(WorkoutUtilities.INTENT_SET_INTERVAL, false);
+            boolean warmup = intent.getBooleanExtra(WorkoutUtilities.INTENT_WARMUP, false);
             workout = (HashMap<String, Object>) intent.getSerializableExtra(WorkoutUtilities.WORKOUT_DATA);
 
             if (workout == null) {
                 workout = new HashMap<>();
             }
 
-            startTimer(setInterval);
+            if (warmup) {
+                Intent launchWarmupIntent = new Intent(PlayActivity.this, WarmUpActivity.class);
+                startActivityForResult(launchWarmupIntent, AppUtilities.REQUEST_CODE_WARMUP);
+            } else {
+                startTimer(setInterval);
+            }
         }
     };
 
@@ -391,10 +398,10 @@ public class PlayActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        if (timer != null) {
-            timer.cancelTimer(true);
-            timer = null;
-        }
+//        if (timer != null) {
+//            timer.cancelTimer(true);
+//            timer = null;
+//        }
 
         getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
@@ -426,6 +433,27 @@ public class PlayActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if ((requestCode == AppUtilities.REQUEST_CODE_WARMUP) && (resultCode == RESULT_OK)) {
+            startTimer(setInterval);
+        } else {
+            showStartButton();
+        }
+    }
+
+    private void showStartButton() {
+        pauseBtn.setClickable(false);
+        stopBtn.setClickable(false);
+        pauseBtn.setVisibility(View.GONE);
+        stopBtn.setVisibility(View.GONE);
+
+        startBtn.setClickable(true);
+        startBtn.setVisibility(View.VISIBLE);
     }
 
     private long convertStringTimeToMillis(String startTimeString) {

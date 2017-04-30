@@ -22,6 +22,7 @@ public class WorkoutUtilities {
 
     // Intent Keys
     public static final String INTENT_SET_INTERVAL = "INTENT SET INTERVAL";
+    public static final String INTENT_WARMUP = "INTENT WARMUP";
 
     // Intent Filters
     public static final String INTENT_START_PLAY_TIMER = "INTENT START PLAY TIMER";

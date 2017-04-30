@@ -1,5 +1,6 @@
 package com.excy.excy.activities;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.PorterDuff;
@@ -15,6 +16,8 @@ import com.excy.excy.timers.WarmupTimer;
 import com.excy.excy.utilities.AppUtilities;
 
 public class WarmUpActivity extends AppCompatActivity {
+    static Activity activity;
+
     TextView timerTV;
     TextView progressBar;
 
@@ -29,6 +32,8 @@ public class WarmUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_warm_up);
+
+        activity = this;
 
         timerTV = (TextView) findViewById(R.id.tvTimer);
         progressBar = (TextView) findViewById(R.id.tvProgressBar);
@@ -46,6 +51,7 @@ public class WarmUpActivity extends AppCompatActivity {
                         // Start Timer, needed to put this code in here to get progressBar width
                         final WarmupTimer timer = new WarmupTimer(origintalStartTimeMillis);
                         timerRef = timer;
+                        timerRef.startTimer(timerTV, progressBar);
 
                         progressBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                     }
@@ -73,6 +79,7 @@ public class WarmUpActivity extends AppCompatActivity {
         skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                activity.setResult(RESULT_OK);
                 finish();
             }
         });
@@ -90,6 +97,7 @@ public class WarmUpActivity extends AppCompatActivity {
             timerRef.cancelTimer();
         }
 
+        activity.setResult(RESULT_OK);
         finish();
     }
 
@@ -111,6 +119,7 @@ public class WarmUpActivity extends AppCompatActivity {
                         if (timerRef != null) {
                             timerRef.cancelTimer();
                         }
+                        activity.setResult(RESULT_OK);
                         finish();
                     }
                 }).show();
@@ -119,6 +128,11 @@ public class WarmUpActivity extends AppCompatActivity {
     public static void updateTime(int newMinutes, int newSeconds) {
         minutes = newMinutes;
         seconds = newSeconds;
+
+        if ((minutes == 0) && (seconds == 0)) {
+            activity.setResult(RESULT_OK);
+            activity.finish();
+        }
     }
 
     public static int getProgressBarStartingWidth() {
