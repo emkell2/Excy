@@ -37,7 +37,6 @@ public class WorkoutTimer {
                 ms += 100;
                 zoneMs += 100;
 
-
                 if (!start) {
                     start = false;
                 }

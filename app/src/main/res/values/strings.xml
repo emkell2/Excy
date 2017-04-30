@@ -27,6 +27,9 @@
     <string name="pause_button">pause</string>
     <string name="stop_button">stop</string>
 
+    <!-- WarmupActivity Strings -->
+    <string name="skip_button">skip</string>
+
     <!-- LoginActivity Strings -->
     <string name="login">Log In</string>
     <string name="sign_up">Sign Up</string>
