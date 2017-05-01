@@ -38,7 +38,7 @@ import java.util.HashMap;
 
 import static android.view.View.GONE;
 
-public class WorkoutActivity extends AppCompatActivity implements WorkoutCompleteDialog.OnCompleteListener{
+public class WorkoutActivity extends AppCompatActivity implements WorkoutCompleteDialog.OnCompleteListener {
     private static int[] powerZoneArr = {0};
 
     private static long originalStartTime = 0;

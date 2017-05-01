@@ -29,6 +29,7 @@ import android.widget.TextView;
 import com.excy.excy.R;
 import com.excy.excy.dialogs.MaxTemperatureDialog;
 import com.excy.excy.dialogs.WarmUpDialog;
+import com.excy.excy.dialogs.WorkoutCompleteDialog;
 import com.excy.excy.timers.PlayTimer;
 import com.excy.excy.utilities.AppUtilities;
 import com.excy.excy.utilities.PlayUtilities;
@@ -39,7 +40,7 @@ import java.util.HashMap;
 
 import info.hoang8f.widget.FButton;
 
-public class PlayActivity extends AppCompatActivity {
+public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDialog.OnCompleteListener {
     private static Activity activity;
     private static Context context;
 
@@ -355,8 +356,11 @@ public class PlayActivity extends AppCompatActivity {
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (timer != null) {
+                    timer.cancelTimer(false);
+                }
+
                 endWorkout(false);
-                reset();
             }
         });
 
@@ -442,6 +446,18 @@ public class PlayActivity extends AppCompatActivity {
             startTimer(setInterval);
         } else {
             showStartButton();
+        }
+    }
+
+    @Override
+    public void onComplete(boolean startTimer) {
+        if (startTimer) {
+            timer.startTimer(timerTV, progressBar, false);
+        } else {
+            finish();
+            Intent intent = new Intent(PlayActivity.this, WorkoutListActivity.class);
+            startActivity(intent);
+            return;
         }
     }
 
