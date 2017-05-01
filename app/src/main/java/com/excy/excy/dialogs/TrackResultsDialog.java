@@ -51,6 +51,7 @@ public class TrackResultsDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
                         getActivity().finish();
+                        return;
                     }
                 });
 

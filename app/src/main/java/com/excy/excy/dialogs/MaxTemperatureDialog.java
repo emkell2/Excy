@@ -23,10 +23,12 @@ import java.util.HashMap;
 
 public class MaxTemperatureDialog extends DialogFragment {
     public static final String MAX_TEMP_DIALOG = "MAX TEMP DIALOG";
+    public static final String MAX_TEMP_DIALOG_DONE = "MAX TEMP DIALOG DONE";
 
-    public static MaxTemperatureDialog newInstance(HashMap<String, Object> workout) {
+    public static MaxTemperatureDialog newInstance(HashMap<String, Object> workout, boolean workoutComplete) {
         Bundle args = new Bundle();
         args.putSerializable(WorkoutUtilities.WORKOUT_DATA, workout);
+        args.putBoolean(MAX_TEMP_DIALOG_DONE, workoutComplete);
 
         MaxTemperatureDialog fragment = new MaxTemperatureDialog();
         fragment.setArguments(args);
@@ -36,6 +38,7 @@ public class MaxTemperatureDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final HashMap workout = (HashMap) getArguments().getSerializable(WorkoutUtilities.WORKOUT_DATA);
+        final boolean workoutComplete = getArguments().getBoolean(MAX_TEMP_DIALOG_DONE);
         final EditText input = new EditText(getActivity());
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -58,15 +61,15 @@ public class MaxTemperatureDialog extends DialogFragment {
                             workout.put("maxTemp", maxTemp);
                         }
                         dismiss();
-                        TrackResultsDialog.newInstance(workout).show(getFragmentManager(),
-                                TrackResultsDialog.TRACK_RESULTS_DIALOG);
+                        WorkoutCompleteDialog.newInstance(workout, workoutComplete).show(
+                                getFragmentManager(), WorkoutCompleteDialog.WORKOUT_COMPLETE_DIALOG);
                     }
                 })
                 .setNegativeButton(R.string.skip, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
-                        TrackResultsDialog.newInstance(workout).show(getFragmentManager(),
-                                TrackResultsDialog.TRACK_RESULTS_DIALOG);
+                        WorkoutCompleteDialog.newInstance(workout, workoutComplete).show(
+                                getFragmentManager(), WorkoutCompleteDialog.WORKOUT_COMPLETE_DIALOG);
                     }
                 });
 

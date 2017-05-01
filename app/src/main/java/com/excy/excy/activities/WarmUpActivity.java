@@ -16,7 +16,7 @@ import com.excy.excy.timers.WarmupTimer;
 import com.excy.excy.utilities.AppUtilities;
 
 public class WarmUpActivity extends AppCompatActivity {
-    static Activity activity;
+    private static Activity activity;
 
     TextView timerTV;
     TextView progressBar;
@@ -49,8 +49,10 @@ public class WarmUpActivity extends AppCompatActivity {
                         System.out.println("startWidth=" + progressStartingWidth);
 
                         // Start Timer, needed to put this code in here to get progressBar width
-                        final WarmupTimer timer = new WarmupTimer(origintalStartTimeMillis);
-                        timerRef = timer;
+                        if (timerRef == null) {
+                            final WarmupTimer timer = new WarmupTimer(origintalStartTimeMillis);
+                            timerRef = timer;
+                        }
                         timerRef.startTimer(timerTV, progressBar);
 
                         progressBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
@@ -83,6 +85,7 @@ public class WarmUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 activity.setResult(RESULT_OK);
                 finish();
+                return;
             }
         });
     }
@@ -104,10 +107,8 @@ public class WarmUpActivity extends AppCompatActivity {
 
         if (timerRef != null) {
             timerRef.cancelTimer();
+            timerRef = null;
         }
-
-        activity.setResult(RESULT_OK);
-        finish();
     }
 
     private void displayResumeDialog(final TextView timerTV) {
@@ -119,7 +120,9 @@ public class WarmUpActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
 
                         timerRef = new WarmupTimer(timerRef.getRemainingTime());
-                        timerRef.startTimer(timerTV, progressBar);
+                        if (timerRef !=null) {
+                            timerRef.startTimer(timerTV, progressBar);
+                        }
                     }
                 })
                 .setNegativeButton(R.string.exit, new DialogInterface.OnClickListener() {
@@ -127,9 +130,11 @@ public class WarmUpActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         if (timerRef != null) {
                             timerRef.cancelTimer();
+                            timerRef = null;
                         }
                         activity.setResult(RESULT_OK);
                         finish();
+                        return;
                     }
                 }).show();
     }
@@ -141,6 +146,7 @@ public class WarmUpActivity extends AppCompatActivity {
         if ((minutes == 0) && (seconds == 0)) {
             activity.setResult(RESULT_OK);
             activity.finish();
+            return;
         }
     }
 
