@@ -58,6 +58,7 @@ public class WorkoutActivity extends AppCompatActivity {
 
     TextView timerTV;
     TextView progressBar;
+    TextView startingTemp;
     ImageView audioIcon;
 
     boolean audioIconEnabled = true;
@@ -147,6 +148,8 @@ public class WorkoutActivity extends AppCompatActivity {
 
         int workoutResId = workoutListData.getIntExtra(WorkoutUtilities.WORKOUT_DATA_RES_ID, 0);
         setWorkoutImages(workoutResId);
+
+        startingTemp = (TextView) findViewById(R.id.tvStartingZoneTemp);
 
         // Button layout
         Button pauseBtn = (Button) findViewById(R.id.btnPause);
@@ -400,6 +403,11 @@ public class WorkoutActivity extends AppCompatActivity {
     public void startTimer() {
         if (timerRef == null) {
             timerRef = new WorkoutTimer(originalStartTime);
+        }
+
+        if (workout != null) {
+            String minTemp = String.valueOf((int) workout.get("minTemp"));
+            startingTemp.setText(minTemp);
         }
 
         timerRef.startTimer(timerTV, progressBar);
