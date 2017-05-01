@@ -1,5 +1,6 @@
 package com.excy.excy.activities;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -28,6 +29,7 @@ import android.widget.TextView;
 import com.excy.excy.R;
 import com.excy.excy.dialogs.MaxTemperatureDialog;
 import com.excy.excy.dialogs.WarmUpDialog;
+import com.excy.excy.dialogs.WorkoutCompleteDialog;
 import com.excy.excy.timers.PlayTimer;
 import com.excy.excy.utilities.AppUtilities;
 import com.excy.excy.utilities.PlayUtilities;
@@ -38,7 +40,8 @@ import java.util.HashMap;
 
 import info.hoang8f.widget.FButton;
 
-public class PlayActivity extends AppCompatActivity {
+public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDialog.OnCompleteListener {
+    private static Activity activity;
     private static Context context;
 
     private static ImageView excyLogoIV;
@@ -60,12 +63,12 @@ public class PlayActivity extends AppCompatActivity {
     private static int fastInterval;    // in seconds
     private static int slowInterval;    // in seconds
 
-    private long originalStartTime = 0;
+    private static long originalStartTime = 0;
     private boolean setInterval;
 
     private static int progressStartingWidth;
 
-    private HashMap<String, Object> workout;
+    private static HashMap<String, Object> workout;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -91,6 +94,8 @@ public class PlayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
+
+        activity = this;
         context = this;
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
@@ -351,8 +356,11 @@ public class PlayActivity extends AppCompatActivity {
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                endWorkout();
-                reset();
+                if (timer != null) {
+                    timer.cancelTimer(false);
+                }
+
+                endWorkout(false);
             }
         });
 
@@ -387,6 +395,8 @@ public class PlayActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        AppUtilities.setBottomNavBarIconActive(this, R.id.action_play);
     }
 
     @Override
@@ -441,6 +451,19 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onComplete(boolean startTimer) {
+        if (startTimer) {
+            timer.startTimer(timerTV, progressBar, false);
+        } else {
+            finish();
+            Intent intent = new Intent(PlayActivity.this, WorkoutListActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            return;
+        }
+    }
+
     private void showStartButton() {
         pauseBtn.setClickable(false);
         stopBtn.setClickable(false);
@@ -470,6 +493,10 @@ public class PlayActivity extends AppCompatActivity {
     public static void updateTime(int newMinutes, int newSeconds) {
         minutes = newMinutes;
         seconds = newSeconds;
+
+        if ((minutes == 0) && (seconds == 0)) {
+            endWorkout(true);
+        }
     }
 
     private void updateTimer() {
@@ -550,6 +577,7 @@ public class PlayActivity extends AppCompatActivity {
 
         /* Reset timer */
         startingTime = 0;
+        originalStartTime = 0;
         minutes = 00;
         seconds = 00;
         timerTV.setText(PlayUtilities.createTimerString(minutes, seconds));
@@ -581,6 +609,8 @@ public class PlayActivity extends AppCompatActivity {
         startBtn.setClickable(true);
         startBtn.setVisibility(View.VISIBLE);
 
+        workout = null;
+
         getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
@@ -592,7 +622,7 @@ public class PlayActivity extends AppCompatActivity {
         return progressStartingWidth * 3;
     }
 
-    private void endWorkout() {
+    private static void endWorkout(boolean workoutComplete) {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String date = WorkoutUtilities.getWorkoutTimestamp();
         String totalTime = WorkoutUtilities.getElapsedTime(originalStartTime, minutes, seconds);
@@ -602,7 +632,7 @@ public class PlayActivity extends AppCompatActivity {
         workout.put("workoutTitle", WorkoutUtilities.WORKOUT_INTERVAL);
         workout.put("totalTime", totalTime);
         workout.put("caloriesBurned", calsBurned);
-        MaxTemperatureDialog.newInstance(workout).show(getFragmentManager(),
+        MaxTemperatureDialog.newInstance(workout, workoutComplete).show(activity.getFragmentManager(),
                 MaxTemperatureDialog.MAX_TEMP_DIALOG);
     }
 

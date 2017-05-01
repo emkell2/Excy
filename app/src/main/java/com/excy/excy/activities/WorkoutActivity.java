@@ -1,5 +1,6 @@
 package com.excy.excy.activities;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 import com.excy.excy.R;
 import com.excy.excy.dialogs.MaxTemperatureDialog;
 import com.excy.excy.dialogs.WarmUpDialog;
+import com.excy.excy.dialogs.WorkoutCompleteDialog;
 import com.excy.excy.timers.WorkoutTimer;
 import com.excy.excy.utilities.AppUtilities;
 import com.excy.excy.utilities.WorkoutUtilities;
@@ -36,7 +38,7 @@ import java.util.HashMap;
 
 import static android.view.View.GONE;
 
-public class WorkoutActivity extends AppCompatActivity {
+public class WorkoutActivity extends AppCompatActivity implements WorkoutCompleteDialog.OnCompleteListener {
     private static int[] powerZoneArr = {0};
 
     private static long originalStartTime = 0;
@@ -46,16 +48,18 @@ public class WorkoutActivity extends AppCompatActivity {
     private static int seconds = 00;
     private static int currZoneCtr = 0;
 
+    private static Activity activity;
     private static Resources mResources;
 
-    private String workoutName = "";
-    HashMap<String, Object> workout;
+    private static String workoutName = "";
+    private static HashMap<String, Object> workout;
 
     MediaPlayer player;
     WorkoutTimer timerRef; // Needed to have a reference to the timer
 
     TextView timerTV;
     TextView progressBar;
+    TextView startingTemp;
     ImageView audioIcon;
 
     boolean audioIconEnabled = true;
@@ -85,6 +89,8 @@ public class WorkoutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout);
+
+        activity = this;
         mResources = getResources();
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
@@ -107,11 +113,11 @@ public class WorkoutActivity extends AppCompatActivity {
                 if (audioIconEnabled) {
                     audioIconEnabled = false;
                     audioIcon.setAlpha(0.30f);
-                    player.pause();
+                    player.setVolume(0, 0);
                 } else {
                     audioIconEnabled = true;
                     audioIcon.setAlpha(1f);
-                    player.start();
+                    player.setVolume(1, 1);
                 }
             }
         });
@@ -144,6 +150,8 @@ public class WorkoutActivity extends AppCompatActivity {
         int workoutResId = workoutListData.getIntExtra(WorkoutUtilities.WORKOUT_DATA_RES_ID, 0);
         setWorkoutImages(workoutResId);
 
+        startingTemp = (TextView) findViewById(R.id.tvStartingZoneTemp);
+
         // Button layout
         Button pauseBtn = (Button) findViewById(R.id.btnPause);
         pauseBtn.getBackground().setColorFilter(getResources().getColor(R.color.colorPauseBtn),
@@ -168,13 +176,13 @@ public class WorkoutActivity extends AppCompatActivity {
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                player.stop();
+                player.pause();
                 audioIcon.setVisibility(GONE);
                 if (timerRef != null) {
                     timerRef.cancelTimer();
                 }
 
-                endWorkout();
+                endWorkout(false);
             }
         });
 
@@ -215,6 +223,13 @@ public class WorkoutActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        AppUtilities.setBottomNavBarIconActive(this, R.id.action_workouts);
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
 
@@ -225,18 +240,21 @@ public class WorkoutActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+
         currZoneCtr = 0;
         minutes = 0;
         seconds = 0;
         originalStartTime = 0;
         progressStartingWidth = 0;
+        powerZoneArr = null;
         player.stop();
+        player.reset();
 
         if (timerRef != null) {
             timerRef.cancelTimer();
+            timerRef = null;
         }
-
-        finish();
     }
 
     @Override
@@ -247,6 +265,23 @@ public class WorkoutActivity extends AppCompatActivity {
             startTimer();
         } else {
             finish();
+            return;
+        }
+    }
+
+    @Override
+    public void onComplete(boolean startTimer) {
+        if (startTimer) {
+            timerRef = new WorkoutTimer(timerRef.getRemainingTime());
+            startTimer();
+            player.start();
+            audioIcon.setVisibility(View.VISIBLE);
+        } else {
+            finish();
+            Intent intent = new Intent(WorkoutActivity.this, WorkoutListActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            return;
         }
     }
 
@@ -327,6 +362,10 @@ public class WorkoutActivity extends AppCompatActivity {
     public static void updateTime(int newMinutes, int newSeconds) {
         minutes = newMinutes;
         seconds = newSeconds;
+
+        if ((minutes == 0) && (seconds == 0)) {
+            endWorkout(true);
+        }
     }
 
     public static int getProgressBarStartingWidth() {
@@ -334,7 +373,7 @@ public class WorkoutActivity extends AppCompatActivity {
     }
 
     public static void updatePowerZone() {
-        if ((minutes > 0) && (seconds % 60 == 0) && (currZoneCtr < powerZoneArr.length)) {
+        if ((minutes > 0) && (currZoneCtr < powerZoneArr.length)) {
             setTargetPowerZoneImage(powerZoneArr[++currZoneCtr]);
         }
     }
@@ -360,6 +399,7 @@ public class WorkoutActivity extends AppCompatActivity {
                             timerRef.cancelTimer();
                         }
                         finish();
+                        return;
                     }
                 }).show();
     }
@@ -368,7 +408,7 @@ public class WorkoutActivity extends AppCompatActivity {
         return originalStartTime;
     }
 
-    private void endWorkout() {
+    private static void endWorkout(boolean workoutComplete) {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String date = WorkoutUtilities.getWorkoutTimestamp();
         String totalTime = WorkoutUtilities.getElapsedTime(originalStartTime, minutes, seconds);
@@ -379,13 +419,28 @@ public class WorkoutActivity extends AppCompatActivity {
         workout.put("totalTime", totalTime);
         workout.put("caloriesBurned", calsBurned);
 
-        getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        activity.getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        MaxTemperatureDialog.newInstance(workout).show(getFragmentManager(),
+        MaxTemperatureDialog.newInstance(workout, workoutComplete).show(activity.getFragmentManager(),
                 MaxTemperatureDialog.MAX_TEMP_DIALOG);
     }
 
     public void startTimer() {
+        if (timerRef == null) {
+            timerRef = new WorkoutTimer(originalStartTime);
+        }
+
+        // Set min temperature textview
+        if (workout != null) {
+            if (workout.get("minTemp") != null) {
+                int minTemp = (int) workout.get("minTemp");
+                if (minTemp > 0) {
+                    String minTempStr = String.valueOf(minTemp);
+                    startingTemp.setText(minTempStr);
+                }
+            }
+        }
+
         timerRef.startTimer(timerTV, progressBar);
 
         // Start media audio

@@ -77,4 +77,11 @@ public class QuickStatsActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {}
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        AppUtilities.setBottomNavBarIconActive(this, R.id.action_me);
+    }
 }

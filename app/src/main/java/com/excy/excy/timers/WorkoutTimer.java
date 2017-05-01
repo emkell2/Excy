@@ -28,6 +28,7 @@ public class WorkoutTimer {
             int seconds = 0;
             long ms = 0;
             long zoneMs = 0;
+            long offsetMs = 0;
             boolean hasUpdatedImage = false;
             boolean start = true;
 
@@ -36,6 +37,7 @@ public class WorkoutTimer {
                 timeRemaining = millisUntilFinished;
                 ms += 100;
                 zoneMs += 100;
+                offsetMs += 100;
 
                 if (!start) {
                     start = false;
@@ -54,31 +56,20 @@ public class WorkoutTimer {
                         tvTimer.setText(newTime);
                     }
 
-//                    System.out.println("ms=" + millisUntilFinished + " mins=" + minutes
-//                            + " secs=" + seconds + " prevSecs=" + prevSeconds
-//                            + " slowCtr=" + slowIntCtr + " fastCtr=" + fastIntCtr);
-
-
-                    WorkoutActivity.updateTime(minutes, seconds);
-
                     // Update progress approximately every half a second
                     if (ms >= 500) {
+                        WorkoutActivity.updateTime(minutes, seconds);
                         updateProgressBar(progressBar, minutes, seconds);
                         ms = 0;
                     }
 
+                    //                    System.out.println("ms=" + millisUntilFinished + " mins=" + minutes
+//                            + " secs=" + seconds + " offsetMS " + offsetMs);
                     // Try to update the power zone image about once a second. This logic
                     // is really stupid but needed to not skip a zone.
-                    if (zoneMs >= 800) {
-                        if ((!hasUpdatedImage) && (zoneMs == 800)) {
-                            WorkoutActivity.updatePowerZone();
-                            hasUpdatedImage = true;
-                        }
-
-                        if (zoneMs == 1300) {
-                            hasUpdatedImage = false;
-                            zoneMs = 0;
-                        }
+                    if (seconds == 0 && offsetMs > 1000) {
+                        WorkoutActivity.updatePowerZone();
+                        offsetMs = 0;
                     }
                 }
             }

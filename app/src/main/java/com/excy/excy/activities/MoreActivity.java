@@ -69,6 +69,13 @@ public class MoreActivity extends AppCompatActivity implements
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        AppUtilities.setBottomNavBarIconActive(this, R.id.action_more);
+    }
+
+    @Override
     public void onBaseFragCreated(Uri uri) {
         // Do Nothing
     }
