@@ -40,7 +40,7 @@ public class WorkoutCompleteDialog extends DialogFragment{
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final HashMap workout = (HashMap) getArguments().getSerializable(WorkoutUtilities.WORKOUT_DATA);
-        boolean workoutComplete = getArguments().getBoolean(WORKOUT_COMPLETE_DIALOG_DONE);
+        final boolean workoutComplete = getArguments().getBoolean(WORKOUT_COMPLETE_DIALOG_DONE);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Workout Complete");
@@ -51,11 +51,10 @@ public class WorkoutCompleteDialog extends DialogFragment{
                 public void onClick(DialogInterface dialog, int item) {
 
                     if (items[item].equals("Save")) {
-                        TrackResultsDialog.newInstance(workout).show(getFragmentManager(),
-                                TrackResultsDialog.TRACK_RESULTS_DIALOG);
+                        TrackResultsDialog.newInstance(workout)
+                                .show(getFragmentManager(), TrackResultsDialog.TRACK_RESULTS_DIALOG);
                     } else if (items[item].equals("Trash and Exit")) {
-                        getActivity().finish();
-                        return;
+                        mListener.onComplete(false);
                     }
                 }
             });
@@ -67,8 +66,8 @@ public class WorkoutCompleteDialog extends DialogFragment{
 
                     if (items[item].equals("Save")) {
                         dismiss();
-                        TrackResultsDialog.newInstance(workout).show(getFragmentManager(),
-                                TrackResultsDialog.TRACK_RESULTS_DIALOG);
+                        TrackResultsDialog.newInstance(workout)
+                                .show(getFragmentManager(), TrackResultsDialog.TRACK_RESULTS_DIALOG);
                     } else if (items[item].equals("Trash and Exit")) {
                         dismiss();
                         mListener.onComplete(false);

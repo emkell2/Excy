@@ -271,6 +271,9 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
             audioIcon.setVisibility(View.VISIBLE);
         } else {
             finish();
+            Intent intent = new Intent(WorkoutActivity.this, WorkoutListActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
             return;
         }
     }

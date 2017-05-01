@@ -192,7 +192,8 @@ public class SurveyActivity extends AppCompatActivity {
                             Log.d(SURVEY_TAG, "Database Error message: " + databaseError.getMessage());
                             Log.d(SURVEY_TAG, "Database Error details : " + databaseError.getDetails());
                         }
-                        Intent intent = new Intent(getBaseContext(), WorkoutListActivity.class);
+                        Intent intent = new Intent(SurveyActivity.this, QuickStatsActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                     }
                 });

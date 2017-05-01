@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.excy.excy.R;
+import com.excy.excy.activities.QuickStatsActivity;
 import com.excy.excy.activities.SurveyActivity;
 import com.excy.excy.utilities.WorkoutUtilities;
 
@@ -51,6 +52,9 @@ public class TrackResultsDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
                         getActivity().finish();
+                        Intent intent = new Intent(getActivity(), QuickStatsActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
                         return;
                     }
                 });
