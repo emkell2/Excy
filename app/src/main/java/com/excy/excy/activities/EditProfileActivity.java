@@ -207,6 +207,13 @@ public class EditProfileActivity extends AppCompatActivity {
         AppUtilities.removeShiftMode(bottomNavigationView);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        AppUtilities.setBottomNavBarIconActive(this, R.id.action_me);
+    }
+
     private void saveChanges() {
         if (map == null) {
             map = new HashMap<>();

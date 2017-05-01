@@ -395,6 +395,8 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
     @Override
     protected void onResume() {
         super.onResume();
+
+        AppUtilities.setBottomNavBarIconActive(this, R.id.action_play);
     }
 
     @Override

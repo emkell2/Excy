@@ -223,6 +223,13 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        AppUtilities.setBottomNavBarIconActive(this, R.id.action_workouts);
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
 

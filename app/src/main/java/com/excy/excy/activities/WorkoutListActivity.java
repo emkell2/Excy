@@ -113,6 +113,13 @@ public class WorkoutListActivity extends AppCompatActivity {
         excyLinkTV.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        AppUtilities.setBottomNavBarIconActive(this, R.id.action_workouts);
+    }
+
     private void startWorkoutActivity(int resId, long timeInMillis, int audioResId) {
         Intent intent = new Intent(getBaseContext(), WorkoutActivity.class);
 
