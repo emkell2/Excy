@@ -30,9 +30,6 @@ public class WorkoutUtilities {
 
     // Persist Keys
     public static final String KEY_USER_EMAIL = "Key User Email";
-    public static final String KEY_HEALTHY_DESC = "Key Healthy Description";
-    public static final String KEY_CALS_PER_WEEK = "Key Calories a week";
-    public static final String KEY_WORKOUTS_PER_WEEK = "Key Workouts a week";
 
     // Workout Names
     public static final String WORKOUT_ARM_CANDY = "Arm Candy";

@@ -2,10 +2,8 @@ package com.excy.excy.activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.net.Uri;
@@ -29,7 +27,6 @@ import android.widget.Toast;
 
 import com.excy.excy.R;
 import com.excy.excy.utilities.AppUtilities;
-import com.excy.excy.utilities.WorkoutUtilities;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseError;
@@ -79,38 +76,9 @@ public class EditProfileActivity extends AppCompatActivity {
 
         // Set Email TextView
         emailET = (EditText) findViewById(R.id.etEmail);
-        String userEmail = "";
-        String savedEmail = WorkoutUtilities.getPersistedString(this, WorkoutUtilities.KEY_USER_EMAIL);
-        if (!TextUtils.isEmpty(savedEmail)) {
-            userEmail = savedEmail;
-        } else {
-            userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-            WorkoutUtilities.persistString(this, WorkoutUtilities.KEY_USER_EMAIL, userEmail);
-        }
-
+        String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         if (!TextUtils.isEmpty(userEmail)) {
             emailET.setText(userEmail);
-        }
-
-        // Set Healthy Description TextView
-        healthDescET = (EditText) findViewById(R.id.etHealthyDescription);
-        healthDescET.requestFocus();
-        String savedDesc = WorkoutUtilities.getPersistedString(this, WorkoutUtilities.KEY_HEALTHY_DESC);
-        if (!TextUtils.isEmpty(savedDesc)) {
-            healthDescET.setText(savedDesc);
-        }
-
-        // Set Goals TextViews
-        numCalsET = (EditText) findViewById(R.id.etNumCals);
-        String calsPerWeek = WorkoutUtilities.getPersistedString(this, WorkoutUtilities.KEY_CALS_PER_WEEK);
-        if (!TextUtils.isEmpty(calsPerWeek)) {
-            numCalsET.setText(calsPerWeek);
-        }
-
-        numWorkoutsET = (EditText) findViewById(R.id.etNumWorkouts);
-        String workoutsPerWeek = WorkoutUtilities.getPersistedString(this, WorkoutUtilities.KEY_WORKOUTS_PER_WEEK);
-        if (!TextUtils.isEmpty(workoutsPerWeek)) {
-            numWorkoutsET.setText(workoutsPerWeek);
         }
 
         changeImageTV = (TextView) findViewById(R.id.tvChangeProfileImage);
@@ -156,9 +124,6 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Sign user out
                 FirebaseAuth.getInstance().signOut();
-
-                // Delete any persisted data
-                deleteSharedPreferences();
 
                 // Kill Task stack and go back to Login Activity
                 Intent intent = new Intent(getBaseContext(), LoginActivity.class);
@@ -252,13 +217,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 });
 
         finish();
-    }
-
-    private void deleteSharedPreferences() {
-        SharedPreferences sharePrefs = getPreferences(Context.MODE_PRIVATE);
-        sharePrefs.edit()
-                .remove(WorkoutUtilities.KEY_USER_EMAIL)
-                .apply();
     }
 
     private void showFileChooser() {
