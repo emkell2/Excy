@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.excy.excy.R;
 import com.excy.excy.dialogs.MaxTemperatureDialog;
 import com.excy.excy.dialogs.WarmUpDialog;
+import com.excy.excy.dialogs.WorkoutCompleteDialog;
 import com.excy.excy.timers.WorkoutTimer;
 import com.excy.excy.utilities.AppUtilities;
 import com.excy.excy.utilities.WorkoutUtilities;
@@ -37,7 +38,7 @@ import java.util.HashMap;
 
 import static android.view.View.GONE;
 
-public class WorkoutActivity extends AppCompatActivity {
+public class WorkoutActivity extends AppCompatActivity implements WorkoutCompleteDialog.OnCompleteListener{
     private static int[] powerZoneArr = {0};
 
     private static long originalStartTime = 0;
@@ -175,7 +176,7 @@ public class WorkoutActivity extends AppCompatActivity {
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                player.stop();
+                player.pause();
                 audioIcon.setVisibility(GONE);
                 if (timerRef != null) {
                     timerRef.cancelTimer();
@@ -241,6 +242,7 @@ public class WorkoutActivity extends AppCompatActivity {
         progressStartingWidth = 0;
         powerZoneArr = null;
         player.stop();
+        player.reset();
 
         if (timerRef != null) {
             timerRef.cancelTimer();
@@ -254,6 +256,19 @@ public class WorkoutActivity extends AppCompatActivity {
 
         if ((requestCode == AppUtilities.REQUEST_CODE_WARMUP) && (resultCode == RESULT_OK)) {
             startTimer();
+        } else {
+            finish();
+            return;
+        }
+    }
+
+    @Override
+    public void onComplete(boolean startTimer) {
+        if (startTimer) {
+            timerRef = new WorkoutTimer(timerRef.getRemainingTime());
+            startTimer();
+            player.start();
+            audioIcon.setVisibility(View.VISIBLE);
         } else {
             finish();
             return;
@@ -405,9 +420,15 @@ public class WorkoutActivity extends AppCompatActivity {
             timerRef = new WorkoutTimer(originalStartTime);
         }
 
+        // Set min temperature textview
         if (workout != null) {
-            String minTemp = String.valueOf((int) workout.get("minTemp"));
-            startingTemp.setText(minTemp);
+            if (workout.get("minTemp") != null) {
+                int minTemp = (int) workout.get("minTemp");
+                if (minTemp > 0) {
+                    String minTempStr = String.valueOf(minTemp);
+                    startingTemp.setText(minTempStr);
+                }
+            }
         }
 
         timerRef.startTimer(timerTV, progressBar);
