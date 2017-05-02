@@ -147,6 +147,8 @@ public class EditProfileActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottomNavigationView);
 
+        AppUtilities.removeShiftMode(bottomNavigationView);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

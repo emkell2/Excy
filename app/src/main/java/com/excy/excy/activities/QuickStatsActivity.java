@@ -1,13 +1,17 @@
 package com.excy.excy.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 
 import com.excy.excy.R;
-import com.excy.excy.models.WorkoutsAdapter;
 import com.excy.excy.models.Workout;
+import com.excy.excy.models.WorkoutsAdapter;
 import com.excy.excy.utilities.AppUtilities;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -31,9 +35,38 @@ public class QuickStatsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quick_stats);
 
+        AppUtilities.setBottomNavBarIconActive(this, R.id.action_me);
+
         if (workoutList == null) {
             workoutList = new ArrayList<>(workoutListSize);
         }
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.bottomNavigationView);
+
+        AppUtilities.removeShiftMode(bottomNavigationView);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
+                switch (item.getItemId()) {
+                    case R.id.action_play:
+                        intent = new Intent(getBaseContext(), PlayActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.action_workouts:
+                        intent = new Intent(getBaseContext(), WorkoutListActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.action_more:
+                        intent = new Intent(getBaseContext(), MoreActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                return true;
+            }
+        });
 
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.rvRecentWorkouts);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
