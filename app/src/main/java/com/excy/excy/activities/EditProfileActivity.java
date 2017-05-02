@@ -81,6 +81,10 @@ public class EditProfileActivity extends AppCompatActivity {
             emailET.setText(userEmail);
         }
 
+        healthDescET = (EditText) findViewById(R.id.etHealthyDescription);
+        numCalsET = (EditText) findViewById(R.id.etNumCals);
+        numWorkoutsET = (EditText) findViewById(R.id.etNumWorkouts);
+
         changeImageTV = (TextView) findViewById(R.id.tvChangeProfileImage);
         imageOneTV = (TextView) findViewById(R.id.tvImageOne);
         imageTwoTV = (TextView) findViewById(R.id.tvImageTwo);
