@@ -67,7 +67,6 @@ public class SignUpActivity extends AppCompatActivity {
         };
 
         final RadioButton maleRB = (RadioButton) findViewById(R.id.rbMale);
-        final RadioButton femaleRB = (RadioButton) findViewById(R.id.rbFemale);
         final EditText weightET = (EditText) findViewById(R.id.etWeight);
         final EditText heightET = (EditText) findViewById(R.id.etHeight);
         final EditText ageET = (EditText) findViewById(R.id.etAge);
@@ -165,6 +164,15 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 });
 
+            }
+        });
+
+        Button loginBtn = (Button) findViewById(R.id.btnLogin);
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                startActivity(intent);
             }
         });
 
