@@ -38,7 +38,7 @@ public class MoreActivity extends AppCompatActivity implements
 
         Fragment moreBaseFrag = new MoreBaseFragment();
         fragmentManager.beginTransaction().replace(R.id.more_fragment_container, moreBaseFrag,
-                getResources().getString(R.string.more_base_frag)).commit();
+                getResources().getString(R.string.more_base_frag)).commitAllowingStateLoss();
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottomNavigationView);
