@@ -37,8 +37,12 @@
             android:name=".activities.SignUpActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activities.WorkoutListActivity" />
-        <activity android:name=".activities.WorkoutActivity" android:configChanges="orientation|screenSize"/>
-        <activity android:name=".activities.MeActivity" />
+        <activity
+            android:name=".activities.WorkoutActivity"
+            android:configChanges="orientation|screenSize"/>
+        <activity
+            android:name=".activities.MeActivity"
+            android:hardwareAccelerated="false"/>
         <activity android:name=".activities.EditProfileActivity" />
         <activity android:name=".activities.SurveyActivity" />
         <activity
