@@ -100,7 +100,7 @@ public class MeActivity extends AppCompatActivity {
 
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.rvRecentWorkouts);
         mRecyclerView.setLayoutManager(nonScrollableLinearLayoutManager);
-        mAdapter = new WorkoutsAdapter(workoutList);
+        mAdapter = new WorkoutsAdapter(getBaseContext(), workoutList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
 

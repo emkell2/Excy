@@ -70,7 +70,7 @@ public class QuickStatsActivity extends AppCompatActivity {
 
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.rvRecentWorkouts);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new WorkoutsAdapter(workoutList);
+        mAdapter = new WorkoutsAdapter(getBaseContext(), workoutList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
 
