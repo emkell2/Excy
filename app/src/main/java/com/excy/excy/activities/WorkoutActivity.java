@@ -63,6 +63,7 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
     ImageView audioIcon;
 
     boolean audioIconEnabled = true;
+    boolean warmUpDialogShown;
 
     static ImageView targetZoneIV;
 
@@ -218,8 +219,12 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
         excyLinkTV.setMovementMethod(LinkMovementMethod.getInstance());
 
         HashMap<String, Object> workout = new HashMap<>();
-        WarmUpDialog.newInstance(false, WorkoutUtilities.INTENT_START_WORKOUT_TIMER, workout)
-                .show(getFragmentManager(), WarmUpDialog.WARM_UP_DIALOG);
+
+        if (!warmUpDialogShown) {
+            warmUpDialogShown = true;
+            WarmUpDialog.newInstance(false, WorkoutUtilities.INTENT_START_WORKOUT_TIMER, workout)
+                    .show(getFragmentManager(), WarmUpDialog.WARM_UP_DIALOG);
+        }
     }
 
     @Override

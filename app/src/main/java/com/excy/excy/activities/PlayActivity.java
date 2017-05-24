@@ -65,6 +65,7 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
 
     private static long originalStartTime = 0;
     private boolean setInterval;
+    private boolean warmUpDialogShown;
 
     private static int progressStartingWidth;
 
@@ -337,8 +338,12 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
                 timer = new PlayTimer(startTime);
 
                 HashMap<String, Object> workout = new HashMap<>();
-                WarmUpDialog.newInstance(true, WorkoutUtilities.INTENT_START_PLAY_TIMER, workout)
-                        .show(getFragmentManager(), WarmUpDialog.WARM_UP_DIALOG);
+
+                if (!warmUpDialogShown) {
+                    warmUpDialogShown = true;
+                    WarmUpDialog.newInstance(true, WorkoutUtilities.INTENT_START_PLAY_TIMER, workout)
+                            .show(getFragmentManager(), WarmUpDialog.WARM_UP_DIALOG);
+                }
             }
         });
 
@@ -635,6 +640,7 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
         workout.put("workoutTitle", WorkoutUtilities.WORKOUT_INTERVAL);
         workout.put("totalTime", totalTime);
         workout.put("caloriesBurned", calsBurned);
+
         MaxTemperatureDialog.newInstance(workout, workoutComplete).show(activity.getFragmentManager(),
                 MaxTemperatureDialog.MAX_TEMP_DIALOG);
     }
