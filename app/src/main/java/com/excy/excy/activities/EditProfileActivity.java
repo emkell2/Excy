@@ -5,6 +5,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,12 +30,18 @@ import android.widget.Toast;
 
 import com.excy.excy.R;
 import com.excy.excy.utilities.AppUtilities;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 
 public class EditProfileActivity extends AppCompatActivity {
@@ -56,6 +65,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private int selectedImageButton = 0;
 
     private HashMap<String, Object> map;
+
+    FirebaseStorage storage = FirebaseStorage.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,8 +216,7 @@ public class EditProfileActivity extends AppCompatActivity {
             map.put("workoutGoal", numWorkouts);
         }
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String userId = user.getUid();
+        String userId = getUserId();
 
         DatabaseReference mDataBaseReference = FirebaseDatabase.getInstance().getReference();
         mDataBaseReference.child(AppUtilities.TABLE_NAME_USERS).child(userId).updateChildren(map,
@@ -272,6 +282,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
 
                 Uri selectedImage = data.getData();
+                Bitmap imageBitmap = getImage(selectedImage);
 
                 ImageButton imageButton;
 
@@ -279,27 +290,27 @@ public class EditProfileActivity extends AppCompatActivity {
                     case 1:
                         imageButton = imageLeft;
                         imageOneTV.setText("");
-                        map.put("inspiringImage1", selectedImage.toString());
+                        uploadImage("inspiringImage1", imageBitmap);
                         break;
                     case 2:
                         imageButton = imageCenter;
                         imageTwoTV.setText("");
-                        map.put("inspiringImage2", selectedImage.toString());
+                        uploadImage("inspiringImage2", imageBitmap);
                         break;
                     case 3:
                         imageButton = imageRight;
                         imageThreeTV.setText("");
-                        map.put("inspiringImage3", selectedImage.toString());
+                        uploadImage("inspiringImage3", imageBitmap);
                         break;
                     case 4:
                         imageButton = userProfile;
                         changeImageTV.setText("");
-                        map.put("profileImageUrl", selectedImage.toString());
+                        uploadImage("profileImage", imageBitmap);
                         break;
                     default:
                         imageButton = userProfile;
                         changeImageTV.setText("");
-                        map.put("profileImageUrl", selectedImage.toString());
+                        uploadImage("profileImage", imageBitmap);
                         break;
                 }
 
@@ -329,5 +340,49 @@ public class EditProfileActivity extends AppCompatActivity {
                 return;
             }
         }
+    }
+
+    private String getUserId() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        return user.getUid();
+    }
+
+    private Bitmap getImage(Uri imageUri) {
+        String[] filePath = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getContentResolver().query(imageUri, filePath, null, null, null);
+        cursor.moveToFirst();
+        String imagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
+
+        cursor.close();
+
+        return bitmap;
+    }
+
+    private void uploadImage(String fileNameSuffix, Bitmap bitmap) {
+        String fileName = "images/" + getUserId() + "_" + fileNameSuffix;
+        StorageReference storageRef = storage.getReference().child(fileName);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = storageRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                //Uri downloadUrl = taskSnapshot.getDownloadUrl();
+            }
+        });
     }
 }
