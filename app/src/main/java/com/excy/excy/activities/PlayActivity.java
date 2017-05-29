@@ -19,7 +19,6 @@ import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -66,8 +65,6 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
     private static long originalStartTime = 0;
     private boolean setInterval;
     private boolean warmUpDialogShown;
-
-    private static int progressStartingWidth;
 
     private static HashMap<String, Object> workout;
 
@@ -285,21 +282,7 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
         progressBar = (TextView) findViewById(R.id.tvProgressBar);
         final LinearLayout mainPlayLayout = (LinearLayout) findViewById(R.id.mainPlayLayout);
 
-        progressBar.getViewTreeObserver().addOnGlobalLayoutListener(
-                new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        // gets called after layout has been done but before display
-                        // so we can get the height then hide the view
-
-                        progressStartingWidth = AppUtilities.dpFromPx(context, progressBar.getWidth());
-                        System.out.println("startWidth=" + progressStartingWidth);
-
-                        progressBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                        progressBar.setVisibility(View.GONE);
-                    }
-                }
-        );
+        progressBar.setVisibility(View.GONE);
 
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -566,6 +549,11 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
         runningManIV.setImageResource(drawableId);
 
         if (stringId != 0) {
+
+            if (!intervalTextTV.isShown()) {
+                intervalTextTV.setVisibility(View.VISIBLE);
+            }
+
             intervalTextTV.setText(stringId);
 
             if (stringId == R.string.slow_it_down) {
@@ -596,9 +584,6 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
         slowIntervalTV.setText("000");
         fastIntervalTV.setText("000");
 
-        /* Reset ProgressBar */
-        progressBar.setWidth(progressStartingWidth);
-
         /* Hide running man image and progress bar*/
         runningManIV.setVisibility(View.GONE);
         intervalTextTV.setVisibility(View.GONE);
@@ -624,10 +609,6 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
 
     public static Context getContext() {
         return context;
-    }
-
-    public static int getProgressBarStartingWidth() {
-        return progressStartingWidth * 3;
     }
 
     private static void endWorkout(boolean workoutComplete) {

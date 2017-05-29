@@ -310,43 +310,46 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
 
                 Uri selectedImage = data.getData();
-                Bitmap imageBitmap = getImage(selectedImage);
 
-                ImageButton imageButton;
+                if (selectedImage != null) {
+                    Bitmap imageBitmap = getImage(selectedImage);
 
-                switch (selectedImageButton) {
-                    case 1:
-                        imageButton = imageLeft;
-                        imageOneTV.setText("");
-                        inspirationOneBitmap = imageBitmap;
-                        break;
-                    case 2:
-                        imageButton = imageCenter;
-                        imageTwoTV.setText("");
-                        inspirationTwoBitmap = imageBitmap;
-                        break;
-                    case 3:
-                        imageButton = imageRight;
-                        imageThreeTV.setText("");
-                        inspirationThreeBitmap = imageBitmap;
-                        break;
-                    case 4:
-                        imageButton = userProfile;
-                        changeImageTV.setText("");
-                        profileBitmap = imageBitmap;
-                        break;
-                    default:
-                        imageButton = userProfile;
-                        changeImageTV.setText("");
-                        profileBitmap = imageBitmap;
-                        break;
+                    ImageButton imageButton;
+
+                    switch (selectedImageButton) {
+                        case 1:
+                            imageButton = imageLeft;
+                            imageOneTV.setText("");
+                            inspirationOneBitmap = imageBitmap;
+                            break;
+                        case 2:
+                            imageButton = imageCenter;
+                            imageTwoTV.setText("");
+                            inspirationTwoBitmap = imageBitmap;
+                            break;
+                        case 3:
+                            imageButton = imageRight;
+                            imageThreeTV.setText("");
+                            inspirationThreeBitmap = imageBitmap;
+                            break;
+                        case 4:
+                            imageButton = userProfile;
+                            changeImageTV.setText("");
+                            profileBitmap = imageBitmap;
+                            break;
+                        default:
+                            imageButton = userProfile;
+                            changeImageTV.setText("");
+                            profileBitmap = imageBitmap;
+                            break;
+                    }
+
+                    imageButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    imageButton.setAdjustViewBounds(false);
+                    imageButton.setPadding(0, 0, 0, 0);
+                    imageButton.setImageResource(0);
+                    imageButton.setImageURI(selectedImage);
                 }
-
-                imageButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageButton.setAdjustViewBounds(false);
-                imageButton.setPadding(0,0,0,0);
-                imageButton.setImageResource(0);
-                imageButton.setImageURI(selectedImage);
             }
         }
     }
