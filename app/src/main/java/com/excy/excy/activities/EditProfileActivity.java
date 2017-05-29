@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -58,6 +60,9 @@ public class EditProfileActivity extends AppCompatActivity {
     ImageButton imageLeft;
     ImageButton imageCenter;
     ImageButton imageRight;
+    ProgressBar progressBar;
+
+    Button saveChangesBtn;
 
     private static final int REQUEST_CAMERA = 1;
     private static final int SELECT_FILE = 2;
@@ -74,6 +79,8 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
 
         AppUtilities.setBottomNavBarIconActive(this, R.id.action_me);
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         // Set user profile image
         userProfile = (ImageButton) findViewById(R.id.ibChangeProfileImage);
@@ -148,7 +155,7 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
-        final Button saveChangesBtn = (Button) findViewById(R.id.btnSaveChanges);
+        saveChangesBtn = (Button) findViewById(R.id.btnSaveChanges);
 
         saveChangesBtn.getBackground().setColorFilter(
                 getResources().getColor(R.color.colorSaveChangesBtn), PorterDuff.Mode.MULTIPLY);
@@ -368,7 +375,7 @@ public class EditProfileActivity extends AppCompatActivity {
         StorageReference storageRef = storage.getReference().child(fileName);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
         byte[] data = baos.toByteArray();
 
         UploadTask uploadTask = storageRef.putBytes(data);
@@ -376,13 +383,39 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle unsuccessful uploads
+                hideProgressBar();
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                 //Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                hideProgressBar();
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                if (taskSnapshot.getBytesTransferred() < taskSnapshot.getTotalByteCount()) {
+                    Toast.makeText(getBaseContext(), "Uploading image...", Toast.LENGTH_SHORT).show();
+                }
+
+                showProgressBar();
+
             }
         });
+    }
+
+    private void showProgressBar() {
+        if (!progressBar.isShown()) {
+            progressBar.setVisibility(View.VISIBLE);
+            saveChangesBtn.setClickable(false);
+            saveChangesBtn.setEnabled(false);
+        }
+    }
+
+    private void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
+        saveChangesBtn.setClickable(true);
+        saveChangesBtn.setEnabled(true);
     }
 }
