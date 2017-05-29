@@ -88,7 +88,7 @@ public class LearnExercisesFragment extends Fragment {
                 fragmentManager.beginTransaction()
                         .replace(R.id.more_fragment_container, frag, STR_ARM_CANDY)
                         .addToBackStack(STR_ARM_CANDY)
-                        .commit();
+                        .commitAllowingStateLoss();
             }
         });
 
@@ -101,7 +101,7 @@ public class LearnExercisesFragment extends Fragment {
                 fragmentManager.beginTransaction()
                         .replace(R.id.more_fragment_container, frag, STR_SUPER_CYCLE_CARDIO)
                         .addToBackStack(STR_SUPER_CYCLE_CARDIO)
-                        .commit();
+                        .commitAllowingStateLoss();
             }
         });
 
@@ -114,7 +114,7 @@ public class LearnExercisesFragment extends Fragment {
                 fragmentManager.beginTransaction()
                         .replace(R.id.more_fragment_container, frag, STR_CYCLE_LEG_BLAST)
                         .addToBackStack(STR_CYCLE_LEG_BLAST)
-                        .commit();
+                        .commitAllowingStateLoss();
             }
         });
 
@@ -127,7 +127,7 @@ public class LearnExercisesFragment extends Fragment {
                 fragmentManager.beginTransaction()
                         .replace(R.id.more_fragment_container, frag, STR_CORE_FLOOR_EXPLOSION)
                         .addToBackStack(STR_CORE_FLOOR_EXPLOSION)
-                        .commit();
+                        .commitAllowingStateLoss();
             }
         });
 
@@ -140,7 +140,7 @@ public class LearnExercisesFragment extends Fragment {
                 fragmentManager.beginTransaction()
                         .replace(R.id.more_fragment_container, frag, STR_ARM_BLAST)
                         .addToBackStack(STR_ARM_BLAST)
-                        .commit();
+                        .commitAllowingStateLoss();
             }
         });
 
@@ -153,7 +153,7 @@ public class LearnExercisesFragment extends Fragment {
                 fragmentManager.beginTransaction()
                         .replace(R.id.more_fragment_container, frag, STR_ULTIMATE_ARM_LEG_TONING)
                         .addToBackStack(STR_ULTIMATE_ARM_LEG_TONING)
-                        .commit();
+                        .commitAllowingStateLoss();
             }
         });
 

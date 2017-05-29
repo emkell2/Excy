@@ -9,16 +9,16 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/ivWatchWorkouts"
+            android:id="@+id/ivVideos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/more_watch_the_workouts"/>
+            android:src="@drawable/more_videos"/>
 
         <ImageView
             android:id="@+id/ivArmCandy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ivWatchWorkouts"
+            android:layout_below="@+id/ivVideos"
             android:layout_marginBottom="8dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"

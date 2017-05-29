@@ -2,7 +2,7 @@ package com.excy.excy.timers;
 
 import android.os.CountDownTimer;
 import android.text.TextUtils;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.excy.excy.activities.WarmUpActivity;
@@ -16,7 +16,6 @@ public class WarmupTimer {
     private CountDownTimer timer;
     private static long timeRemaining;
 
-    private static final int progressTotalWidth = WarmUpActivity.getProgressBarStartingWidth();
     public boolean finished;
 
     public WarmupTimer(long startTime) {
@@ -92,9 +91,11 @@ public class WarmupTimer {
             progress = 0;
         }
 
-        int newWidth = (int) (progressTotalWidth * (progress / 100));
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) progressBar.getLayoutParams();
-        params.width = newWidth;
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) progressBar.getLayoutParams();
+        if (params.width != 0) {
+            params.width = 0;
+        }
+        params.weight = progress;
         progressBar.setLayoutParams(params);
     }
 

@@ -42,7 +42,6 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
     private static int[] powerZoneArr = {0};
 
     private static long originalStartTime = 0;
-    private static int progressStartingWidth;
 
     private static int minutes = 00;
     private static int seconds = 00;
@@ -63,6 +62,7 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
     ImageView audioIcon;
 
     boolean audioIconEnabled = true;
+    boolean warmUpDialogShown;
 
     static ImageView targetZoneIV;
 
@@ -126,20 +126,18 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
                 new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
                     public void onGlobalLayout() {
+                        // TODO: Take this out of the observer, don't need to be here anymore
                         // gets called after layout has been done but before display
                         // so we can get the height then hide the view
+                        progressBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-                        progressStartingWidth = AppUtilities.dpFromPx(getBaseContext(),
-                                progressBar.getWidth());
-                        System.out.println("startWidth=" + progressStartingWidth);
+                        progressBar.setVisibility(View.GONE);
 
                         // Start Timer, needed to put this code in here to get progressBar width
                         long timeInMillis = workoutListData.getLongExtra(WorkoutUtilities.WORKOUT_DATA_TIME_MILLIS, 0);
                         originalStartTime = timeInMillis;
                         final WorkoutTimer timer = new WorkoutTimer(timeInMillis);
                         timerRef = timer;
-
-                        progressBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                     }
                 }
         );
@@ -218,8 +216,12 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
         excyLinkTV.setMovementMethod(LinkMovementMethod.getInstance());
 
         HashMap<String, Object> workout = new HashMap<>();
-        WarmUpDialog.newInstance(false, WorkoutUtilities.INTENT_START_WORKOUT_TIMER, workout)
-                .show(getFragmentManager(), WarmUpDialog.WARM_UP_DIALOG);
+
+        if (!warmUpDialogShown) {
+            warmUpDialogShown = true;
+            WarmUpDialog.newInstance(false, WorkoutUtilities.INTENT_START_WORKOUT_TIMER, workout)
+                    .show(getFragmentManager(), WarmUpDialog.WARM_UP_DIALOG);
+        }
     }
 
     @Override
@@ -246,7 +248,6 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
         minutes = 0;
         seconds = 0;
         originalStartTime = 0;
-        progressStartingWidth = 0;
         powerZoneArr = null;
         player.stop();
         player.reset();
@@ -366,10 +367,6 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
         if ((minutes == 0) && (seconds == 0)) {
             endWorkout(true);
         }
-    }
-
-    public static int getProgressBarStartingWidth() {
-        return progressStartingWidth * 3;
     }
 
     public static void updatePowerZone() {

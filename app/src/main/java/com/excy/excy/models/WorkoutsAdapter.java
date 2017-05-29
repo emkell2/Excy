@@ -1,5 +1,6 @@
 package com.excy.excy.models;
 
+import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -14,15 +15,15 @@ import com.excy.excy.utilities.WorkoutUtilities;
 
 import java.util.ArrayList;
 
-import static com.excy.excy.activities.PlayActivity.getContext;
-
 /**
  * Created by erin.kelley on 4/24/17.
  */
 public class WorkoutsAdapter extends RecyclerView.Adapter<WorkoutsAdapter.ViewHolder> {
+    Context mContext;
     ArrayList<Workout> workouts;
 
-    public WorkoutsAdapter(ArrayList<Workout> workoutList){
+    public WorkoutsAdapter(Context context, ArrayList<Workout> workoutList){
+        mContext = context;
         this.workouts = workoutList;
     }
 
@@ -36,66 +37,68 @@ public class WorkoutsAdapter extends RecyclerView.Adapter<WorkoutsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(WorkoutsAdapter.ViewHolder holder, int position) {
-        holder.workoutTitle.setText(workouts.get(position).getWorkoutTitle());
-        holder.workoutDate.setText(workouts.get(position).getDateCompleted());
-        holder.totalTime.setText(workouts.get(position).getTotalTime());
-        holder.minTemp.setText("min: " + String.valueOf(workouts.get(position).getMinTemp()));
-        holder.maxTemp.setText("max: " + String.valueOf(workouts.get(position).getMaxTemp()));
-        holder.caloriesBurned.setText(String.valueOf(workouts.get(position).getCaloriesBurned()));
+        if (mContext != null) {
+            holder.workoutTitle.setText(workouts.get(position).getWorkoutTitle());
+            holder.workoutDate.setText(workouts.get(position).getDateCompleted());
+            holder.totalTime.setText(workouts.get(position).getTotalTime());
+            holder.minTemp.setText("min: " + String.valueOf(workouts.get(position).getMinTemp()));
+            holder.maxTemp.setText("max: " + String.valueOf(workouts.get(position).getMaxTemp()));
+            holder.caloriesBurned.setText(String.valueOf(workouts.get(position).getCaloriesBurned()));
 
-        // Set enjoyment data
-        String enjoyment = workouts.get(position).getEnjoyment();
-        if (!TextUtils.isEmpty(enjoyment)) {
-            holder.enjoyment.setText(enjoyment);
+            // Set enjoyment data
+            String enjoyment = workouts.get(position).getEnjoyment();
+            if (!TextUtils.isEmpty(enjoyment)) {
+                holder.enjoyment.setText(enjoyment);
 
-            switch (enjoyment) {
-                case WorkoutUtilities.AMAZING:
-                case WorkoutUtilities.GREAT:
-                    holder.faceImage.setImageDrawable(getContext().getResources()
-                            .getDrawable(R.drawable.ic_smilie_happy));
-                    break;
-                case WorkoutUtilities.GOOD:
-                    holder.faceImage.setImageDrawable(getContext().getResources()
-                            .getDrawable(R.drawable.ic_smilie_satisfied));
-                    break;
-                case WorkoutUtilities.BAD:
-                case WorkoutUtilities.AWFUL:
-                    holder.faceImage.setImageDrawable(getContext().getResources()
-                            .getDrawable(R.drawable.ic_smilie_sad));
-                    break;
-                default:
-                    holder.faceImage.setImageDrawable(getContext().getResources()
-                            .getDrawable(R.drawable.ic_smilie_happy));
-                    break;
+                switch (enjoyment) {
+                    case WorkoutUtilities.AMAZING:
+                    case WorkoutUtilities.GREAT:
+                        holder.faceImage.setImageDrawable(mContext.getResources()
+                                .getDrawable(R.drawable.ic_smilie_happy));
+                        break;
+                    case WorkoutUtilities.GOOD:
+                        holder.faceImage.setImageDrawable(mContext.getResources()
+                                .getDrawable(R.drawable.ic_smilie_satisfied));
+                        break;
+                    case WorkoutUtilities.BAD:
+                    case WorkoutUtilities.AWFUL:
+                        holder.faceImage.setImageDrawable(mContext.getResources()
+                                .getDrawable(R.drawable.ic_smilie_sad));
+                        break;
+                    default:
+                        holder.faceImage.setImageDrawable(mContext.getResources()
+                                .getDrawable(R.drawable.ic_smilie_happy));
+                        break;
+                }
             }
-        }
 
-        // Set location data
-        String location = workouts.get(position).getLocation();
-        if (!TextUtils.isEmpty(location)) {
-            holder.location.setText(location);
+            // Set location data
+            String location = workouts.get(position).getLocation();
+            if (!TextUtils.isEmpty(location)) {
+                holder.location.setText(location);
 
-            switch (location) {
-                case WorkoutUtilities.AT_HOME:
-                    holder.locationImage.setImageDrawable(getContext().getResources()
-                            .getDrawable(R.drawable.account_home));
-                    break;
-                case WorkoutUtilities.AT_WORK:
-                    holder.locationImage.setImageDrawable(getContext().getResources()
-                            .getDrawable(R.drawable.account_work));
-                    break;
-                case WorkoutUtilities.TRAVELING:
-                    holder.locationImage.setImageDrawable(getContext().getResources()
-                            .getDrawable(R.drawable.account_traveling));
-                    break;
-                case WorkoutUtilities.ON_THE_GO:
-                    holder.locationImage.setImageDrawable(getContext().getResources()
-                            .getDrawable(R.drawable.account_on_the_go));
-                    break;
-                default:
-                    holder.locationImage.setImageDrawable(getContext().getResources()
-                            .getDrawable(R.drawable.account_home));
-                    break;
+                switch (location) {
+                    case WorkoutUtilities.AT_HOME:
+                        holder.locationImage.setImageDrawable(mContext.getResources()
+                                .getDrawable(R.drawable.account_home));
+                        break;
+                    case WorkoutUtilities.AT_WORK:
+                        holder.locationImage.setImageDrawable(mContext.getResources()
+                                .getDrawable(R.drawable.account_work));
+                        break;
+                    case WorkoutUtilities.TRAVELING:
+                        holder.locationImage.setImageDrawable(mContext.getResources()
+                                .getDrawable(R.drawable.account_traveling));
+                        break;
+                    case WorkoutUtilities.ON_THE_GO:
+                        holder.locationImage.setImageDrawable(mContext.getResources()
+                                .getDrawable(R.drawable.account_on_the_go));
+                        break;
+                    default:
+                        holder.locationImage.setImageDrawable(mContext.getResources()
+                                .getDrawable(R.drawable.account_home));
+                        break;
+                }
             }
         }
     }

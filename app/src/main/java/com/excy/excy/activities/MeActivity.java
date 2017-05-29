@@ -30,13 +30,19 @@ import com.excy.excy.models.Workout;
 import com.excy.excy.models.WorkoutsAdapter;
 import com.excy.excy.utilities.AppUtilities;
 import com.excy.excy.utilities.NonScrollableLinearLayoutManager;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -49,6 +55,8 @@ public class MeActivity extends AppCompatActivity {
     private int workoutListSize = 5;
     private int count = 0;
     WorkoutsAdapter mAdapter;
+
+    FirebaseStorage storage = FirebaseStorage.getInstance();
 
     ImageView profileImage;
     ImageView inspirationImage1;
@@ -100,7 +108,7 @@ public class MeActivity extends AppCompatActivity {
 
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.rvRecentWorkouts);
         mRecyclerView.setLayoutManager(nonScrollableLinearLayoutManager);
-        mAdapter = new WorkoutsAdapter(workoutList);
+        mAdapter = new WorkoutsAdapter(getBaseContext(), workoutList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
 
@@ -257,44 +265,61 @@ public class MeActivity extends AppCompatActivity {
     }
 
     private void displayImages() {
-        String profileStr = user.getProfileImageUrl();
-        if (!TextUtils.isEmpty(profileStr)) {
-            Uri profileImageUri = Uri.parse(profileStr);
-            if (profileImageUri != null) {
-                setupImage(profileImageUri, profileImage);
-            }
-        }
+        StorageReference storageRef = storage.getReference();
 
-        String imageOneStr = user.getInspiringImage1();
-        if (!TextUtils.isEmpty(imageOneStr)) {
-            Uri inspirationOneUri = Uri.parse(imageOneStr);
-            if (inspirationOneUri != null) {
-                setupImage(inspirationOneUri, inspirationImage1);
-            }
-        }
+        if (storageRef != null) {
+            String profileImageStr = "images/" + getUserId() + "_" + "profileImage";
+            downloadImages(profileImageStr, profileImage, storageRef);
 
-        String imageTwoStr = user.getInspiringImage2();
-        if (!TextUtils.isEmpty(imageTwoStr)) {
-            Uri inspirationTwoUri = Uri.parse(imageTwoStr);
-            if (inspirationTwoUri != null) {
-                setupImage(inspirationTwoUri, inspirationImage2);
-            }
-        }
+            String inspirationOneStr = "images/" + getUserId() + "_" + "inspiringImage1";
+            downloadImages(inspirationOneStr, inspirationImage1, storageRef);
 
-        String imageThreeStr = user.getInspiringImage3();
-        if (!TextUtils.isEmpty(imageThreeStr)) {
-            Uri inspirationThreeUri = Uri.parse(imageThreeStr);
-            if (inspirationThreeUri != null) {
-                setupImage(inspirationThreeUri, inspirationImage3);
-            }
+            String inspirationTwoStr = "images/" + getUserId() + "_" + "inspiringImage2";
+            downloadImages(inspirationTwoStr, inspirationImage2, storageRef);
+
+            String inspirationThreeStr = "images/" + getUserId() + "_" + "inspiringImage3";
+            downloadImages(inspirationThreeStr, inspirationImage3, storageRef);
         }
     }
 
-    private void setupImage(Uri uri, ImageView image) {
-        image.setImageURI(uri);
-        image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        image.setAdjustViewBounds(false);
+    private void downloadImages(final String url, final ImageView imageView,
+                                final StorageReference storageRef) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                storageRef.child(url).getDownloadUrl()
+                        .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        // Got the download URL for 'images/...'
+                        if (uri != null) {
+                            // Retrieve image from Firebase with Picasso
+                            Picasso.with(getBaseContext())
+                                    .load(uri.toString())
+                                    .fit()
+                                    .centerCrop()
+                                    .into(imageView);
+                            setupImage(imageView);
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void setupImage(ImageView image) {
         image.setPadding(0,0,0,0);
+    }
+
+    private String getUserId() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        return user.getUid();
     }
 }
 

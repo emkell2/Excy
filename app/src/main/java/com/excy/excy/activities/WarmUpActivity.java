@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.excy.excy.R;
 import com.excy.excy.timers.WarmupTimer;
-import com.excy.excy.utilities.AppUtilities;
 
 public class WarmUpActivity extends AppCompatActivity {
     private static Activity activity;
@@ -24,7 +23,6 @@ public class WarmUpActivity extends AppCompatActivity {
     WarmupTimer timerRef; // Needed to have a reference to the timer
 
     private static long origintalStartTimeMillis = 120000;
-    private static int progressStartingWidth;
     private static int minutes = 00;
     private static int seconds = 00;
 
@@ -41,12 +39,9 @@ public class WarmUpActivity extends AppCompatActivity {
                 new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
                     public void onGlobalLayout() {
+                        // TODO: Remove this code out of the observer, no longer needed.
                         // gets called after layout has been done but before display
                         // so we can get the height then hide the view
-
-                        progressStartingWidth = AppUtilities.dpFromPx(getBaseContext(),
-                                progressBar.getWidth());
-                        System.out.println("startWidth=" + progressStartingWidth);
 
                         // Start Timer, needed to put this code in here to get progressBar width
                         if (timerRef == null) {
@@ -103,7 +98,6 @@ public class WarmUpActivity extends AppCompatActivity {
 
         minutes = 0;
         seconds = 0;
-        progressStartingWidth = 0;
 
         if (timerRef != null) {
             timerRef.cancelTimer();
@@ -148,10 +142,6 @@ public class WarmUpActivity extends AppCompatActivity {
             activity.finish();
             return;
         }
-    }
-
-    public static int getProgressBarStartingWidth() {
-        return progressStartingWidth * 3;
     }
 
     public static long getOriginalStartTime() {

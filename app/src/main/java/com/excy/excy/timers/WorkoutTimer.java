@@ -2,7 +2,8 @@ package com.excy.excy.timers;
 
 import android.os.CountDownTimer;
 import android.text.TextUtils;
-import android.widget.RelativeLayout;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.excy.excy.activities.WorkoutActivity;
@@ -16,7 +17,6 @@ public class WorkoutTimer {
     private CountDownTimer timer;
     private static long timeRemaining;
 
-    private static final int progressTotalWidth = WorkoutActivity.getProgressBarStartingWidth();
     public boolean finished;
 
     public WorkoutTimer(long startTime) {
@@ -24,6 +24,11 @@ public class WorkoutTimer {
     }
 
     public void startTimer(final TextView tvTimer, final TextView progressBar) {
+
+        if (!progressBar.isShown()) {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
         timer = new CountDownTimer(timeRemaining, 100) {
             int seconds = 0;
             long ms = 0;
@@ -102,9 +107,11 @@ public class WorkoutTimer {
             progress = 0;
         }
 
-        int newWidth = (int) (progressTotalWidth * (progress / 100));
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) progressBar.getLayoutParams();
-        params.width = newWidth;
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) progressBar.getLayoutParams();
+        if (params.width != 0) {
+            params.width = 0;
+        }
+        params.weight = progress;
         progressBar.setLayoutParams(params);
     }
 

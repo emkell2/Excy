@@ -2,7 +2,8 @@ package com.excy.excy.timers;
 
 import android.os.CountDownTimer;
 import android.text.TextUtils;
-import android.widget.RelativeLayout;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.excy.excy.R;
@@ -21,8 +22,6 @@ public class PlayTimer {
     private static int fastIntCtr = 0;
     private static int slowIntCtr = 0;
     private static boolean currentInterval;     // false = slow, true = fast
-
-    private static final int progressTotalWidth = PlayActivity.getProgressBarStartingWidth();
 
     public boolean finished;
 
@@ -45,6 +44,10 @@ public class PlayTimer {
             }
 
             currentInterval = (slowInt >= fastInt) ? false : true;
+        }
+
+        if (!progressBar.isShown()) {
+            progressBar.setVisibility(View.VISIBLE);
         }
 
         timer = new CountDownTimer(timeRemaining, 100) {
@@ -132,9 +135,11 @@ public class PlayTimer {
             progress = 0;
         }
 
-        int newWidth = (int) (progressTotalWidth * (progress / 100));
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) progressBar.getLayoutParams();
-        params.width = newWidth;
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) progressBar.getLayoutParams();
+        if (params.width != 0) {
+            params.width = 0;
+        }
+        params.weight = progress;
         progressBar.setLayoutParams(params);
     }
 

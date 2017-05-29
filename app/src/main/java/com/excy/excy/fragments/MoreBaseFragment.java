@@ -1,6 +1,7 @@
 package com.excy.excy.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,7 @@ import com.excy.excy.R;
  */
 public class MoreBaseFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
+    public static final String EXCY_LIVE_WEBSITE = "http://www.excy.live";
 
     public MoreBaseFragment() {
         // Required empty public constructor
@@ -55,6 +57,16 @@ public class MoreBaseFragment extends Fragment {
 
         final FragmentManager fragmentManager = getFragmentManager();
 
+        ImageButton liveBtn = (ImageButton) view.findViewById(R.id.ibLive);
+        liveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uriUrl = Uri.parse(EXCY_LIVE_WEBSITE);
+                Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                startActivity(launchBrowser);
+            }
+        });
+
         ImageButton learnExercisesBtn = (ImageButton) view.findViewById(R.id.ibLearnExercises);
         learnExercisesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,11 +77,11 @@ public class MoreBaseFragment extends Fragment {
                 fragmentManager.beginTransaction()
                         .replace(R.id.more_fragment_container, frag, str)
                         .addToBackStack(str)
-                        .commit();
+                        .commitAllowingStateLoss();
             }
         });
 
-        ImageButton watchWorkoutsBtn = (ImageButton) view.findViewById(R.id.ibWatchWorkouts);
+        ImageButton watchWorkoutsBtn = (ImageButton) view.findViewById(R.id.ibVideos);
         watchWorkoutsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +91,7 @@ public class MoreBaseFragment extends Fragment {
                 fragmentManager.beginTransaction()
                         .replace(R.id.more_fragment_container, frag, str)
                         .addToBackStack(str)
-                        .commit();
+                        .commitAllowingStateLoss();
             }
         });
 
@@ -93,7 +105,7 @@ public class MoreBaseFragment extends Fragment {
                 fragmentManager.beginTransaction()
                         .replace(R.id.more_fragment_container, frag, str)
                         .addToBackStack(str)
-                        .commit();
+                        .commitAllowingStateLoss();
             }
         });
 
@@ -107,7 +119,7 @@ public class MoreBaseFragment extends Fragment {
                 fragmentManager.beginTransaction()
                         .replace(R.id.more_fragment_container, frag, str)
                         .addToBackStack(str)
-                        .commit();
+                        .commitAllowingStateLoss();
             }
         });
 
