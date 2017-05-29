@@ -31,8 +31,10 @@ import android.widget.Toast;
 
 import com.excy.excy.R;
 import com.excy.excy.utilities.AppUtilities;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseError;
@@ -63,6 +65,11 @@ public class EditProfileActivity extends AppCompatActivity {
     ProgressBar progressBar;
 
     Button saveChangesBtn;
+
+    Bitmap profileBitmap;
+    Bitmap inspirationOneBitmap;
+    Bitmap inspirationTwoBitmap;
+    Bitmap inspirationThreeBitmap;
 
     private static final int REQUEST_CAMERA = 1;
     private static final int SELECT_FILE = 2;
@@ -162,7 +169,21 @@ public class EditProfileActivity extends AppCompatActivity {
         saveChangesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveChanges();
+                if (profileBitmap != null) {
+                    uploadImage("profileImage", profileBitmap);
+                }
+
+                if (inspirationOneBitmap != null) {
+                    uploadImage("inspiringImage1", inspirationOneBitmap);
+                }
+
+                if (inspirationTwoBitmap != null) {
+                    uploadImage("inspiringImage2", inspirationTwoBitmap);
+                }
+
+                if (inspirationThreeBitmap != null) {
+                    uploadImage("inspiringImage3", inspirationThreeBitmap);
+                }
             }
         });
 
@@ -297,27 +318,27 @@ public class EditProfileActivity extends AppCompatActivity {
                     case 1:
                         imageButton = imageLeft;
                         imageOneTV.setText("");
-                        uploadImage("inspiringImage1", imageBitmap);
+                        inspirationOneBitmap = imageBitmap;
                         break;
                     case 2:
                         imageButton = imageCenter;
                         imageTwoTV.setText("");
-                        uploadImage("inspiringImage2", imageBitmap);
+                        inspirationTwoBitmap = imageBitmap;
                         break;
                     case 3:
                         imageButton = imageRight;
                         imageThreeTV.setText("");
-                        uploadImage("inspiringImage3", imageBitmap);
+                        inspirationThreeBitmap = imageBitmap;
                         break;
                     case 4:
                         imageButton = userProfile;
                         changeImageTV.setText("");
-                        uploadImage("profileImage", imageBitmap);
+                        profileBitmap = imageBitmap;
                         break;
                     default:
                         imageButton = userProfile;
                         changeImageTV.setText("");
-                        uploadImage("profileImage", imageBitmap);
+                        profileBitmap = imageBitmap;
                         break;
                 }
 
@@ -396,11 +417,18 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                 if (taskSnapshot.getBytesTransferred() < taskSnapshot.getTotalByteCount()) {
-                    Toast.makeText(getBaseContext(), "Uploading image...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "Uploading images...", Toast.LENGTH_SHORT).show();
                 }
 
                 showProgressBar();
 
+            }
+        }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                if (storage.getReference().child("images").getActiveUploadTasks().size() == 0) {
+                    saveChanges();
+                }
             }
         });
     }
@@ -408,14 +436,10 @@ public class EditProfileActivity extends AppCompatActivity {
     private void showProgressBar() {
         if (!progressBar.isShown()) {
             progressBar.setVisibility(View.VISIBLE);
-            saveChangesBtn.setClickable(false);
-            saveChangesBtn.setEnabled(false);
         }
     }
 
     private void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
-        saveChangesBtn.setClickable(true);
-        saveChangesBtn.setEnabled(true);
     }
 }
