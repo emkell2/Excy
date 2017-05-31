@@ -3,6 +3,7 @@ package com.excy.excy.dialogs;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
@@ -61,15 +62,29 @@ public class MaxTemperatureDialog extends DialogFragment {
                             workout.put("maxTemp", maxTemp);
                         }
                         dismiss();
-                        WorkoutCompleteDialog.newInstance(workout, workoutComplete).show(
-                                getFragmentManager(), WorkoutCompleteDialog.WORKOUT_COMPLETE_DIALOG);
+
+                        String tag = WorkoutCompleteDialog.WORKOUT_COMPLETE_DIALOG;
+                        Fragment frag = WorkoutCompleteDialog.newInstance(workout,
+                                workoutComplete);
+
+                        getFragmentManager().beginTransaction().add(frag, tag).commitAllowingStateLoss();
+
+//                        WorkoutCompleteDialog.newInstance(workout, workoutComplete).show(
+//                                getFragmentManager(), WorkoutCompleteDialog.WORKOUT_COMPLETE_DIALOG);
                     }
                 })
                 .setNegativeButton(R.string.skip, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
-                        WorkoutCompleteDialog.newInstance(workout, workoutComplete).show(
-                                getFragmentManager(), WorkoutCompleteDialog.WORKOUT_COMPLETE_DIALOG);
+
+                        String tag = WorkoutCompleteDialog.WORKOUT_COMPLETE_DIALOG;
+                        Fragment frag = WorkoutCompleteDialog.newInstance(workout,
+                                workoutComplete);
+
+                        getFragmentManager().beginTransaction().add(frag, tag).commitAllowingStateLoss();
+
+//                        WorkoutCompleteDialog.newInstance(workout, workoutComplete).show(
+//                                getFragmentManager(), WorkoutCompleteDialog.WORKOUT_COMPLETE_DIALOG);
                     }
                 });
 

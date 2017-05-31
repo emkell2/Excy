@@ -2,6 +2,7 @@ package com.excy.excy.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -219,8 +220,13 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
 
         if (!warmUpDialogShown) {
             warmUpDialogShown = true;
-            WarmUpDialog.newInstance(false, WorkoutUtilities.INTENT_START_WORKOUT_TIMER, workout)
-                    .show(getFragmentManager(), WarmUpDialog.WARM_UP_DIALOG);
+
+            String tag = WarmUpDialog.WARM_UP_DIALOG;
+            Fragment frag = WarmUpDialog.newInstance(false, WorkoutUtilities.INTENT_START_WORKOUT_TIMER, workout);
+
+            getFragmentManager().beginTransaction().add(frag, tag).commitAllowingStateLoss();
+//            WarmUpDialog.newInstance(false, WorkoutUtilities.INTENT_START_WORKOUT_TIMER, workout)
+//                    .show(getFragmentManager(), WarmUpDialog.WARM_UP_DIALOG);
         }
     }
 
@@ -418,8 +424,13 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
 
         activity.getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        MaxTemperatureDialog.newInstance(workout, workoutComplete).show(activity.getFragmentManager(),
-                MaxTemperatureDialog.MAX_TEMP_DIALOG);
+        String tag = MaxTemperatureDialog.MAX_TEMP_DIALOG;
+        Fragment frag = MaxTemperatureDialog.newInstance(workout, workoutComplete);
+
+        activity.getFragmentManager().beginTransaction().add(frag, tag).commitAllowingStateLoss();
+
+//        MaxTemperatureDialog.newInstance(workout, workoutComplete).show(activity.getFragmentManager(),
+//                MaxTemperatureDialog.MAX_TEMP_DIALOG);
     }
 
     public void startTimer() {
