@@ -122,11 +122,11 @@ public class MeActivity extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 Workout workout = dataSnapshot.getValue(Workout.class);
                 workout.setId(dataSnapshot.getKey());
-                workoutList.add(workout);
+                workoutList.add(0, workout);
                 count++;
 
                 if (count > workoutListSize) {
-                    workoutList.remove(0);
+                    workoutList.remove(workoutList.size() - 1);
                 }
 
                 mAdapter.notifyDataSetChanged();
