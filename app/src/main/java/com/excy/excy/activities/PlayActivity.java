@@ -2,6 +2,7 @@ package com.excy.excy.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -324,8 +325,15 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
 
                 if (!warmUpDialogShown) {
                     warmUpDialogShown = true;
-                    WarmUpDialog.newInstance(true, WorkoutUtilities.INTENT_START_PLAY_TIMER, workout)
-                            .show(getFragmentManager(), WarmUpDialog.WARM_UP_DIALOG);
+
+                    String tag = WarmUpDialog.WARM_UP_DIALOG;
+                    Fragment frag = WarmUpDialog.newInstance(true,
+                            WorkoutUtilities.INTENT_START_PLAY_TIMER, workout);
+
+                    getFragmentManager().beginTransaction().add(frag, tag).commitAllowingStateLoss();
+
+//                    WarmUpDialog.newInstance(true, WorkoutUtilities.INTENT_START_PLAY_TIMER, workout)
+//                            .show(getFragmentManager(), WarmUpDialog.WARM_UP_DIALOG);
                 }
             }
         });
@@ -622,8 +630,13 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
         workout.put("totalTime", totalTime);
         workout.put("caloriesBurned", calsBurned);
 
-        MaxTemperatureDialog.newInstance(workout, workoutComplete).show(activity.getFragmentManager(),
-                MaxTemperatureDialog.MAX_TEMP_DIALOG);
+        String tag = MaxTemperatureDialog.MAX_TEMP_DIALOG;
+        Fragment frag = MaxTemperatureDialog.newInstance(workout, workoutComplete);
+
+        activity.getFragmentManager().beginTransaction().add(frag, tag).commitAllowingStateLoss();
+
+//        MaxTemperatureDialog.newInstance(workout, workoutComplete).show(activity.getFragmentManager(),
+//                MaxTemperatureDialog.MAX_TEMP_DIALOG);
     }
 
     public void startTimer(boolean setCurrentInterval) {

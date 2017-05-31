@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
@@ -51,8 +52,13 @@ public class WorkoutCompleteDialog extends DialogFragment{
                 public void onClick(DialogInterface dialog, int item) {
 
                     if (items[item].equals("Save")) {
-                        TrackResultsDialog.newInstance(workout)
-                                .show(getFragmentManager(), TrackResultsDialog.TRACK_RESULTS_DIALOG);
+                        String tag = TrackResultsDialog.TRACK_RESULTS_DIALOG;
+                        Fragment frag = TrackResultsDialog.newInstance(workout);
+
+                        getFragmentManager().beginTransaction().add(frag, tag).commitAllowingStateLoss();
+
+//                        TrackResultsDialog.newInstance(workout)
+//                                .show(getFragmentManager(), TrackResultsDialog.TRACK_RESULTS_DIALOG);
                     } else if (items[item].equals("Trash and Exit")) {
                         mListener.onComplete(false);
                     }
@@ -66,8 +72,14 @@ public class WorkoutCompleteDialog extends DialogFragment{
 
                     if (items[item].equals("Save")) {
                         dismiss();
-                        TrackResultsDialog.newInstance(workout)
-                                .show(getFragmentManager(), TrackResultsDialog.TRACK_RESULTS_DIALOG);
+
+                        String tag = TrackResultsDialog.TRACK_RESULTS_DIALOG;
+                        Fragment frag = TrackResultsDialog.newInstance(workout);
+
+                        getFragmentManager().beginTransaction().add(frag, tag).commitAllowingStateLoss();
+
+//                        TrackResultsDialog.newInstance(workout)
+//                                .show(getFragmentManager(), TrackResultsDialog.TRACK_RESULTS_DIALOG);
                     } else if (items[item].equals("Trash and Exit")) {
                         dismiss();
                         mListener.onComplete(false);
