@@ -624,6 +624,11 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
         String date = WorkoutUtilities.getWorkoutTimestamp();
         String totalTime = WorkoutUtilities.getElapsedTime(originalStartTime, minutes, seconds);
         int calsBurned = WorkoutUtilities.calculateCaloriesBurned(originalStartTime, minutes, seconds);
+
+        if (workout == null) {
+            workout = new HashMap<>();
+        }
+
         workout.put("uid", userId);
         workout.put("dateCompleted", date);
         workout.put("workoutTitle", WorkoutUtilities.WORKOUT_INTERVAL);

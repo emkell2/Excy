@@ -416,6 +416,11 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
         String date = WorkoutUtilities.getWorkoutTimestamp();
         String totalTime = WorkoutUtilities.getElapsedTime(originalStartTime, minutes, seconds);
         int calsBurned = WorkoutUtilities.calculateCaloriesBurned(originalStartTime, minutes, seconds);
+
+        if (workout == null) {
+            workout = new HashMap<>();
+        }
+
         workout.put("uid", userId);
         workout.put("dateCompleted", date);
         workout.put("workoutTitle", workoutName);

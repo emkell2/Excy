@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.excy.excy.R;
 import com.excy.excy.utilities.AppUtilities;
@@ -186,7 +187,13 @@ public class SurveyActivity extends AppCompatActivity {
                         if (databaseError != null) {
                             Log.d(SURVEY_TAG, "Database Error message: " + databaseError.getMessage());
                             Log.d(SURVEY_TAG, "Database Error details : " + databaseError.getDetails());
+                            Toast.makeText(SurveyActivity.this, "Error submitting survey.",
+                                    Toast.LENGTH_SHORT).show();
                         }
+
+                        Toast.makeText(SurveyActivity.this, "Workout saved.",
+                                Toast.LENGTH_SHORT).show();
+
                         Intent intent = new Intent(SurveyActivity.this, QuickStatsActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
