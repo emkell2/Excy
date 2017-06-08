@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,12 +28,16 @@ public class SurveyActivity extends AppCompatActivity {
     private String location;
     private HashMap<String, Object> workout;
 
+    ProgressBar progressBar;
+
     public static final String SURVEY_TAG = "SURVEY TAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey);
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         workout = (HashMap<String, Object>) getIntent().getSerializableExtra(WorkoutUtilities.WORKOUT_DATA);
 
@@ -179,11 +184,18 @@ public class SurveyActivity extends AppCompatActivity {
         workout.put("enjoyment", enjoyment);
 
         String userId = workout.get("uid").toString();
+
+        Toast.makeText(SurveyActivity.this, "Saving Workout.",
+                Toast.LENGTH_SHORT).show();
+        showProgressBar();
+
         DatabaseReference mDataBaseReference = FirebaseDatabase.getInstance().getReference();
         mDataBaseReference.child(AppUtilities.TABLE_NAME_WORKOUTS).child(userId).push()
                 .setValue(workout, new DatabaseReference.CompletionListener() {
                     @Override
                     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                        hideProgressBar();
+
                         if (databaseError != null) {
                             Log.d(SURVEY_TAG, "Database Error message: " + databaseError.getMessage());
                             Log.d(SURVEY_TAG, "Database Error details : " + databaseError.getDetails());
@@ -199,5 +211,15 @@ public class SurveyActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
+    }
+
+    private void showProgressBar() {
+        if (!progressBar.isShown()) {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
     }
 }
