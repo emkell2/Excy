@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.excy.excy.R;
 import com.excy.excy.utilities.AppUtilities;
+import com.excy.excy.utilities.ImagePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -46,7 +47,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
+
+import static android.R.attr.bitmap;
 
 public class EditProfileActivity extends AppCompatActivity {
 
@@ -309,11 +313,20 @@ public class EditProfileActivity extends AppCompatActivity {
                     map = new HashMap<>();
                 }
 
-                Uri selectedImage = data.getData();
+//                Bitmap imageBitmap = getImage(selectedImage);
+                Bitmap imageBitmap = null;
 
-                if (selectedImage != null) {
-                    Bitmap imageBitmap = getImage(selectedImage);
+                // For older devices, camera pic is stored here
+                if (data != null && data.getExtras() != null) {
+                    imageBitmap = (Bitmap) data.getExtras().get("data");
+                }
 
+                // For newer devices
+                if (imageBitmap == null) {
+                    imageBitmap = ImagePicker.getImageFromResult(getBaseContext(), resultCode, data);
+                }
+
+                if (imageBitmap != null) {
                     ImageButton imageButton;
 
                     switch (selectedImageButton) {
@@ -348,7 +361,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     imageButton.setAdjustViewBounds(false);
                     imageButton.setPadding(0, 0, 0, 0);
                     imageButton.setImageResource(0);
-                    imageButton.setImageURI(selectedImage);
+                    imageButton.setImageBitmap(imageBitmap);
                 }
             }
         }
