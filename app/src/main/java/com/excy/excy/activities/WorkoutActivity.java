@@ -254,7 +254,6 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
         minutes = 0;
         seconds = 0;
         originalStartTime = 0;
-        powerZoneArr = null;
         player.stop();
         player.reset();
 
@@ -262,6 +261,8 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
             timerRef.cancelTimer();
             timerRef = null;
         }
+
+        powerZoneArr = null;
     }
 
     @Override
@@ -376,7 +377,7 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
     }
 
     public static void updatePowerZone() {
-        if ((minutes > 0) && (currZoneCtr < powerZoneArr.length)) {
+        if ((minutes > 0) && (powerZoneArr != null) && (currZoneCtr < powerZoneArr.length)) {
             setTargetPowerZoneImage(powerZoneArr[++currZoneCtr]);
         }
     }
