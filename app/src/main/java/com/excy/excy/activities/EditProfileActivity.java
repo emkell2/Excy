@@ -111,6 +111,8 @@ public class EditProfileActivity extends AppCompatActivity {
         }
 
         healthDescET = (EditText) findViewById(R.id.etHealthyDescription);
+        healthDescET.requestFocus();
+
         numCalsET = (EditText) findViewById(R.id.etNumCals);
         numWorkoutsET = (EditText) findViewById(R.id.etNumWorkouts);
 

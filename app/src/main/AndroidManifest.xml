@@ -43,7 +43,9 @@
         <activity
             android:name=".activities.MeActivity"
             android:hardwareAccelerated="false"/>
-        <activity android:name=".activities.EditProfileActivity" />
+        <activity
+            android:name=".activities.EditProfileActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity android:name=".activities.SurveyActivity" />
         <activity
             android:name=".activities.MoreActivity"

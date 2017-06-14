@@ -92,11 +92,24 @@ public class SignUpActivity extends AppCompatActivity {
                     gender = FEMALE;
                 }
 
-                weight = Integer.valueOf(weightET.getText().toString());
-                height = Integer.valueOf(heightET.getText().toString());
-                age = Integer.valueOf(ageET.getText().toString());
 
                 String str = "";
+
+                str = weightET.getText().toString();
+                if (!TextUtils.isEmpty(str)) {
+                    weight = Integer.valueOf(str);
+                }
+
+                str = heightET.getText().toString();
+                if (!TextUtils.isEmpty(str)) {
+                    height = Integer.valueOf(str);
+                }
+
+                str = ageET.getText().toString();
+                if (!TextUtils.isEmpty(str)) {
+                    age = Integer.valueOf(str);
+                }
+
                 str = usernameET.getText().toString();
                 if (!TextUtils.isEmpty(str)) {
                     username = str;
@@ -112,58 +125,62 @@ public class SignUpActivity extends AppCompatActivity {
                     password = str;
                 }
 
-                user = new User(gender, weight, height, age, username, email);
+                if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+                    user = new User(gender, weight, height, age, username, email);
 
-                final HashMap<String, Object> map = new HashMap<String, Object>();
-                map.put("gender", gender);
-                map.put("weight", weight);
-                map.put("height", height);
-                map.put("age", age);
-                map.put("memberSince", WorkoutUtilities.getMemberSinceTimestamp());
-                map.put("username", username);
-                map.put("email", email);
+                    final HashMap<String, Object> map = new HashMap<String, Object>();
+                    map.put("gender", gender);
+                    map.put("weight", weight);
+                    map.put("height", height);
+                    map.put("age", age);
+                    map.put("memberSince", WorkoutUtilities.getMemberSinceTimestamp());
+                    map.put("username", username);
+                    map.put("email", email);
 
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                Log.d(AUTH_TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+                    mAuth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    Log.d(AUTH_TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
 
-                                // If sign in fails, display a message to the user. If sign in succeeds
-                                // the auth state listener will be notified and logic to handle the
-                                // signed in user can be handled in the listener.
-                                if (!task.isSuccessful()) {
-                                    Toast.makeText(SignUpActivity.this, R.string.auth_failed,
-                                            Toast.LENGTH_SHORT).show();
-                                } else {
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    String userId = user.getUid();
+                                    // If sign in fails, display a message to the user. If sign in succeeds
+                                    // the auth state listener will be notified and logic to handle the
+                                    // signed in user can be handled in the listener.
+                                    if (!task.isSuccessful()) {
+                                        Toast.makeText(SignUpActivity.this, R.string.auth_failed,
+                                                Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        String userId = user.getUid();
 
-                                    DatabaseReference mDataBaseReference = FirebaseDatabase.getInstance().getReference();
-                                    mDataBaseReference.child(AppUtilities.TABLE_NAME_USERS).child(userId).setValue(map,
-                                            new DatabaseReference.CompletionListener() {
-                                                @Override
-                                                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                                                    if (databaseError != null) {
-                                                        Log.d(AUTH_TAG, "Database Error message: " + databaseError.getMessage());
-                                                        Log.d(AUTH_TAG, "Database Error details : " + databaseError.getDetails());
+                                        DatabaseReference mDataBaseReference = FirebaseDatabase.getInstance().getReference();
+                                        mDataBaseReference.child(AppUtilities.TABLE_NAME_USERS).child(userId).setValue(map,
+                                                new DatabaseReference.CompletionListener() {
+                                                    @Override
+                                                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                                        if (databaseError != null) {
+                                                            Log.d(AUTH_TAG, "Database Error message: " + databaseError.getMessage());
+                                                            Log.d(AUTH_TAG, "Database Error details : " + databaseError.getDetails());
+                                                        }
+                                                        Intent intent = new Intent(getBaseContext(), WorkoutListActivity.class);
+                                                        startActivity(intent);
                                                     }
-                                                    Intent intent = new Intent(getBaseContext(), WorkoutListActivity.class);
-                                                    startActivity(intent);
-                                                }
-                                            });
+                                                });
+                                    }
                                 }
-                            }
-                        })
-                .addOnFailureListener(SignUpActivity.this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(AUTH_TAG, "Sign up failed: " + e.getMessage());
-                        Toast.makeText(SignUpActivity.this, e.getMessage(),
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
-
+                            })
+                            .addOnFailureListener(SignUpActivity.this, new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d(AUTH_TAG, "Sign up failed: " + e.getMessage());
+                                    Toast.makeText(SignUpActivity.this, e.getMessage(),
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            });
+                } else {
+                    Toast.makeText(SignUpActivity.this, "Please enter in a valid email address and password.",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
