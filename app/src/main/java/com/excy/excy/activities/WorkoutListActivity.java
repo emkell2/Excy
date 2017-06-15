@@ -93,14 +93,17 @@ public class WorkoutListActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.action_play:
                         intent = new Intent(getBaseContext(), PlayActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         break;
                     case R.id.action_me:
                         intent = new Intent(getBaseContext(), MeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         break;
                     case R.id.action_more:
                         intent = new Intent(getBaseContext(), MoreActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         break;
                 }
@@ -122,6 +125,7 @@ public class WorkoutListActivity extends AppCompatActivity {
 
     private void startWorkoutActivity(int resId, long timeInMillis, int audioResId) {
         Intent intent = new Intent(getBaseContext(), WorkoutActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 
         intent.putExtra(WorkoutUtilities.WORKOUT_DATA_RES_ID, resId);
         intent.putExtra(WorkoutUtilities.WORKOUT_DATA_TIME_MILLIS, timeInMillis);

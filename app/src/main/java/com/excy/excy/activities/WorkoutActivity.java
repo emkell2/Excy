@@ -91,100 +91,6 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout);
 
-        activity = this;
-        mResources = getResources();
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-                new IntentFilter(WorkoutUtilities.INTENT_START_WORKOUT_TIMER));
-
-        final Intent workoutListData = getIntent();
-
-        timerTV = (TextView) findViewById(R.id.tvTimer);
-        progressBar = (TextView) findViewById(R.id.tvProgressBar);
-        targetZoneIV = (ImageView) findViewById(R.id.ivTargetZone);
-
-        player = MediaPlayer.create(getBaseContext(), workoutListData.getIntExtra(
-                WorkoutUtilities.WORKOUT_DATA_AUDIO_RES_ID, 0));
-        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
-        audioIcon = (ImageView) findViewById(R.id.ivAudioIcon);
-        audioIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (audioIconEnabled) {
-                    audioIconEnabled = false;
-                    audioIcon.setAlpha(0.30f);
-                    player.setVolume(0, 0);
-                } else {
-                    audioIconEnabled = true;
-                    audioIcon.setAlpha(1f);
-                    player.setVolume(1, 1);
-                }
-            }
-        });
-
-        progressBar.getViewTreeObserver().addOnGlobalLayoutListener(
-                new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        // TODO: Take this out of the observer, don't need to be here anymore
-                        // gets called after layout has been done but before display
-                        // so we can get the height then hide the view
-                        progressBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-
-                        progressBar.setVisibility(View.GONE);
-
-                        // Start Timer, needed to put this code in here to get progressBar width
-                        long timeInMillis = workoutListData.getLongExtra(WorkoutUtilities.WORKOUT_DATA_TIME_MILLIS, 0);
-                        originalStartTime = timeInMillis;
-                        final WorkoutTimer timer = new WorkoutTimer(timeInMillis);
-                        timerRef = timer;
-                    }
-                }
-        );
-
-        // Create Layout
-        AppUtilities.setBottomNavBarIconActive(this, R.id.action_workouts);
-
-        int workoutResId = workoutListData.getIntExtra(WorkoutUtilities.WORKOUT_DATA_RES_ID, 0);
-        setWorkoutImages(workoutResId);
-
-        startingTemp = (TextView) findViewById(R.id.tvStartingZoneTemp);
-
-        // Button layout
-        Button pauseBtn = (Button) findViewById(R.id.btnPause);
-        pauseBtn.getBackground().setColorFilter(getResources().getColor(R.color.colorPauseBtn),
-                PorterDuff.Mode.MULTIPLY);
-        pauseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                player.pause();
-                audioIcon.setVisibility(GONE);
-
-                if (timerRef != null) {
-                    timerRef.cancelTimer();
-                }
-
-                displayResumeDialog(timerTV);
-            }
-        });
-
-        Button stopBtn = (Button) findViewById(R.id.btnStop);
-        stopBtn.getBackground().setColorFilter(getResources().getColor(R.color.colorStopBtn),
-                PorterDuff.Mode.MULTIPLY);
-        stopBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                player.pause();
-                audioIcon.setVisibility(GONE);
-                if (timerRef != null) {
-                    timerRef.cancelTimer();
-                }
-
-                endWorkout(false);
-            }
-        });
-
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottomNavigationView);
 
@@ -197,14 +103,17 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
                 switch (item.getItemId()) {
                     case R.id.action_play:
                         intent = new Intent(getBaseContext(), PlayActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         break;
                     case R.id.action_me:
                         intent = new Intent(getBaseContext(), MeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         break;
                     case R.id.action_more:
                         intent = new Intent(getBaseContext(), MoreActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         break;
                 }
@@ -212,21 +121,117 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
             }
         });
 
-        /* Set up excy link view  */
-        TextView excyLinkTV = (TextView) findViewById(R.id.tvLink);
-        excyLinkTV.setMovementMethod(LinkMovementMethod.getInstance());
+        if (!checkForCurrentWorkout()) {
+            activity = this;
+            mResources = getResources();
 
-        HashMap<String, Object> workout = new HashMap<>();
+            LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                    new IntentFilter(WorkoutUtilities.INTENT_START_WORKOUT_TIMER));
 
-        if (!warmUpDialogShown) {
-            warmUpDialogShown = true;
+            final Intent workoutListData = getIntent();
 
-            String tag = WarmUpDialog.WARM_UP_DIALOG;
-            Fragment frag = WarmUpDialog.newInstance(false, WorkoutUtilities.INTENT_START_WORKOUT_TIMER, workout);
+            timerTV = (TextView) findViewById(R.id.tvTimer);
+            progressBar = (TextView) findViewById(R.id.tvProgressBar);
+            targetZoneIV = (ImageView) findViewById(R.id.ivTargetZone);
 
-            getFragmentManager().beginTransaction().add(frag, tag).commitAllowingStateLoss();
-//            WarmUpDialog.newInstance(false, WorkoutUtilities.INTENT_START_WORKOUT_TIMER, workout)
-//                    .show(getFragmentManager(), WarmUpDialog.WARM_UP_DIALOG);
+            player = MediaPlayer.create(getBaseContext(), workoutListData.getIntExtra(
+                    WorkoutUtilities.WORKOUT_DATA_AUDIO_RES_ID, 0));
+            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+            audioIcon = (ImageView) findViewById(R.id.ivAudioIcon);
+            audioIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (audioIconEnabled) {
+                        audioIconEnabled = false;
+                        audioIcon.setAlpha(0.30f);
+                        player.setVolume(0, 0);
+                    } else {
+                        audioIconEnabled = true;
+                        audioIcon.setAlpha(1f);
+                        player.setVolume(1, 1);
+                    }
+                }
+            });
+
+            progressBar.getViewTreeObserver().addOnGlobalLayoutListener(
+                    new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @Override
+                        public void onGlobalLayout() {
+                            // TODO: Take this out of the observer, don't need to be here anymore
+                            // gets called after layout has been done but before display
+                            // so we can get the height then hide the view
+                            progressBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                            progressBar.setVisibility(View.GONE);
+
+                            // Start Timer, needed to put this code in here to get progressBar width
+                            long timeInMillis = workoutListData.getLongExtra(WorkoutUtilities.WORKOUT_DATA_TIME_MILLIS, 0);
+                            originalStartTime = timeInMillis;
+                            final WorkoutTimer timer = new WorkoutTimer(timeInMillis);
+                            timerRef = timer;
+                        }
+                    }
+            );
+
+            // Create Layout
+            AppUtilities.setBottomNavBarIconActive(this, R.id.action_workouts);
+
+            int workoutResId = workoutListData.getIntExtra(WorkoutUtilities.WORKOUT_DATA_RES_ID, 0);
+            setWorkoutImages(workoutResId);
+
+            startingTemp = (TextView) findViewById(R.id.tvStartingZoneTemp);
+
+            // Button layout
+            Button pauseBtn = (Button) findViewById(R.id.btnPause);
+            pauseBtn.getBackground().setColorFilter(getResources().getColor(R.color.colorPauseBtn),
+                    PorterDuff.Mode.MULTIPLY);
+            pauseBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    player.pause();
+                    audioIcon.setVisibility(GONE);
+
+                    if (timerRef != null) {
+                        timerRef.cancelTimer();
+                    }
+
+                    displayResumeDialog(timerTV);
+                }
+            });
+
+            Button stopBtn = (Button) findViewById(R.id.btnStop);
+            stopBtn.getBackground().setColorFilter(getResources().getColor(R.color.colorStopBtn),
+                    PorterDuff.Mode.MULTIPLY);
+            stopBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    player.pause();
+                    audioIcon.setVisibility(GONE);
+                    if (timerRef != null) {
+                        timerRef.cancelTimer();
+                    }
+
+                    endWorkout(false);
+                }
+            });
+
+            // Set up excy link view
+            TextView excyLinkTV = (TextView) findViewById(R.id.tvLink);
+            excyLinkTV.setMovementMethod(LinkMovementMethod.getInstance());
+
+            HashMap<String, Object> workout = new HashMap<>();
+
+            WorkoutUtilities.setCurrentWorkoutActivity(this);
+
+            if (!warmUpDialogShown) {
+                warmUpDialogShown = true;
+
+                String tag = WarmUpDialog.WARM_UP_DIALOG;
+                Fragment frag = WarmUpDialog.newInstance(false, WorkoutUtilities.INTENT_START_WORKOUT_TIMER, workout);
+
+                getFragmentManager().beginTransaction().add(frag, tag).commitAllowingStateLoss();
+            }
         }
     }
 
@@ -254,8 +259,11 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
         minutes = 0;
         seconds = 0;
         originalStartTime = 0;
-        player.stop();
-        player.reset();
+
+        if (player != null) {
+            player.stop();
+            player.reset();
+        }
 
         if (timerRef != null) {
             timerRef.cancelTimer();
@@ -275,6 +283,13 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
             finish();
             return;
         }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        checkForCurrentWorkout();
     }
 
     @Override
@@ -418,6 +433,8 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
         String totalTime = WorkoutUtilities.getElapsedTime(originalStartTime, minutes, seconds);
         int calsBurned = WorkoutUtilities.calculateCaloriesBurned(originalStartTime, minutes, seconds);
 
+        WorkoutUtilities.setCurrentWorkoutActivity(null);
+
         if (workout == null) {
             workout = new HashMap<>();
         }
@@ -434,9 +451,6 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
         Fragment frag = MaxTemperatureDialog.newInstance(workout, workoutComplete);
 
         activity.getFragmentManager().beginTransaction().add(frag, tag).commitAllowingStateLoss();
-
-//        MaxTemperatureDialog.newInstance(workout, workoutComplete).show(activity.getFragmentManager(),
-//                MaxTemperatureDialog.MAX_TEMP_DIALOG);
     }
 
     public void startTimer() {
@@ -462,5 +476,37 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
         player.start();
 
         getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    private boolean checkForCurrentWorkout() {
+        Activity currActivity = WorkoutUtilities.getCurrentWorkoutActivity();
+        if (currActivity != null) {
+            String activityStr = currActivity.getClass().getSimpleName();
+            if (currActivity != null && !activityStr.equals(this.getClass().getSimpleName())) {
+                displayInAWorkoutDialog();
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void displayInAWorkoutDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("You Are In A Workout!")
+                .setMessage("You are in the middle of a workout! Please finish the workout " +
+                        "before starting a new one.")
+                .setPositiveButton("FINISH WORKOUT", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // current workout is NOT a workout of type WorkoutActivity, so finish this screen.
+                        Intent intent = new Intent(getBaseContext(), PlayActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setCancelable(false)
+                .show();
     }
 }

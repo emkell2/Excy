@@ -52,14 +52,17 @@ public class MoreActivity extends AppCompatActivity implements
                 switch (item.getItemId()) {
                     case R.id.action_play:
                         intent = new Intent(getBaseContext(), PlayActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         break;
                     case R.id.action_workouts:
                         intent = new Intent(getBaseContext(), WorkoutListActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         break;
                     case R.id.action_me:
                         intent = new Intent(getBaseContext(), MeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         break;
                 }

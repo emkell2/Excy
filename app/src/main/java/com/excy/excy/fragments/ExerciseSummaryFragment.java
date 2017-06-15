@@ -138,6 +138,7 @@ public class ExerciseSummaryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), WorkoutActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 
                 intent.putExtra(WorkoutUtilities.WORKOUT_DATA_RES_ID, mResId);
                 intent.putExtra(WorkoutUtilities.WORKOUT_DATA_TIME_MILLIS, timeInMillis);
