@@ -94,272 +94,6 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
 
-        activity = this;
-        context = this;
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-                new IntentFilter(WorkoutUtilities.INTENT_START_PLAY_TIMER));
-
-        Typeface dosisRegular = Typeface.createFromAsset(getAssets(), "fonts/Dosis-Regular.ttf");
-        Typeface dosisMedium = Typeface.createFromAsset(getAssets(), "fonts/Dosis-Medium.ttf");
-        Typeface dosisBold = Typeface.createFromAsset(getAssets(), "fonts/Dosis-Bold.ttf");
-
-        /* Set font for burst play text */
-        burstTV = (TextView) findViewById(R.id.tvBurstPlay);
-        burstTV.setTypeface(dosisRegular);
-
-        /* Set font for interval text */
-        intervalTextTV = (TextView) findViewById(R.id.tvIntervalText);
-        intervalTextTV.setTypeface(dosisBold);
-
-        /* Set up clock view */
-        final TextView clockTV = (TextView) findViewById(R.id.tvClock);
-        clockTV.setTypeface(dosisBold);
-
-        TextView minTV = (TextView) findViewById(R.id.tvMin);
-        minTV.setTypeface(dosisBold);
-
-        timerTV = (TextView) findViewById(R.id.tvTimer);
-        timerTV.setTypeface(dosisMedium);
-
-        TextView secTV = (TextView) findViewById(R.id.tvSec);
-        secTV.setTypeface(dosisBold);
-
-        ImageButton minPlus = (ImageButton) findViewById(R.id.ibMinPlus);
-        minPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (minutes < 60) {
-                    minutes++;
-                    timerTV.setText(createTimerString());
-                    updateTimer();
-                }
-            }
-        });
-
-        final ImageButton minMinus = (ImageButton) findViewById(R.id.ibMinMinus);
-        minMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (minutes > 0) {
-                    minutes--;
-                    timerTV.setText(createTimerString());
-                    updateTimer();
-                }
-            }
-        });
-
-        ImageButton secPlus = (ImageButton) findViewById(R.id.ibSecPlus);
-        secPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (seconds < 60) {
-                    seconds++;
-                    timerTV.setText(createTimerString());
-                    updateTimer();
-                }
-            }
-        });
-
-        ImageButton secMinus = (ImageButton) findViewById(R.id.ibSecMinus);
-        secMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (seconds > 0) {
-                    seconds--;
-                    timerTV.setText(createTimerString());
-                    updateTimer();
-                }
-            }
-        });
-
-        /* Set up intervals view */
-        final TextView graphTV = (TextView) findViewById(R.id.tvGraph);
-        graphTV.setTypeface(dosisBold);
-
-        slowIntervalTV = (TextView) findViewById(R.id.tvSlowInterval);
-        slowIntervalTV.setTypeface(dosisMedium);
-
-        TextView slowTV = (TextView) findViewById(R.id.tvSlow);
-        slowTV.setTypeface(dosisBold);
-
-        fastIntervalTV = (TextView) findViewById(R.id.tvFastInterval);
-        fastIntervalTV.setTypeface(dosisMedium);
-
-        TextView fastTV = (TextView) findViewById(R.id.tvFast);
-        fastTV.setTypeface(dosisBold);
-
-        ImageButton slowMinus = (ImageButton) findViewById(R.id.ibSlowMinus);
-        slowMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String slowText = slowIntervalTV.getText().toString();
-
-                if (TextUtils.isEmpty(slowText)) {
-                    return;
-                }
-
-                int slowInt = Integer.valueOf(slowText).intValue();
-
-                if (slowInt > 0) {
-                    slowInt--;
-                    slowInterval = slowInt;
-
-                    if (slowInt == 0) {
-                        slowIntervalTV.setText("000");
-                    } else {
-                        slowIntervalTV.setText(String.valueOf(slowInt));
-                    }
-
-                    PlayTimer.resetIntervalCounters();
-                }
-            }
-        });
-
-        ImageButton slowPlus = (ImageButton) findViewById(R.id.ibSlowPlus);
-        slowPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int slowInt = Integer.valueOf(slowIntervalTV.getText().toString()).intValue();
-
-                slowInt++;
-                slowInterval = slowInt;
-                slowIntervalTV.setText(String.valueOf(slowInt));
-                PlayTimer.resetIntervalCounters();
-            }
-        });
-
-        ImageButton fastMinus = (ImageButton) findViewById(R.id.ibFastMinus);
-        fastMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String fastText = fastIntervalTV.getText().toString();
-
-                if (TextUtils.isEmpty(fastText)) {
-                    return;
-                }
-
-                int fastInt = Integer.valueOf(fastText).intValue();
-
-                if (fastInt > 0) {
-                    fastInt--;
-                    fastInterval = fastInt;
-
-                    if (fastInt == 0) {
-                        fastIntervalTV.setText("000");
-                    } else {
-                        fastIntervalTV.setText(String.valueOf(fastInt));
-                    }
-
-                    PlayTimer.resetIntervalCounters();
-                }
-            }
-        });
-
-        ImageButton fastPlus = (ImageButton) findViewById(R.id.ibFastPlus);
-        fastPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int fastInt = Integer.valueOf(fastIntervalTV.getText().toString()).intValue();
-
-                fastInt++;
-                fastInterval = fastInt;
-                fastIntervalTV.setText(String.valueOf(fastInt));
-                PlayTimer.resetIntervalCounters();
-            }
-        });
-
-        /* Set up excy link view  */
-        TextView excyLinkTV = (TextView) findViewById(R.id.tvLink);
-        excyLinkTV.setTypeface(dosisRegular);
-        excyLinkTV.setMovementMethod(LinkMovementMethod.getInstance());
-
-        /* Set up Start/Pause/Stop buttons */
-        startBtn = (FButton) findViewById(R.id.btnStart);
-        pauseBtn = (FButton) findViewById(R.id.btnPause);
-        stopBtn = (FButton) findViewById(R.id.btnStop);
-        excyLogoIV = (ImageView) findViewById(R.id.ivExcyLogo);
-        runningManIV = (ImageView) findViewById(R.id.ivRunningMan);
-        progressBar = (TextView) findViewById(R.id.tvProgressBar);
-        final LinearLayout mainPlayLayout = (LinearLayout) findViewById(R.id.mainPlayLayout);
-
-        progressBar.setVisibility(View.GONE);
-
-        startBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                /* Hide excy logo and burst play textview */
-                excyLogoIV.setVisibility(View.GONE);
-                burstTV.setVisibility(View.GONE);
-
-                /* Setup running man image and progress bar*/
-                runningManIV.setVisibility(View.VISIBLE);
-                intervalTextTV.setVisibility(View.VISIBLE);
-
-                progressBar.setVisibility(View.VISIBLE);
-
-                /* Change text */
-                clockTV.setText(R.string.time_remaining);
-                graphTV.setText(R.string.intervals);
-
-                /* Switch out buttons */
-                startBtn.setClickable(false);
-                startBtn.setVisibility(View.GONE);
-
-                pauseBtn.setClickable(true);
-                stopBtn.setClickable(true);
-                pauseBtn.setVisibility(View.VISIBLE);
-                stopBtn.setVisibility(View.VISIBLE);
-
-                mainPlayLayout.setWeightSum(3);
-
-                long startTime = convertStringTimeToMillis(timerTV.getText().toString());
-
-                originalStartTime = startTime;
-                startingTime = startTime;
-                getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-                timer = new PlayTimer(startTime);
-
-                HashMap<String, Object> workout = new HashMap<>();
-
-                if (!warmUpDialogShown) {
-                    warmUpDialogShown = true;
-
-                    String tag = WarmUpDialog.WARM_UP_DIALOG;
-                    Fragment frag = WarmUpDialog.newInstance(true,
-                            WorkoutUtilities.INTENT_START_PLAY_TIMER, workout);
-
-                    getFragmentManager().beginTransaction().add(frag, tag).commitAllowingStateLoss();
-
-//                    WarmUpDialog.newInstance(true, WorkoutUtilities.INTENT_START_PLAY_TIMER, workout)
-//                            .show(getFragmentManager(), WarmUpDialog.WARM_UP_DIALOG);
-                }
-            }
-        });
-
-        pauseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (timer != null) {
-                    timer.cancelTimer(false);
-                }
-
-                displayResumeDialog(timerTV);
-            }
-        });
-
-        stopBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (timer != null) {
-                    timer.cancelTimer(false);
-                }
-
-                endWorkout(false);
-            }
-        });
-
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottomNavigationView);
 
@@ -371,24 +105,266 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
                 Intent intent;
                 switch (item.getItemId()) {
                     case R.id.action_workouts:
-                        finish();
                         intent = new Intent(getContext(), WorkoutListActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         break;
                     case R.id.action_me:
-                        finish();
                         intent = new Intent(getContext(), MeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         break;
                     case R.id.action_more:
-                        finish();
                         intent = new Intent(getContext(), MoreActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         break;
                 }
                 return true;
             }
         });
+
+        if (!checkForCurrentWorkout()) {
+            activity = this;
+            context = this;
+
+            LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                    new IntentFilter(WorkoutUtilities.INTENT_START_PLAY_TIMER));
+
+            Typeface dosisRegular = Typeface.createFromAsset(getAssets(), "fonts/Dosis-Regular.ttf");
+            Typeface dosisMedium = Typeface.createFromAsset(getAssets(), "fonts/Dosis-Medium.ttf");
+            Typeface dosisBold = Typeface.createFromAsset(getAssets(), "fonts/Dosis-Bold.ttf");
+
+        /* Set font for burst play text */
+            burstTV = (TextView) findViewById(R.id.tvBurstPlay);
+            burstTV.setTypeface(dosisRegular);
+
+        /* Set font for interval text */
+            intervalTextTV = (TextView) findViewById(R.id.tvIntervalText);
+            intervalTextTV.setTypeface(dosisBold);
+
+        /* Set up clock view */
+            final TextView clockTV = (TextView) findViewById(R.id.tvClock);
+            clockTV.setTypeface(dosisBold);
+
+            TextView minTV = (TextView) findViewById(R.id.tvMin);
+            minTV.setTypeface(dosisBold);
+
+            timerTV = (TextView) findViewById(R.id.tvTimer);
+            timerTV.setTypeface(dosisMedium);
+
+            TextView secTV = (TextView) findViewById(R.id.tvSec);
+            secTV.setTypeface(dosisBold);
+
+            ImageButton minPlus = (ImageButton) findViewById(R.id.ibMinPlus);
+            minPlus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (minutes < 60) {
+                        minutes++;
+                        timerTV.setText(createTimerString());
+                        updateTimer();
+                    }
+                }
+            });
+
+            final ImageButton minMinus = (ImageButton) findViewById(R.id.ibMinMinus);
+            minMinus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (minutes > 0) {
+                        minutes--;
+                        timerTV.setText(createTimerString());
+                        updateTimer();
+                    }
+                }
+            });
+
+            ImageButton secPlus = (ImageButton) findViewById(R.id.ibSecPlus);
+            secPlus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (seconds < 60) {
+                        seconds++;
+                        timerTV.setText(createTimerString());
+                        updateTimer();
+                    }
+                }
+            });
+
+            ImageButton secMinus = (ImageButton) findViewById(R.id.ibSecMinus);
+            secMinus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (seconds > 0) {
+                        seconds--;
+                        timerTV.setText(createTimerString());
+                        updateTimer();
+                    }
+                }
+            });
+
+        /* Set up intervals view */
+            final TextView graphTV = (TextView) findViewById(R.id.tvGraph);
+            graphTV.setTypeface(dosisBold);
+
+            slowIntervalTV = (TextView) findViewById(R.id.tvSlowInterval);
+            slowIntervalTV.setTypeface(dosisMedium);
+
+            TextView slowTV = (TextView) findViewById(R.id.tvSlow);
+            slowTV.setTypeface(dosisBold);
+
+            fastIntervalTV = (TextView) findViewById(R.id.tvFastInterval);
+            fastIntervalTV.setTypeface(dosisMedium);
+
+            TextView fastTV = (TextView) findViewById(R.id.tvFast);
+            fastTV.setTypeface(dosisBold);
+
+            ImageButton slowMinus = (ImageButton) findViewById(R.id.ibSlowMinus);
+            slowMinus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String slowText = slowIntervalTV.getText().toString();
+
+                    if (TextUtils.isEmpty(slowText)) {
+                        return;
+                    }
+
+                    int slowInt = Integer.valueOf(slowText).intValue();
+
+                    if (slowInt > 0) {
+                        slowInt--;
+                        slowInterval = slowInt;
+
+                        if (slowInt == 0) {
+                            slowIntervalTV.setText("000");
+                        } else {
+                            slowIntervalTV.setText(String.valueOf(slowInt));
+                        }
+
+                        PlayTimer.resetIntervalCounters();
+                    }
+                }
+            });
+
+            ImageButton slowPlus = (ImageButton) findViewById(R.id.ibSlowPlus);
+            slowPlus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int slowInt = Integer.valueOf(slowIntervalTV.getText().toString()).intValue();
+
+                    slowInt++;
+                    slowInterval = slowInt;
+                    slowIntervalTV.setText(String.valueOf(slowInt));
+                    PlayTimer.resetIntervalCounters();
+                }
+            });
+
+            ImageButton fastMinus = (ImageButton) findViewById(R.id.ibFastMinus);
+            fastMinus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String fastText = fastIntervalTV.getText().toString();
+
+                    if (TextUtils.isEmpty(fastText)) {
+                        return;
+                    }
+
+                    int fastInt = Integer.valueOf(fastText).intValue();
+
+                    if (fastInt > 0) {
+                        fastInt--;
+                        fastInterval = fastInt;
+
+                        if (fastInt == 0) {
+                            fastIntervalTV.setText("000");
+                        } else {
+                            fastIntervalTV.setText(String.valueOf(fastInt));
+                        }
+
+                        PlayTimer.resetIntervalCounters();
+                    }
+                }
+            });
+
+            ImageButton fastPlus = (ImageButton) findViewById(R.id.ibFastPlus);
+            fastPlus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int fastInt = Integer.valueOf(fastIntervalTV.getText().toString()).intValue();
+
+                    fastInt++;
+                    fastInterval = fastInt;
+                    fastIntervalTV.setText(String.valueOf(fastInt));
+                    PlayTimer.resetIntervalCounters();
+                }
+            });
+
+        /* Set up excy link view  */
+            TextView excyLinkTV = (TextView) findViewById(R.id.tvLink);
+            excyLinkTV.setTypeface(dosisRegular);
+            excyLinkTV.setMovementMethod(LinkMovementMethod.getInstance());
+
+        /* Set up Start/Pause/Stop buttons */
+            startBtn = (FButton) findViewById(R.id.btnStart);
+            pauseBtn = (FButton) findViewById(R.id.btnPause);
+            stopBtn = (FButton) findViewById(R.id.btnStop);
+            excyLogoIV = (ImageView) findViewById(R.id.ivExcyLogo);
+            runningManIV = (ImageView) findViewById(R.id.ivRunningMan);
+            progressBar = (TextView) findViewById(R.id.tvProgressBar);
+            final LinearLayout mainPlayLayout = (LinearLayout) findViewById(R.id.mainPlayLayout);
+
+            progressBar.setVisibility(View.GONE);
+
+            startBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    changeLayout();
+
+                    long startTime = convertStringTimeToMillis(timerTV.getText().toString());
+
+                    originalStartTime = startTime;
+                    startingTime = startTime;
+                    getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                    timer = new PlayTimer(startTime);
+                    WorkoutUtilities.setCurrentWorkoutActivity(activity);
+
+                    HashMap<String, Object> workout = new HashMap<>();
+
+                    if (!warmUpDialogShown) {
+                        warmUpDialogShown = true;
+
+                        String tag = WarmUpDialog.WARM_UP_DIALOG;
+                        Fragment frag = WarmUpDialog.newInstance(true,
+                                WorkoutUtilities.INTENT_START_PLAY_TIMER, workout);
+
+                        getFragmentManager().beginTransaction().add(frag, tag).commitAllowingStateLoss();
+                    }
+                }
+            });
+
+            pauseBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (timer != null) {
+                        timer.cancelTimer(false);
+                    }
+
+                    displayResumeDialog(timerTV);
+                }
+            });
+
+            stopBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (timer != null) {
+                        timer.cancelTimer(false);
+                    }
+
+                    endWorkout(false);
+                }
+            });
+        }
     }
 
     @Override
@@ -415,6 +391,13 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
         reset();
         super.onDestroy();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        checkForCurrentWorkout();
     }
 
     @Override
@@ -530,6 +513,25 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
                 }).show();
     }
 
+    private void displayInAWorkoutDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("You Are In A Workout!")
+                .setMessage("You are in the middle of a workout! Please finish the workout " +
+                        "before starting a new one.")
+                .setPositiveButton("FINISH WORKOUT", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // current workout is NOT a play activity, so finish this screen.
+                        Intent intent = new Intent(getBaseContext(), WorkoutActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setCancelable(false)
+                .show();
+    }
+
     public static long getStartingTime() {
         return startingTime;
     }
@@ -625,6 +627,8 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
         String totalTime = WorkoutUtilities.getElapsedTime(originalStartTime, minutes, seconds);
         int calsBurned = WorkoutUtilities.calculateCaloriesBurned(originalStartTime, minutes, seconds);
 
+        WorkoutUtilities.setCurrentWorkoutActivity(null);
+
         if (workout == null) {
             workout = new HashMap<>();
         }
@@ -639,14 +643,59 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
         Fragment frag = MaxTemperatureDialog.newInstance(workout, workoutComplete);
 
         activity.getFragmentManager().beginTransaction().add(frag, tag).commitAllowingStateLoss();
-
-//        MaxTemperatureDialog.newInstance(workout, workoutComplete).show(activity.getFragmentManager(),
-//                MaxTemperatureDialog.MAX_TEMP_DIALOG);
     }
 
     public void startTimer(boolean setCurrentInterval) {
         if (timer != null) {
             timer.startTimer(timerTV, progressBar, setCurrentInterval);
         }
+    }
+
+    private void changeLayout() {
+        Typeface dosisBold = Typeface.createFromAsset(getAssets(), "fonts/Dosis-Bold.ttf");
+        final TextView clockTV = (TextView) findViewById(R.id.tvClock);
+        clockTV.setTypeface(dosisBold);
+
+        final TextView graphTV = (TextView) findViewById(R.id.tvGraph);
+        graphTV.setTypeface(dosisBold);
+
+        /* Hide excy logo and burst play textview */
+        excyLogoIV.setVisibility(View.GONE);
+        burstTV.setVisibility(View.GONE);
+
+                /* Setup running man image and progress bar*/
+        runningManIV.setVisibility(View.VISIBLE);
+        intervalTextTV.setVisibility(View.VISIBLE);
+
+        progressBar.setVisibility(View.VISIBLE);
+
+                /* Change text */
+        clockTV.setText(R.string.time_remaining);
+        graphTV.setText(R.string.intervals);
+
+                /* Switch out buttons */
+        startBtn.setClickable(false);
+        startBtn.setVisibility(View.GONE);
+
+        pauseBtn.setClickable(true);
+        stopBtn.setClickable(true);
+        pauseBtn.setVisibility(View.VISIBLE);
+        stopBtn.setVisibility(View.VISIBLE);
+
+        final LinearLayout mainPlayLayout = (LinearLayout) findViewById(R.id.mainPlayLayout);
+        mainPlayLayout.setWeightSum(3);
+    }
+
+    private boolean checkForCurrentWorkout() {
+        Activity currActivity = WorkoutUtilities.getCurrentWorkoutActivity();
+        if (currActivity != null) {
+            String activityStr = currActivity.getClass().getSimpleName();
+            if (currActivity != null && !activityStr.equals(this.getClass().getSimpleName())) {
+                displayInAWorkoutDialog();
+                return true;
+            }
+        }
+
+        return false;
     }
 }

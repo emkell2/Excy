@@ -205,14 +205,17 @@ public class EditProfileActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.action_play:
                         intent = new Intent(getBaseContext(), PlayActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         break;
                     case R.id.action_workouts:
                         intent = new Intent(getBaseContext(), WorkoutListActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         break;
                     case R.id.action_more:
                         intent = new Intent(getBaseContext(), MoreActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         break;
                 }
@@ -262,6 +265,7 @@ public class EditProfileActivity extends AppCompatActivity {
                             Log.d("EDIT PROFILE DATA", "Database Error details : " + databaseError.getDetails());
                         }
                         Intent intent = new Intent(getBaseContext(), MeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                     }
                 });

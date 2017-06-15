@@ -1,8 +1,6 @@
 package com.excy.excy.utilities;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,8 +10,9 @@ import java.util.Date;
  */
 
 public class WorkoutUtilities {
+    private static Activity sCurrentWorkoutActivity = null;
+
     public static final String WORKOUT_DATA = "WORKOUT DATA";
-    public static final String SHARED_PREFS = "Shared Prefs";
 
     // Workout Keys
     public static final String WORKOUT_DATA_RES_ID = "WORKOUT_DATA_RES_ID";
@@ -99,39 +98,11 @@ public class WorkoutUtilities {
         return new SimpleDateFormat("MMM d yyyy").format(new Date());
     }
 
-    public static void persistString(Activity activity, String key, String data) {
-        SharedPreferences sharedPref = activity.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(key, data);
-        editor.commit();
+    public static Activity getCurrentWorkoutActivity() {
+        return sCurrentWorkoutActivity;
     }
 
-    public static String getPersistedString(Activity activity, String key) {
-        SharedPreferences sharedPref = activity.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        return sharedPref.getString(key, "");
-    }
-
-    public static void persistInteger(Activity activity, String key, int data) {
-        SharedPreferences sharedPref = activity.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt(key, data);
-        editor.commit();
-    }
-
-    public static int getPersistedInt(Activity activity, String key) {
-        SharedPreferences sharedPref = activity.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        return sharedPref.getInt(key, -1);
-    }
-
-    public static void persistBoolean(Activity activity, String key, boolean data) {
-        SharedPreferences sharedPref = activity.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean(key, data);
-        editor.commit();
-    }
-
-    public static boolean getPersistedBoolean(Activity activity, String key) {
-        SharedPreferences sharedPref = activity.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        return sharedPref.getBoolean(key, false);
+    public static void setCurrentWorkoutActivity(Activity currentWorkoutActivity) {
+        sCurrentWorkoutActivity = currentWorkoutActivity;
     }
 }

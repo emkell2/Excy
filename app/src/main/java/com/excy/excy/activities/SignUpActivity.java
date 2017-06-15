@@ -163,6 +163,7 @@ public class SignUpActivity extends AppCompatActivity {
                                                             Log.d(AUTH_TAG, "Database Error details : " + databaseError.getDetails());
                                                         }
                                                         Intent intent = new Intent(getBaseContext(), WorkoutListActivity.class);
+                                                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                                                         startActivity(intent);
                                                     }
                                                 });
@@ -189,6 +190,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
             }
         });
