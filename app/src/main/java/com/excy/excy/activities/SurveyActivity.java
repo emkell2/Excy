@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -155,10 +156,16 @@ public class SurveyActivity extends AppCompatActivity {
 
                     switch (submitCount) {
                         case 1:
+                            if (TextUtils.isEmpty(enjoyment)) {
+                                enjoyment = "good";
+                            }
                             useSilderTV.setText(getString(R.string.feedback_location));
                             surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey2_work));
                             break;
                         case 2:
+                            if (TextUtils.isEmpty(location)) {
+                                location = "at work";
+                            }
                             useSilderTV.setText(getString(R.string.feedback_how_you_feel));
                             surveyImage.setImageDrawable(getResources().getDrawable(R.drawable.survey3_healthier));
                             submitBtn.setText(getString(R.string.feedback_btn_complete));
