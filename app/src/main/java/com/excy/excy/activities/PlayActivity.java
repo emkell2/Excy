@@ -105,7 +105,9 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
                 Intent intent;
                 switch (item.getItemId()) {
                     case R.id.action_workouts:
-                        intent = new Intent(getContext(), WorkoutListActivity.class);
+                        intent = WorkoutActivity.sisActive
+                                ? new Intent(getBaseContext(), WorkoutActivity.class)
+                                : new Intent(getBaseContext(), WorkoutListActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         break;
