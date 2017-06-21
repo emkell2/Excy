@@ -86,7 +86,9 @@ public class MeActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.action_workouts:
-                        intent = new Intent(getBaseContext(), WorkoutListActivity.class);
+                        intent = WorkoutActivity.sisActive
+                                ? new Intent(getBaseContext(), WorkoutActivity.class)
+                                : new Intent(getBaseContext(), WorkoutListActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         break;

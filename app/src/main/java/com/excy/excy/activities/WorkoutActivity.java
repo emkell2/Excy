@@ -65,6 +65,7 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
     boolean audioIconEnabled = true;
     boolean warmUpDialogShown;
 
+    static boolean sisActive = false;
     static ImageView targetZoneIV;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -236,6 +237,12 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        sisActive = true;
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
@@ -259,6 +266,8 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
         minutes = 0;
         seconds = 0;
         originalStartTime = 0;
+
+        sisActive = false;
 
         if (player != null) {
             player.stop();
@@ -358,7 +367,7 @@ public class WorkoutActivity extends AppCompatActivity implements WorkoutComplet
     }
 
     private static void setTargetPowerZoneImage(int currZone) {
-        Drawable zone;;
+        Drawable zone;
         switch (currZone) {
             case 1:
                 zone = mResources.getDrawable(R.drawable.zone_intensity_1);
