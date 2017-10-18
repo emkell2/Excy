@@ -39,19 +39,21 @@
         <activity android:name=".activities.WorkoutListActivity" />
         <activity
             android:name=".activities.WorkoutActivity"
-            android:configChanges="orientation|screenSize"/>
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name=".activities.MeActivity"
-            android:hardwareAccelerated="false"/>
+            android:hardwareAccelerated="false" />
         <activity
             android:name=".activities.EditProfileActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".activities.SurveyActivity" />
         <activity
             android:name=".activities.MoreActivity"
             android:hardwareAccelerated="false" />
         <activity android:name=".activities.QuickStatsActivity" />
-        <activity android:name=".activities.WarmUpActivity"></activity>
+        <activity android:name=".activities.WarmUpActivity" />
+        <activity android:name=".activities.ErgonomicsActivity" />
+        <activity android:name=".activities.WebViewActivity"></activity>
     </application>
 
 </manifest>
