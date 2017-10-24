@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
@@ -55,5 +56,9 @@ public class AppUtilities {
 
     public static int dpFromPx(final Context context, final float px) {
         return (int) (px / context.getResources().getDisplayMetrics().density);
+    }
+
+    public static int convertDpToPx(Context context, int dp){
+        return Math.round(dp*(context.getResources().getDisplayMetrics().xdpi/ DisplayMetrics.DENSITY_DEFAULT));
     }
 }

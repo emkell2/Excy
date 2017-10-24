@@ -26,9 +26,7 @@ public class WorkoutUtilities {
     // Intent Filters
     public static final String INTENT_START_PLAY_TIMER = "INTENT START PLAY TIMER";
     public static final String INTENT_START_WORKOUT_TIMER = "INTENT START WORKOUT TIMER";
-
-    // Persist Keys
-    public static final String KEY_USER_EMAIL = "Key User Email";
+    public static final String INTENT_FORWARDS_BACKWARDS = "INTENT FORWARDS BACKWARDS";
 
     // Workout Names
     public static final String WORKOUT_ARM_CANDY = "Arm Candy";
