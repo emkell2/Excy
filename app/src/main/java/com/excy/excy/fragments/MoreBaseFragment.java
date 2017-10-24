@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.excy.excy.R;
+import com.excy.excy.activities.ErgonomicsActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,13 +72,15 @@ public class MoreBaseFragment extends Fragment {
         learnExercisesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment frag = new LearnExercisesFragment();
-                String str = getResources().getString(R.string.learn_exercises);
-
-                fragmentManager.beginTransaction()
-                        .replace(R.id.more_fragment_container, frag, str)
-                        .addToBackStack(str)
-                        .commitAllowingStateLoss();
+//                Fragment frag = new ErgonomicsActivity();
+//                String str = getResources().getString(R.string.learn_exercises);
+//
+//                fragmentManager.beginTransaction()
+//                        .replace(R.id.more_fragment_container, frag, str)
+//                        .addToBackStack(str)
+//                        .commitAllowingStateLoss();
+                Intent intent = new Intent(getContext(), ErgonomicsActivity.class);
+                startActivity(intent);
             }
         });
 
