@@ -20,6 +20,9 @@
     <string name="slow">slow</string>
     <string name="fast">fast</string>
 
+    <string name="forwards">forwards</string>
+    <string name="backwards">backwards</string>
+
     <string name="slow_it_down">slow it down</string>
     <string name="push_yourself">push yourself</string>
 

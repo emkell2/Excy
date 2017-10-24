@@ -38,9 +38,17 @@ public class PlayTimer {
             if (slowInt == 0 && fastInt == 0) {
                 PlayActivity.setRunningManImageAndText(R.drawable.burst_play_grey, 0);
             } else if (slowInt >= fastInt) {
-                PlayActivity.setRunningManImageAndText(R.drawable.burst_play_blue, R.string.slow_it_down);
+                if (!PlayActivity.isForwardBackwardWorkout()) {
+                    PlayActivity.setRunningManImageAndText(R.drawable.burst_play_blue, R.string.slow_it_down);
+                } else {
+                    PlayActivity.setRunningManImageAndText(R.drawable.burst_play_blue, R.string.backwards);
+                }
             } else {
-                PlayActivity.setRunningManImageAndText(R.drawable.burst_play_red, R.string.push_yourself);
+                if (!PlayActivity.isForwardBackwardWorkout()) {
+                    PlayActivity.setRunningManImageAndText(R.drawable.burst_play_red, R.string.push_yourself);
+                } else {
+                    PlayActivity.setRunningManImageAndText(R.drawable.burst_play_red, R.string.forwards);
+                }
             }
 
             currentInterval = (slowInt >= fastInt) ? false : true;

@@ -41,6 +41,8 @@ import java.util.HashMap;
 import info.hoang8f.widget.FButton;
 
 public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDialog.OnCompleteListener {
+    private static final int BACKWARDS_FORWARDS_TEXT_SIZE = 12;
+
     private static Activity activity;
     private static Context context;
 
@@ -56,6 +58,13 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
     private static Button pauseBtn;
     private static Button stopBtn;
 
+    private TextView slowTV;
+    private TextView fastTV;
+    private ImageButton slowMinus;
+    private ImageButton slowPlus;
+    private ImageButton fastMinus;
+    private ImageButton fastPlus;
+
     private PlayTimer timer;
     private static long startingTime = 0;
     private static int minutes = 00;
@@ -66,6 +75,9 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
     private static long originalStartTime = 0;
     private boolean setInterval;
     private boolean warmUpDialogShown;
+    private boolean inWorkoutDialogShowing;
+
+    private static boolean sForwardsBackwards;
 
     private static HashMap<String, Object> workout;
 
@@ -126,7 +138,7 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
             }
         });
 
-        if (!checkForCurrentWorkout()) {
+        if (!checkForCurrentWorkout(false)) {
             activity = this;
             context = this;
 
@@ -137,15 +149,15 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
             Typeface dosisMedium = Typeface.createFromAsset(getAssets(), "fonts/Dosis-Medium.ttf");
             Typeface dosisBold = Typeface.createFromAsset(getAssets(), "fonts/Dosis-Bold.ttf");
 
-        /* Set font for burst play text */
+            /* Set font for burst play text */
             burstTV = (TextView) findViewById(R.id.tvBurstPlay);
             burstTV.setTypeface(dosisRegular);
 
-        /* Set font for interval text */
+            /* Set font for interval text */
             intervalTextTV = (TextView) findViewById(R.id.tvIntervalText);
             intervalTextTV.setTypeface(dosisBold);
 
-        /* Set up clock view */
+            /* Set up clock view */
             final TextView clockTV = (TextView) findViewById(R.id.tvClock);
             clockTV.setTypeface(dosisBold);
 
@@ -206,23 +218,23 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
                 }
             });
 
-        /* Set up intervals view */
+            /* Set up intervals view */
             final TextView graphTV = (TextView) findViewById(R.id.tvGraph);
             graphTV.setTypeface(dosisBold);
 
             slowIntervalTV = (TextView) findViewById(R.id.tvSlowInterval);
             slowIntervalTV.setTypeface(dosisMedium);
 
-            TextView slowTV = (TextView) findViewById(R.id.tvSlow);
+            slowTV = (TextView) findViewById(R.id.tvSlow);
             slowTV.setTypeface(dosisBold);
 
             fastIntervalTV = (TextView) findViewById(R.id.tvFastInterval);
             fastIntervalTV.setTypeface(dosisMedium);
 
-            TextView fastTV = (TextView) findViewById(R.id.tvFast);
+            fastTV = (TextView) findViewById(R.id.tvFast);
             fastTV.setTypeface(dosisBold);
 
-            ImageButton slowMinus = (ImageButton) findViewById(R.id.ibSlowMinus);
+            slowMinus = (ImageButton) findViewById(R.id.ibSlowMinus);
             slowMinus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -249,7 +261,7 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
                 }
             });
 
-            ImageButton slowPlus = (ImageButton) findViewById(R.id.ibSlowPlus);
+            slowPlus = (ImageButton) findViewById(R.id.ibSlowPlus);
             slowPlus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -262,7 +274,7 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
                 }
             });
 
-            ImageButton fastMinus = (ImageButton) findViewById(R.id.ibFastMinus);
+            fastMinus = (ImageButton) findViewById(R.id.ibFastMinus);
             fastMinus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -289,7 +301,7 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
                 }
             });
 
-            ImageButton fastPlus = (ImageButton) findViewById(R.id.ibFastPlus);
+            fastPlus = (ImageButton) findViewById(R.id.ibFastPlus);
             fastPlus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -302,12 +314,20 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
                 }
             });
 
-        /* Set up excy link view  */
+            if (getIntent() != null) {
+                sForwardsBackwards = getIntent().getBooleanExtra(WorkoutUtilities.INTENT_FORWARDS_BACKWARDS, false);
+            }
+
+            if (sForwardsBackwards) {
+                setForwardsBackwardsLayout();
+            }
+
+            /* Set up excy link view  */
             TextView excyLinkTV = (TextView) findViewById(R.id.tvLink);
             excyLinkTV.setTypeface(dosisRegular);
             excyLinkTV.setMovementMethod(LinkMovementMethod.getInstance());
 
-        /* Set up Start/Pause/Stop buttons */
+            /* Set up Start/Pause/Stop buttons */
             startBtn = (FButton) findViewById(R.id.btnStart);
             pauseBtn = (FButton) findViewById(R.id.btnPause);
             stopBtn = (FButton) findViewById(R.id.btnStop);
@@ -399,7 +419,18 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-        checkForCurrentWorkout();
+        boolean bForwardsBackwards = false;
+        if (intent != null) {
+            bForwardsBackwards = intent.getBooleanExtra(WorkoutUtilities.INTENT_FORWARDS_BACKWARDS, false);
+        }
+
+        if (checkForCurrentWorkout(bForwardsBackwards) && bForwardsBackwards) {
+            if (!inWorkoutDialogShowing) {
+                sForwardsBackwards = bForwardsBackwards;
+
+                setForwardsBackwardsLayout();
+            }
+        }
     }
 
     @Override
@@ -515,7 +546,7 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
                 }).show();
     }
 
-    private void displayInAWorkoutDialog() {
+    private void displayInAWorkoutDialog(final boolean forwardsBackwards) {
         new AlertDialog.Builder(this)
                 .setTitle("You Are In A Workout!")
                 .setMessage("You are in the middle of a workout! Please finish the workout " +
@@ -524,14 +555,18 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // current workout is NOT a play activity, so finish this screen.
-                        Intent intent = new Intent(getBaseContext(), WorkoutActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                        startActivity(intent);
-                        finish();
+                        if (!forwardsBackwards) {
+                            Intent intent = new Intent(getBaseContext(), WorkoutActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                            startActivity(intent);
+                            finish();
+                        }
                     }
                 })
                 .setCancelable(false)
                 .show();
+
+        inWorkoutDialogShowing = true;
     }
 
     public static long getStartingTime() {
@@ -549,9 +584,17 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
     public static void changeIntervalImage(boolean currentInteveral) {
         Vibrator vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         if (currentInteveral) {
-            setRunningManImageAndText(R.drawable.burst_play_red, R.string.push_yourself);
+            if (!sForwardsBackwards) {
+                setRunningManImageAndText(R.drawable.burst_play_red, R.string.push_yourself);
+            } else {
+                setRunningManImageAndText(R.drawable.burst_play_red, R.string.forwards);
+            }
         } else {
-            setRunningManImageAndText(R.drawable.burst_play_blue, R.string.slow_it_down);
+            if (!sForwardsBackwards) {
+                setRunningManImageAndText(R.drawable.burst_play_blue, R.string.slow_it_down);
+            } else {
+                setRunningManImageAndText(R.drawable.burst_play_blue, R.string.backwards);
+            }
         }
 
         vibe.vibrate(1000);
@@ -568,7 +611,7 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
 
             intervalTextTV.setText(stringId);
 
-            if (stringId == R.string.slow_it_down) {
+            if (stringId == R.string.slow_it_down || stringId == R.string.backwards) {
                 intervalTextTV.setTextColor(context.getResources().getColor(R.color.colorBlue));
             } else {
                 intervalTextTV.setTextColor(context.getResources().getColor(R.color.colorAccent));
@@ -614,6 +657,7 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
         startBtn.setClickable(true);
         startBtn.setVisibility(View.VISIBLE);
 
+        sForwardsBackwards = false;
         workout = null;
 
         getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -665,17 +709,17 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
         excyLogoIV.setVisibility(View.GONE);
         burstTV.setVisibility(View.GONE);
 
-                /* Setup running man image and progress bar*/
+        /* Setup running man image and progress bar*/
         runningManIV.setVisibility(View.VISIBLE);
         intervalTextTV.setVisibility(View.VISIBLE);
 
         progressBar.setVisibility(View.VISIBLE);
 
-                /* Change text */
+        /* Change text */
         clockTV.setText(R.string.time_remaining);
         graphTV.setText(R.string.intervals);
 
-                /* Switch out buttons */
+        /* Switch out buttons */
         startBtn.setClickable(false);
         startBtn.setVisibility(View.GONE);
 
@@ -688,16 +732,41 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
         mainPlayLayout.setWeightSum(3);
     }
 
-    private boolean checkForCurrentWorkout() {
+    private boolean checkForCurrentWorkout(boolean forwardsBackwards) {
         Activity currActivity = WorkoutUtilities.getCurrentWorkoutActivity();
         if (currActivity != null) {
             String activityStr = currActivity.getClass().getSimpleName();
-            if (currActivity != null && !activityStr.equals(this.getClass().getSimpleName())) {
-                displayInAWorkoutDialog();
+            if ((currActivity != null && !activityStr.equals(this.getClass().getSimpleName())) || forwardsBackwards) {
+                displayInAWorkoutDialog(forwardsBackwards);
                 return true;
             }
         }
 
         return false;
+    }
+
+    public static boolean isForwardBackwardWorkout() {
+        return sForwardsBackwards;
+    }
+    private void setForwardsBackwardsLayout() {
+        slowTV.setText(getString(R.string.backwards));
+        slowTV.setTextSize(BACKWARDS_FORWARDS_TEXT_SIZE);
+
+        fastTV.setText(getString(R.string.forwards));
+        fastTV.setTextSize(BACKWARDS_FORWARDS_TEXT_SIZE);
+
+        int buttonSize = AppUtilities.convertDpToPx(getContext(), 42);
+
+        slowMinus.getLayoutParams().width = buttonSize;
+        slowMinus.getLayoutParams().height = buttonSize;
+
+        slowPlus.getLayoutParams().width = buttonSize;
+        slowPlus.getLayoutParams().height = buttonSize;
+
+        fastMinus.getLayoutParams().width = buttonSize;
+        fastMinus.getLayoutParams().height = buttonSize;
+
+        fastPlus.getLayoutParams().width = buttonSize;
+        fastPlus.getLayoutParams().height = buttonSize;
     }
 }
