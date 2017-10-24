@@ -424,7 +424,7 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
             bForwardsBackwards = intent.getBooleanExtra(WorkoutUtilities.INTENT_FORWARDS_BACKWARDS, false);
         }
 
-        if (checkForCurrentWorkout(bForwardsBackwards) && bForwardsBackwards) {
+        if (!checkForCurrentWorkout(bForwardsBackwards) && bForwardsBackwards) {
             if (!inWorkoutDialogShowing) {
                 sForwardsBackwards = bForwardsBackwards;
 
@@ -681,7 +681,11 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
 
         workout.put("uid", userId);
         workout.put("dateCompleted", date);
-        workout.put("workoutTitle", WorkoutUtilities.WORKOUT_INTERVAL);
+        if (!sForwardsBackwards) {
+            workout.put("workoutTitle", WorkoutUtilities.WORKOUT_INTERVAL);
+        } else {
+            workout.put("workoutTitle", WorkoutUtilities.WORKOUT_BACKWARDS_FORWARDS);
+        }
         workout.put("totalTime", totalTime);
         workout.put("caloriesBurned", calsBurned);
 

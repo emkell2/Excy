@@ -36,6 +36,7 @@ public class WorkoutUtilities {
     public static final String WORKOUT_ARM_BLAST = "Arm Blast";
     public static final String WORKOUT_ULTIMATE_ARM_LEG_TONING = "Ultimate Arm & Leg Toning";
     public static final String WORKOUT_INTERVAL = "Interval Workout";
+    public static final String WORKOUT_BACKWARDS_FORWARDS = "Backwards & Forwards";
 
     // PowerZone int Arrays
     public static final int[] PZ_ARM_CANDY_ARR = {3, 5, 3, 5, 3, 5, 3};
