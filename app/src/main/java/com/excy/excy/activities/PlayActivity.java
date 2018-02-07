@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -17,8 +19,11 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -27,6 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.excy.excy.R;
+import com.excy.excy.activities.interfaces.PlayViewContract;
 import com.excy.excy.dialogs.MaxTemperatureDialog;
 import com.excy.excy.dialogs.WarmUpDialog;
 import com.excy.excy.dialogs.WorkoutCompleteDialog;
@@ -36,12 +42,20 @@ import com.excy.excy.utilities.PlayUtilities;
 import com.excy.excy.utilities.WorkoutUtilities;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import info.hoang8f.widget.FButton;
 
-public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDialog.OnCompleteListener {
+public class PlayActivity extends AppCompatActivity implements PlayViewContract,
+        WorkoutCompleteDialog.OnCompleteListener, View.OnKeyListener,
+        View.OnTouchListener, View.OnClickListener {
     private static final int BACKWARDS_FORWARDS_TEXT_SIZE = 12;
+    private static final int MSG_INC = 0;
+    private static final int MSG_DEC = 1;
 
     private static Activity activity;
     private static Context context;
@@ -64,6 +78,10 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
     private ImageButton slowPlus;
     private ImageButton fastMinus;
     private ImageButton fastPlus;
+    private ImageButton minPlus;
+    private ImageButton minMinus;
+    private ImageButton secPlus;
+    private ImageButton secMinus;
 
     private PlayTimer timer;
     private static long startingTime = 0;
@@ -72,10 +90,18 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
     private static int fastInterval;    // in seconds
     private static int slowInterval;    // in seconds
 
+    private int mSlowCounter;
+    private int mFastCounter;
+
+    private Handler mHandler;
+    private ScheduledExecutorService mUpdater;
+
     private static long originalStartTime = 0;
     private boolean setInterval;
     private boolean warmUpDialogShown;
     private boolean inWorkoutDialogShowing;
+
+    private ArrayList<ImageButton> mViews;
 
     private static boolean sForwardsBackwards;
 
@@ -142,6 +168,23 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
             activity = this;
             context = this;
 
+            mViews = new ArrayList<>();
+
+            mHandler = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    switch (msg.arg2) {
+                        case MSG_INC:
+                            inc(getAssociatedTextViewReady(mViews.get(msg.arg1)));
+                            return;
+                        case MSG_DEC:
+                            dec(getAssociatedTextViewReady(mViews.get(msg.arg1)));
+                            return;
+                    }
+                    super.handleMessage(msg);
+                }
+            };
+
             LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                     new IntentFilter(WorkoutUtilities.INTENT_START_PLAY_TIMER));
 
@@ -170,53 +213,17 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
             TextView secTV = (TextView) findViewById(R.id.tvSec);
             secTV.setTypeface(dosisBold);
 
-            ImageButton minPlus = (ImageButton) findViewById(R.id.ibMinPlus);
-            minPlus.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (minutes < 60) {
-                        minutes++;
-                        timerTV.setText(createTimerString());
-                        updateTimer();
-                    }
-                }
-            });
+            minPlus = (ImageButton) findViewById(R.id.ibMinPlus);
+            setListeners(minPlus);
 
-            final ImageButton minMinus = (ImageButton) findViewById(R.id.ibMinMinus);
-            minMinus.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (minutes > 0) {
-                        minutes--;
-                        timerTV.setText(createTimerString());
-                        updateTimer();
-                    }
-                }
-            });
+            minMinus = (ImageButton) findViewById(R.id.ibMinMinus);
+            setListeners(minMinus);
 
-            ImageButton secPlus = (ImageButton) findViewById(R.id.ibSecPlus);
-            secPlus.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (seconds < 60) {
-                        seconds++;
-                        timerTV.setText(createTimerString());
-                        updateTimer();
-                    }
-                }
-            });
+            secPlus = (ImageButton) findViewById(R.id.ibSecPlus);
+            setListeners(secPlus);
 
-            ImageButton secMinus = (ImageButton) findViewById(R.id.ibSecMinus);
-            secMinus.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (seconds > 0) {
-                        seconds--;
-                        timerTV.setText(createTimerString());
-                        updateTimer();
-                    }
-                }
-            });
+            secMinus = (ImageButton) findViewById(R.id.ibSecMinus);
+            setListeners(secMinus);
 
             /* Set up intervals view */
             final TextView graphTV = (TextView) findViewById(R.id.tvGraph);
@@ -235,84 +242,16 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
             fastTV.setTypeface(dosisBold);
 
             slowMinus = (ImageButton) findViewById(R.id.ibSlowMinus);
-            slowMinus.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String slowText = slowIntervalTV.getText().toString();
-
-                    if (TextUtils.isEmpty(slowText)) {
-                        return;
-                    }
-
-                    int slowInt = Integer.valueOf(slowText).intValue();
-
-                    if (slowInt > 0) {
-                        slowInt--;
-                        slowInterval = slowInt;
-
-                        if (slowInt == 0) {
-                            slowIntervalTV.setText("000");
-                        } else {
-                            slowIntervalTV.setText(String.valueOf(slowInt));
-                        }
-
-                        PlayTimer.resetIntervalCounters();
-                    }
-                }
-            });
+            setListeners(slowMinus);
 
             slowPlus = (ImageButton) findViewById(R.id.ibSlowPlus);
-            slowPlus.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int slowInt = Integer.valueOf(slowIntervalTV.getText().toString()).intValue();
-
-                    slowInt++;
-                    slowInterval = slowInt;
-                    slowIntervalTV.setText(String.valueOf(slowInt));
-                    PlayTimer.resetIntervalCounters();
-                }
-            });
+            setListeners(slowPlus);
 
             fastMinus = (ImageButton) findViewById(R.id.ibFastMinus);
-            fastMinus.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String fastText = fastIntervalTV.getText().toString();
-
-                    if (TextUtils.isEmpty(fastText)) {
-                        return;
-                    }
-
-                    int fastInt = Integer.valueOf(fastText).intValue();
-
-                    if (fastInt > 0) {
-                        fastInt--;
-                        fastInterval = fastInt;
-
-                        if (fastInt == 0) {
-                            fastIntervalTV.setText("000");
-                        } else {
-                            fastIntervalTV.setText(String.valueOf(fastInt));
-                        }
-
-                        PlayTimer.resetIntervalCounters();
-                    }
-                }
-            });
+            setListeners(fastMinus);
 
             fastPlus = (ImageButton) findViewById(R.id.ibFastPlus);
-            fastPlus.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int fastInt = Integer.valueOf(fastIntervalTV.getText().toString()).intValue();
-
-                    fastInt++;
-                    fastInterval = fastInt;
-                    fastIntervalTV.setText(String.valueOf(fastInt));
-                    PlayTimer.resetIntervalCounters();
-                }
-            });
+            setListeners(fastPlus);
 
             if (getIntent() != null) {
                 sForwardsBackwards = getIntent().getBooleanExtra(WorkoutUtilities.INTENT_FORWARDS_BACKWARDS, false);
@@ -387,6 +326,15 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
                 }
             });
         }
+
+        mViews.add(minPlus);
+        mViews.add(minMinus);
+        mViews.add(secPlus);
+        mViews.add(secMinus);
+        mViews.add(slowPlus);
+        mViews.add(slowMinus);
+        mViews.add(fastPlus);
+        mViews.add(fastMinus);
     }
 
     @Override
@@ -772,5 +720,205 @@ public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDi
 
         fastPlus.getLayoutParams().width = buttonSize;
         fastPlus.getLayoutParams().height = buttonSize;
+    }
+
+    private void inc(TextView view) {
+        if (view == fastIntervalTV) {
+            view.setText(String.valueOf(mFastCounter));
+            PlayTimer.resetIntervalCounters();
+        } else if (view == slowIntervalTV) {
+            view.setText(String.valueOf(mSlowCounter));
+            PlayTimer.resetIntervalCounters();
+        } else if (view == timerTV) {
+            view.setText(createTimerString());
+            updateTimer();
+        }
+    }
+
+    private void dec(TextView view) {
+        if (view == fastIntervalTV) {
+            if (mFastCounter == 0) {
+                view.setText("000");
+            } else {
+                view.setText(String.valueOf(mFastCounter));
+            }
+
+            PlayTimer.resetIntervalCounters();
+        } else if (view == slowIntervalTV) {
+            if (mSlowCounter == 0) {
+                view.setText("000");
+            } else {
+                view.setText(String.valueOf(mSlowCounter));
+            }
+            PlayTimer.resetIntervalCounters();
+        } else if (view == timerTV) {
+            view.setText(createTimerString());
+            updateTimer();
+        }
+    }
+
+    private void startUpdating(View view, boolean inc) {
+        if (mUpdater != null) {
+            Log.e(getClass().getSimpleName(), "Another executor is still active");
+            return;
+        }
+        mUpdater = Executors.newSingleThreadScheduledExecutor();
+        mUpdater.scheduleAtFixedRate(new UpdateCounterTask(view, inc), 200, 200,
+                TimeUnit.MILLISECONDS);
+    }
+
+    private void stopUpdating() {
+        mUpdater.shutdownNow();
+        mUpdater = null;
+    }
+
+    private TextView getAssociatedTextViewReady(View view) {
+        TextView v = null;
+
+        if (view == minPlus) {
+            if (minutes < 60) {
+                minutes++;
+            }
+            v = timerTV;
+        } else if (view == minMinus) {
+            if (minutes > 0) {
+                minutes--;
+            }
+            v = timerTV;
+        } else if (view == secPlus) {
+            if (seconds < 60) {
+                seconds++;
+            }
+            v = timerTV;
+        } else if (view == secMinus) {
+            if (seconds > 0) {
+                seconds--;
+            }
+            v = timerTV;
+        } else if (view == slowPlus) {
+            mSlowCounter = Integer.valueOf(slowIntervalTV.getText().toString()).intValue();
+
+            mSlowCounter++;
+            slowInterval = mSlowCounter;
+            v = slowIntervalTV;
+        } else if (view == slowMinus) {
+            String slowText = slowIntervalTV.getText().toString();
+
+            if (!TextUtils.isEmpty(slowText)) {
+                mSlowCounter = Integer.valueOf(slowText).intValue();
+
+                if (mSlowCounter > 0) {
+                    mSlowCounter--;
+                    slowInterval = mSlowCounter;
+                }
+            }
+            v = slowIntervalTV;
+        } else if (view == fastPlus) {
+            mFastCounter = Integer.valueOf(fastIntervalTV.getText().toString()).intValue();
+
+            mFastCounter++;
+            fastInterval = mFastCounter;
+            v = fastIntervalTV;
+        } else if (view == fastMinus) {
+            String fastText = fastIntervalTV.getText().toString();
+
+            if (!TextUtils.isEmpty(fastText)) {
+                mFastCounter = Integer.valueOf(fastText).intValue();
+
+                if (mFastCounter > 0) {
+                    mFastCounter--;
+                    fastInterval = mFastCounter;
+                }
+            }
+            v = fastIntervalTV;
+        }
+
+        return v;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if ((v instanceof ImageButton) && (mUpdater == null)) {
+            if (isIncrementButton(v)) {
+                inc(getAssociatedTextViewReady(v));
+            } else if (isDecrementButton(v)) {
+                dec(getAssociatedTextViewReady(v));
+            }
+        }
+    }
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        boolean isKeyOfInterest = keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_ENTER;
+        boolean isReleased = event.getAction() == KeyEvent.ACTION_UP;
+        boolean isPressed = event.getAction() == KeyEvent.ACTION_DOWN
+                && event.getAction() != KeyEvent.ACTION_MULTIPLE;
+
+        if (isKeyOfInterest && isReleased) {
+            stopUpdating();
+        } else if (isKeyOfInterest && isPressed) {
+            startUpdating(v, isIncrementButton(v));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        boolean isReleased = event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL;
+        boolean isPressed = event.getAction() == MotionEvent.ACTION_DOWN;
+
+        if (isReleased) {
+            stopUpdating();
+        } else if (isPressed) {
+            startUpdating(v, isIncrementButton(v));
+        }
+        return false;
+    }
+
+    private boolean isIncrementButton(View v) {
+        return (v == fastPlus) || (v == slowPlus) || (v == minPlus) || (v == secPlus);
+    }
+
+    private boolean isDecrementButton(View v) {
+        return (v == fastMinus) || (v == slowMinus) || (v == minMinus) || (v == secMinus);
+    }
+
+    private void setListeners(View view) {
+        view.setOnClickListener(this);
+        view.setOnTouchListener(this);
+        view.setOnKeyListener(this);
+    }
+
+    private class UpdateCounterTask implements Runnable {
+        private ImageButton mView;
+        private boolean mInc;
+
+        public UpdateCounterTask(View view, boolean inc) {
+            if (view instanceof  ImageView) {
+                mView = (ImageButton) view;
+            }
+            mInc = inc;
+        }
+
+        public void run() {
+            if (mView != null) {
+                Message message = new Message();
+                int index = 0;
+                for (int i = 0; i < mViews.size(); i++) {
+                    if (mViews.get(i) == mView) {
+                        index = i;
+                        break;
+                    }
+                }
+                message.arg1 = index;
+                if (mInc) {
+                    message.arg2 = MSG_INC;
+                    mHandler.sendMessage(message);
+                } else {
+                    message.arg2 = MSG_DEC;
+                    mHandler.sendMessage(message);
+                }
+            }
+        }
     }
 }
