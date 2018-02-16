@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.excy.excy">
+    package="com.app.excy">
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -21,11 +21,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.PlayActivity"
+            android:name="com.app.excy.activities.PlayActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.LoginActivity"
+            android:name="com.app.excy.activities.LoginActivity"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,26 +34,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.SignUpActivity"
+            android:name="com.app.excy.activities.SignUpActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".activities.WorkoutListActivity" />
+        <activity android:name="com.app.excy.activities.WorkoutListActivity" />
         <activity
-            android:name=".activities.WorkoutActivity"
+            android:name="com.app.excy.activities.WorkoutActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".activities.MeActivity"
+            android:name="com.app.excy.activities.MeActivity"
             android:hardwareAccelerated="false" />
         <activity
-            android:name=".activities.EditProfileActivity"
+            android:name="com.app.excy.activities.EditProfileActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name=".activities.SurveyActivity" />
+        <activity android:name="com.excy.com.app.excy.activities.SurveyActivity" />
         <activity
-            android:name=".activities.MoreActivity"
+            android:name="com.app.excy.activities.MoreActivity"
             android:hardwareAccelerated="false" />
-        <activity android:name=".activities.QuickStatsActivity" />
-        <activity android:name=".activities.WarmUpActivity" />
-        <activity android:name=".activities.ErgonomicsActivity" />
-        <activity android:name=".activities.WebViewActivity"></activity>
+        <activity android:name="com.app.excy.activities.QuickStatsActivity" />
+        <activity android:name="com.app.excy.activities.WarmUpActivity" />
+        <activity android:name="com.app.excy.activities.ErgonomicsActivity" />
+        <activity android:name="com.app.excy.activities.WebViewActivity"></activity>
     </application>
 
 </manifest>

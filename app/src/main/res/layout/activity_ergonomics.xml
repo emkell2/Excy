@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    tools:context="com.excy.excy.activities.ErgonomicsActivity">
+    tools:context="com.app.excy.activities.ErgonomicsActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvTips"
