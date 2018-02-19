@@ -476,13 +476,13 @@ public class PlayActivity extends AppCompatActivity implements PlayViewContract,
         }
     }
 
-    public static void updateSlowInterval(int value) {
-        slowIntervalTV.setText(String.valueOf(value));
-    }
-
-    public static void updateFastInterval(int value) {
-        fastIntervalTV.setText(String.valueOf(value));
-    }
+//    public static void updateSlowInterval(int value) {
+//        slowIntervalTV.setText(String.valueOf(value));
+//    }
+//
+//    public static void updateFastInterval(int value) {
+//        fastIntervalTV.setText(String.valueOf(value));
+//    }
 
     private void displayResumeDialog(final TextView timerTV) {
         new AlertDialog.Builder(this)

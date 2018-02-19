@@ -162,11 +162,11 @@ public class PlayTimer {
         if (!currentInterval) {
             slowIntCtr++;
 
-            if (slowIntCtr == 1) {
-                PlayActivity.updateFastInterval(fastInt);
-            }
-
-            PlayActivity.updateSlowInterval(slowInt - slowIntCtr);
+//            if (slowIntCtr == 1) {
+//                PlayActivity.updateFastInterval(fastInt);
+//            }
+//
+//            PlayActivity.updateSlowInterval(slowInt - slowIntCtr);
 
             if (slowIntCtr == slowInt) {
                 slowIntCtr = 0;
@@ -176,11 +176,11 @@ public class PlayTimer {
         } else {
             fastIntCtr++;
 
-            if (fastIntCtr == 1) {
-                PlayActivity.updateSlowInterval(slowInt);
-            }
-
-            PlayActivity.updateFastInterval(fastInt - fastIntCtr);
+//            if (fastIntCtr == 1) {
+//                PlayActivity.updateSlowInterval(slowInt);
+//            }
+//
+//            PlayActivity.updateFastInterval(fastInt - fastIntCtr);
 
             if (fastIntCtr == fastInt) {
                 fastIntCtr = 0;
