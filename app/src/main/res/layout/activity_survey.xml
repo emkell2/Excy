@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.excy.excy.activities.SurveyActivity">
+    tools:context="com.app.excy.activities.SurveyActivity">
 
     <TextView
         android:id="@+id/tvWayToGo"

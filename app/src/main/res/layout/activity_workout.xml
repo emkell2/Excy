@@ -4,7 +4,7 @@
     android:id="@+id/activity_workout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.excy.excy.activities.WorkoutActivity">
+    tools:context="com.app.excy.activities.WorkoutActivity">
 
     <ScrollView
         android:layout_width="match_parent"

@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:974192858023:android:1c49b6c7d314d2ac",
+        "mobilesdk_app_id": "1:974192858023:android:74ad037846e54528",
         "android_client_info": {
-          "package_name": "com.excy.excy"
+          "package_name": "com.app.excy"
         }
       },
       "oauth_client": [
