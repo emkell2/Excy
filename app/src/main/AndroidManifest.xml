@@ -46,7 +46,7 @@
         <activity
             android:name="com.app.excy.activities.EditProfileActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name="com.excy.com.app.excy.activities.SurveyActivity" />
+        <activity android:name="com.app.excy.activities.SurveyActivity" />
         <activity
             android:name="com.app.excy.activities.MoreActivity"
             android:hardwareAccelerated="false" />
