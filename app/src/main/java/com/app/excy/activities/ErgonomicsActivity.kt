@@ -75,6 +75,7 @@ class ErgonomicsActivity : AppCompatActivity() {
     private fun createTipList(): ArrayList<ExerciseTip> {
         val tips = ArrayList<ExerciseTip>()
 
+        // Arm Ergonomics
         tips.add(ExerciseTip(getString(R.string.arms1), getString(R.string.link_arms1), 1,
                 ExerciseTip.ExerciseType.ARMS))
         tips.add(ExerciseTip(getString(R.string.arms2), getString(R.string.link_arms2), 2,
@@ -100,6 +101,7 @@ class ErgonomicsActivity : AppCompatActivity() {
         tips.add(ExerciseTip(getString(R.string.arms12), getString(R.string.link_arms12), 12,
                 ExerciseTip.ExerciseType.ARMS))
 
+        // Leg Ergonomics
         tips.add(ExerciseTip(getString(R.string.legs1), getString(R.string.link_legs1), 1,
                 ExerciseTip.ExerciseType.LEGS))
         tips.add(ExerciseTip(getString(R.string.legs2), getString(R.string.link_legs2), 2,
