@@ -226,6 +226,8 @@
     <string name="arms10">How Do I Plank on Excy?</string>
     <string name="arms11">How do I use Excy as an Upper Body Ergometer from a Chair Without a Table?</string>
     <string name="arms12">How to use Excy with Hand Pedals for Hand Cycling?</string>
+    <string name="arms13">How to I squat and hand cycle with Excy?</string>
+    <string name="arms14">How do I hand cycle in bed?</string>
 
     <string name="legs1">How to Pedal Excy as a Portable Recumbent Exercise Bike</string>
     <string name="legs2">How do I use Excy in the unicucle and step cycle position</string>
@@ -236,6 +238,10 @@
     <string name="legs7">How do I cycle Excy on the floor with the Keeper?</string>
     <string name="legs8">How to get started with Excy as a recumbent exercise bike after an injury?</string>
     <string name="legs9">What is the proper posture to use while cycling Excy from a chair?</string>
+    <string name="legs10">How do I stretch and lunge with Excy?</string>
+    <string name="legs11">How do I use Excy lying down on a bed or table?</string>
+    <string name="legs12">How do I hand cycle from a chair with Excy?</string>
+    <string name="legs13">How do I do a single leg balance hand cycle exercise?</string>
 
     <string name="link_arms1">https://www.youtube.com/watch?v=WcIWHB1ERK4</string>
     <string name="link_arms2">https://www.youtube.com/watch?v=6Z2oBqV9fOg</string>
@@ -249,6 +255,8 @@
     <string name="link_arms10">https://excy.com/excy-exercise-bike-upper-body-ergometer-ergonomic-setup-tips-physical-therapists-sports-medicine/</string>
     <string name="link_arms11">https://www.youtube.com/watch?v=rKtmEqytb9Y</string>
     <string name="link_arms12">https://excy.com/excy-exercise-bike-upper-body-ergometer-ergonomic-setup-tips-physical-therapists-sports-medicine/</string>
+    <string name="link_arms13">https://www.youtube.com/watch?v=qxyxjt5d0o8</string>
+    <string name="link_arms14">https://www.youtube.com/watch?v=3dAGkht2c0Q&amp;feature=youtu.be</string>
 
     <string name="link_legs1">https://www.youtube.com/watch?v=jXHt24vmmak</string>
     <string name="link_legs2">https://www.youtube.com/watch?v=M7mTiJADqqE</string>
@@ -259,6 +267,10 @@
     <string name="link_legs7">https://www.youtube.com/watch?v=sEkhc35Legs</string>
     <string name="link_legs8">https://www.youtube.com/watch?v=rQYsUxcLnuI</string>
     <string name="link_legs9">https://www.youtube.com/watch?time_continue=5&amp;v=4PwTWHltpZI</string>
+    <string name="link_legs10">https://youtu.be/T9oC1yQ2teQ</string>
+    <string name="link_legs11">https://www.youtube.com/watch?v=UMZyGtzKcG8</string>
+    <string name="link_legs12">https://www.youtube.com/watch?v=ueaGkrxVt4Q&amp;feature=youtu.be</string>
+    <string name="link_legs13">https://www.youtube.com/watch?v=0YjptN8YEi0 </string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

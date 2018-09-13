@@ -113,6 +113,10 @@ class ErgonomicsActivity : AppCompatActivity() {
                 ExerciseTip.ExerciseType.ARMS))
         tips.add(ExerciseTip(getString(R.string.arms12), getString(R.string.link_arms12), 12,
                 ExerciseTip.ExerciseType.ARMS))
+        tips.add(ExerciseTip(getString(R.string.arms13), getString(R.string.link_arms13), 13,
+                ExerciseTip.ExerciseType.ARMS))
+        tips.add(ExerciseTip(getString(R.string.arms14), getString(R.string.link_arms14), 14,
+                ExerciseTip.ExerciseType.ARMS))
 
         // Leg Ergonomics
         tips.add(ExerciseTip(getString(R.string.legs1), getString(R.string.link_legs1), 1,
@@ -132,6 +136,14 @@ class ErgonomicsActivity : AppCompatActivity() {
         tips.add(ExerciseTip(getString(R.string.legs8), getString(R.string.link_legs8), 8,
                 ExerciseTip.ExerciseType.LEGS))
         tips.add(ExerciseTip(getString(R.string.legs9), getString(R.string.link_legs9), 9,
+                ExerciseTip.ExerciseType.LEGS))
+        tips.add(ExerciseTip(getString(R.string.legs10), getString(R.string.link_legs10), 10,
+                ExerciseTip.ExerciseType.LEGS))
+        tips.add(ExerciseTip(getString(R.string.legs11), getString(R.string.link_legs11), 11,
+                ExerciseTip.ExerciseType.LEGS))
+        tips.add(ExerciseTip(getString(R.string.legs12), getString(R.string.link_legs12), 12,
+                ExerciseTip.ExerciseType.LEGS))
+        tips.add(ExerciseTip(getString(R.string.legs13), getString(R.string.link_legs13), 13,
                 ExerciseTip.ExerciseType.LEGS))
 
         return tips

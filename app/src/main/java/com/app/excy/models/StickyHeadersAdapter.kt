@@ -153,6 +153,8 @@ class StickyHeadersAdapter(listener: OnListFragmentInteractionListener) : Sectio
                     10 -> R.drawable.arms_10
                     11 -> R.drawable.arms_11
                     12 -> R.drawable.arms_12
+                    13 -> R.drawable.arms_13
+                    14 -> R.drawable.arms_14
                     else -> R.drawable.arms_1
                 }
             ExerciseTip.ExerciseType.LEGS.toString() ->
@@ -166,6 +168,10 @@ class StickyHeadersAdapter(listener: OnListFragmentInteractionListener) : Sectio
                     7 -> R.drawable.legs_7
                     8 -> R.drawable.legs_8
                     9 -> R.drawable.legs_9
+                    10 -> R.drawable.legs_10
+                    11 -> R.drawable.legs_11
+                    12 -> R.drawable.legs_12
+                    13 -> R.drawable.legs_13
                     else -> R.drawable.legs_1
                 }
             ExerciseTip.ExerciseType.WORKOUT.toString() ->
