@@ -1,6 +1,5 @@
 package com.app.excy.models
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +22,10 @@ class StickyHeadersAdapter(listener: OnListFragmentInteractionListener) : Sectio
     private var mValues: List<ExerciseTip>? = null
     private val sections = ArrayList<Section>()
     private var listener = listener
+
+    val WORKOUTS = "Workouts"
+    val ARM_ERGONOMICS = "Arm Ergonomics"
+    val LEG_ERGONOMICS = "Leg Ergonomics"
 
     override fun onCreateItemViewHolder(parent: ViewGroup, itemUserType: Int): ItemViewHolder? {
         val view = LayoutInflater.from(parent.context)
@@ -51,6 +54,12 @@ class StickyHeadersAdapter(listener: OnListFragmentInteractionListener) : Sectio
         holder.mItem = section.tips[itemIndex]
         holder.mTextView.text = holder.mItem!!.getTip()
 
+        if (section.text!! == WORKOUTS) {
+            holder.playButton.visibility = View.GONE
+        }
+
+        holder.playButton.visibility = if (section.text!! == WORKOUTS) View.GONE else View.VISIBLE
+
         setupImageView(holder.mImageView, holder.mItem)
 
         holder.mView.setOnClickListener {
@@ -69,9 +78,7 @@ class StickyHeadersAdapter(listener: OnListFragmentInteractionListener) : Sectio
     }
 
     override fun getNumberOfItemsInSection(sectionIndex: Int): Int {
-        val section = sections[sectionIndex] ?: return 0
-
-        return section.tips.size
+        return sections[sectionIndex].tips.size
     }
 
     override fun doesSectionHaveHeader(sectionIndex: Int): Boolean {
@@ -99,10 +106,11 @@ class StickyHeadersAdapter(listener: OnListFragmentInteractionListener) : Sectio
                 }
 
                 currentSection = Section()
-                if (currentType.toString() == ExerciseTip.ExerciseType.ARMS.toString()) {
-                    currentSection.text = "Arm Ergonomics"
-                } else {
-                    currentSection.text = "Leg Ergonomics"
+                currentSection.text = when (currentType.toString()) {
+                    ExerciseTip.ExerciseType.WORKOUT.toString() -> WORKOUTS
+                    ExerciseTip.ExerciseType.ARMS.toString() -> ARM_ERGONOMICS
+                    ExerciseTip.ExerciseType.LEGS.toString() -> LEG_ERGONOMICS
+                    else -> ""
                 }
             }
 
@@ -130,33 +138,46 @@ class StickyHeadersAdapter(listener: OnListFragmentInteractionListener) : Sectio
     private fun getImageDrawableResId(tip: ExerciseTip): Int {
         var resId = 0
         val type = tip.exerciseType.toString()
-        if (type == ExerciseTip.ExerciseType.ARMS.toString()) {
-            when (tip.getTipNum()) {
-                1 -> resId = R.drawable.arms_1
-                2 -> resId = R.drawable.arms_2
-                3 -> resId = R.drawable.arms_3
-                4 -> resId = R.drawable.arms_4
-                5 -> resId = R.drawable.arms_5
-                6 -> resId = R.drawable.arms_6
-                7 -> resId = R.drawable.arms_7
-                8 -> resId = R.drawable.arms_8
-                9 -> resId = R.drawable.arms_9
-                10 -> resId = R.drawable.arms_10
-                11 -> resId = R.drawable.arms_11
-                12 -> resId = R.drawable.arms_12
-            }
-        } else if (type == ExerciseTip.ExerciseType.LEGS.toString()) {
-            when (tip.getTipNum()) {
-                1 -> resId = R.drawable.legs_1
-                2 -> resId = R.drawable.legs_2
-                3 -> resId = R.drawable.legs_3
-                4 -> resId = R.drawable.legs_4
-                5 -> resId = R.drawable.legs_5
-                6 -> resId = R.drawable.legs_6
-                7 -> resId = R.drawable.legs_7
-                8 -> resId = R.drawable.legs_8
-                9 -> resId = R.drawable.legs_9
-            }
+        when (type) {
+            ExerciseTip.ExerciseType.ARMS.toString() ->
+                resId = when (tip.getTipNum()) {
+                    1 -> R.drawable.arms_1
+                    2 -> R.drawable.arms_2
+                    3 -> R.drawable.arms_3
+                    4 -> R.drawable.arms_4
+                    5 -> R.drawable.arms_5
+                    6 -> R.drawable.arms_6
+                    7 -> R.drawable.arms_7
+                    8 -> R.drawable.arms_8
+                    9 -> R.drawable.arms_9
+                    10 -> R.drawable.arms_10
+                    11 -> R.drawable.arms_11
+                    12 -> R.drawable.arms_12
+                    else -> R.drawable.arms_1
+                }
+            ExerciseTip.ExerciseType.LEGS.toString() ->
+                resId = when (tip.getTipNum()) {
+                    1 -> R.drawable.legs_1
+                    2 -> R.drawable.legs_2
+                    3 -> R.drawable.legs_3
+                    4 -> R.drawable.legs_4
+                    5 -> R.drawable.legs_5
+                    6 -> R.drawable.legs_6
+                    7 -> R.drawable.legs_7
+                    8 -> R.drawable.legs_8
+                    9 -> R.drawable.legs_9
+                    else -> R.drawable.legs_1
+                }
+            ExerciseTip.ExerciseType.WORKOUT.toString() ->
+                resId = when (tip.getTipNum()) {
+                    1 -> R.drawable.watch_arm_candy
+                    2 -> R.drawable.watch_super_cycle
+                    3 -> R.drawable.watch_cycle_leg
+                    4 -> R.drawable.watch_core_floor
+                    5 -> R.drawable.watch_arm_blast
+                    6 -> R.drawable.watch_ultimate_arm_leg
+                    else -> R.drawable.watch_arm_candy
+                }
         }
         return resId
     }
@@ -164,11 +185,13 @@ class StickyHeadersAdapter(listener: OnListFragmentInteractionListener) : Sectio
     inner class ItemViewHolder(var mView: View) : SectioningAdapter.ItemViewHolder(mView) {
         val mTextView: TextView
         val mImageView: ImageView
+        val playButton: ImageView
         var mItem: ExerciseTip? = null
 
         init {
-            mTextView = mView.findViewById<View>(R.id.tvArmsLegs) as TextView
-            mImageView = mView.findViewById<View>(R.id.ivArmsLegs) as ImageView
+            mTextView = mView.findViewById(R.id.tvArmsLegs)
+            mImageView = mView.findViewById(R.id.ivArmsLegs)
+            playButton = mView.findViewById(R.id.ivPlayVideo)
         }
     }
 
@@ -176,7 +199,7 @@ class StickyHeadersAdapter(listener: OnListFragmentInteractionListener) : Sectio
         var mHeaderView: TextView
 
         init {
-            mHeaderView = itemView.findViewById<View>(R.id.listSectionHeaderTextView) as TextView
+            mHeaderView = itemView.findViewById(R.id.listSectionHeaderTextView)
         }
     }
 

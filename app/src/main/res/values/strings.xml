@@ -207,6 +207,13 @@
     </string>
 
     <!-- Strings for exercise tips -->
+    <string name="workout1">Arm Candy - 7 min arm strength workout</string>
+    <string name="workout2">Super Cycle Cardio - 23 min high intensity interval</string>
+    <string name="workout3">Cycle Leg Blast - 15 min interval spin</string>
+    <string name="workout4">Core Floor Explosion - 10 min core training</string>
+    <string name="workout5">Arm Blast - 10 min interval arm spin</string>
+    <string name="workout6">Ultimate Arm &amp; Leg Toning - 7 min arm strength workout</string>
+
     <string name="arms1">What Are the Benefits of an Upper Body Ergometer Like Excy?</string>
     <string name="arms2">How do I use Excy as an Upper Body Ergometer from the Floor?</string>
     <string name="arms3">How do I use Excy as an Upper Body Ergometer on the Table?</string>
