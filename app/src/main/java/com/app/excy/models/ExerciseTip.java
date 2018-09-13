@@ -11,6 +11,7 @@ public class ExerciseTip {
     ExerciseType exerciseType;
 
     public enum ExerciseType {
+        WORKOUT("Workout"),
         ARMS("Arms"),
         LEGS("Legs");
 
