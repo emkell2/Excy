@@ -141,12 +141,12 @@
     <string name="tip16Link">"http://excy.com/2015/11/18/take-excy-for-a-leisure-spin/"</string>
     <string name="tip17Link">"http://excy.com/2015/10/30/use-excy-to-train-for-swimming/"</string>
 
-    <string name="armCandyYoutubeLink">0eONwwRUIJc</string>
-    <string name="superCycleYoutubeLink">tSRh26o3zaI</string>
-    <string name="cycleLegYoutubeLink">aIxytWycNhg</string>
-    <string name="coreFloorYoutubeLink">RA-dtZcF75c</string>
-    <string name="armBlastYoutubeLink">4k7JUFgF57M</string>
-    <string name="ultimateArmLegYoutubeLink">QnwdAfD3XLI</string>
+    <string name="armCandyYoutubeLink">https://www.youtube.com/watch?v=0eONwwRUIJc</string>
+    <string name="superCycleYoutubeLink">https://www.youtube.com/watch?v=tSRh26o3zaI</string>
+    <string name="cycleLegYoutubeLink">https://www.youtube.com/watch?v=aIxytWycNhg</string>
+    <string name="coreFloorYoutubeLink">https://www.youtube.com/watch?v=RA-dtZcF75c</string>
+    <string name="armBlastYoutubeLink">https://www.youtube.com/watch?v=4k7JUFgF57M</string>
+    <string name="ultimateArmLegYoutubeLink">https://www.youtube.com/watch?v=QnwdAfD3XLI</string>
 
     <!-- Resume Dialog Strings -->
     <string name="resume_continue">"Continue?"</string>
