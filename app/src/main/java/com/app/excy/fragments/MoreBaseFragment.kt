@@ -12,7 +12,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 
 import com.app.excy.R
-import com.app.excy.activities.ErgonomicsActivity
+import com.app.excy.activities.VideosActivity
 
 /**
  * A simple [Fragment] subclass.
@@ -38,19 +38,19 @@ class MoreBaseFragment : Fragment() {
 
         val learnExercisesBtn = view.findViewById<ImageButton>(R.id.ibLearnExercises)
         learnExercisesBtn.setOnClickListener {
-            val intent = Intent(context, ErgonomicsActivity::class.java)
-            startActivity(intent)
-        }
-
-        val videoBtn = view.findViewById<ImageButton>(R.id.ibVideos)
-        videoBtn.setOnClickListener {
-            val frag = VideosFragment()
-            val str = resources.getString(R.string.watch_workouts)
+            val frag = LearnTheExercisesFragment()
+            val str = resources.getString(R.string.learn_exercises)
 
             fragmentManager!!.beginTransaction()
                     .replace(R.id.more_fragment_container, frag, str)
                     .addToBackStack(str)
                     .commitAllowingStateLoss()
+        }
+
+        val videoBtn = view.findViewById<ImageButton>(R.id.ibVideos)
+        videoBtn.setOnClickListener {
+            val intent = Intent(context, VideosActivity::class.java)
+            startActivity(intent)
         }
 
         val knowZonesBtn = view.findViewById<ImageButton>(R.id.ibKnowZones)
@@ -86,14 +86,7 @@ class MoreBaseFragment : Fragment() {
     companion object {
         val EXCY_LIVE_WEBSITE = "http://www.excy.live"
 
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 String.
-         * @return A new instance of fragment MoreBaseFragment.
-         */
-        fun newInstance(param1: String): MoreBaseFragment {
+        fun newInstance(): MoreBaseFragment {
             val fragment = MoreBaseFragment()
             val args = Bundle()
             fragment.arguments = args

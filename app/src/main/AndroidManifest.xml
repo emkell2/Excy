@@ -52,7 +52,7 @@
             android:hardwareAccelerated="false" />
         <activity android:name="com.app.excy.activities.QuickStatsActivity" />
         <activity android:name="com.app.excy.activities.WarmUpActivity" />
-        <activity android:name="com.app.excy.activities.ErgonomicsActivity" />
+        <activity android:name="com.app.excy.activities.VideosActivity" />
         <activity android:name="com.app.excy.activities.WebViewActivity"></activity>
     </application>
 
