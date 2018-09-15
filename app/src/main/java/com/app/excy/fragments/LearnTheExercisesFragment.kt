@@ -12,12 +12,12 @@ import android.widget.ImageButton
 
 import com.app.excy.R
 
-class VideosFragment : Fragment() {
+class LearnTheExercisesFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_watch_workouts, container, false)
+        val view = inflater.inflate(R.layout.fragment_learn_the_exercises, container, false)
 
         val armCandyBtn = view.findViewById<ImageButton>(R.id.ibArmCandyLink)
         armCandyBtn.setOnClickListener { watchYoutubeVideo(getString(R.string.armCandyYoutubeLink)) }
@@ -53,8 +53,8 @@ class VideosFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(): VideosFragment {
-            val fragment = VideosFragment()
+        fun newInstance(): LearnTheExercisesFragment {
+            val fragment = LearnTheExercisesFragment()
             val args = Bundle()
             fragment.arguments = args
             return fragment

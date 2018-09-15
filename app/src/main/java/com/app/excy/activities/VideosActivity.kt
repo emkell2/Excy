@@ -15,20 +15,20 @@ import com.app.excy.models.ExerciseTip
 import com.app.excy.models.StickyHeadersAdapter
 import com.app.excy.utilities.AppUtilities
 import com.app.excy.utilities.Constants
-import kotlinx.android.synthetic.main.activity_ergonomics.*
+import kotlinx.android.synthetic.main.activity_videos.*
 
 import java.util.ArrayList
 
 /**
  * A simple [Fragment] subclass.
  */
-class ErgonomicsActivity : AppCompatActivity() {
+class VideosActivity : AppCompatActivity() {
     var tips = ArrayList<ExerciseTip>()
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Inflate the layout for this fragment
-        setContentView(R.layout.activity_ergonomics)
+        setContentView(R.layout.activity_videos)
 
         AppUtilities.setBottomNavBarIconActive(this, R.id.action_more)
 
