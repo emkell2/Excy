@@ -11,7 +11,7 @@ import android.text.TextUtils
 import com.app.excy.R
 import com.app.excy.StickyHeaderLayoutManager
 import com.app.excy.interfaces.OnListFragmentInteractionListener
-import com.app.excy.models.ExerciseTip
+import com.app.excy.models.ExerciseVideo
 import com.app.excy.models.StickyHeadersAdapter
 import com.app.excy.utilities.AppUtilities
 import com.app.excy.utilities.Constants
@@ -23,7 +23,7 @@ import java.util.ArrayList
  * A simple [Fragment] subclass.
  */
 class VideosActivity : AppCompatActivity() {
-    var tips = ArrayList<ExerciseTip>()
+    var videoList = ArrayList<ExerciseVideo>()
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,92 +61,92 @@ class VideosActivity : AppCompatActivity() {
             true
         }
 
-        tips = createTipList()
+        videoList = createVideoList()
         var adapter = StickyHeadersAdapter(object: OnListFragmentInteractionListener {
-            override fun onListFragmentInteraction(tip: ExerciseTip?) {
-                launchWebViewActivity(tip)
+            override fun onListFragmentInteraction(video: ExerciseVideo?) {
+                launchWebViewActivity(video)
             }
         })
-        rvTips.layoutManager = StickyHeaderLayoutManager()
-        rvTips.adapter = adapter
-        adapter.setSections(tips)
+        videos.layoutManager = StickyHeaderLayoutManager()
+        videos.adapter = adapter
+        adapter.setSections(videoList)
     }
 
-    private fun createTipList(): ArrayList<ExerciseTip> {
-        val tips = ArrayList<ExerciseTip>()
+    private fun createVideoList(): ArrayList<ExerciseVideo> {
+        val videos = ArrayList<ExerciseVideo>()
         // Workout
-        tips.add(ExerciseTip(getString(R.string.workout1), getString(R.string.armCandyYoutubeLink), 1,
-                ExerciseTip.ExerciseType.WORKOUT))
-        tips.add(ExerciseTip(getString(R.string.workout2), getString(R.string.superCycleYoutubeLink), 2,
-                ExerciseTip.ExerciseType.WORKOUT))
-        tips.add(ExerciseTip(getString(R.string.workout3), getString(R.string.cycleLegYoutubeLink), 3,
-                ExerciseTip.ExerciseType.WORKOUT))
-        tips.add(ExerciseTip(getString(R.string.workout4), getString(R.string.coreFloorYoutubeLink), 4,
-                ExerciseTip.ExerciseType.WORKOUT))
-        tips.add(ExerciseTip(getString(R.string.workout5), getString(R.string.armBlastYoutubeLink), 5,
-                ExerciseTip.ExerciseType.WORKOUT))
-        tips.add(ExerciseTip(getString(R.string.workout6), getString(R.string.ultimateArmLegYoutubeLink), 6,
-                ExerciseTip.ExerciseType.WORKOUT))
+        videos.add(ExerciseVideo(getString(R.string.workout1), getString(R.string.armCandyYoutubeLink), 1,
+                ExerciseVideo.ExerciseType.WORKOUT))
+        videos.add(ExerciseVideo(getString(R.string.workout2), getString(R.string.superCycleYoutubeLink), 2,
+                ExerciseVideo.ExerciseType.WORKOUT))
+        videos.add(ExerciseVideo(getString(R.string.workout3), getString(R.string.cycleLegYoutubeLink), 3,
+                ExerciseVideo.ExerciseType.WORKOUT))
+        videos.add(ExerciseVideo(getString(R.string.workout4), getString(R.string.coreFloorYoutubeLink), 4,
+                ExerciseVideo.ExerciseType.WORKOUT))
+        videos.add(ExerciseVideo(getString(R.string.workout5), getString(R.string.armBlastYoutubeLink), 5,
+                ExerciseVideo.ExerciseType.WORKOUT))
+        videos.add(ExerciseVideo(getString(R.string.workout6), getString(R.string.ultimateArmLegYoutubeLink), 6,
+                ExerciseVideo.ExerciseType.WORKOUT))
 
         // Arm Ergonomics
-        tips.add(ExerciseTip(getString(R.string.arms1), getString(R.string.link_arms1), 1,
-                ExerciseTip.ExerciseType.ARMS))
-        tips.add(ExerciseTip(getString(R.string.arms2), getString(R.string.link_arms2), 2,
-                ExerciseTip.ExerciseType.ARMS))
-        tips.add(ExerciseTip(getString(R.string.arms3), getString(R.string.link_arms3), 3,
-                ExerciseTip.ExerciseType.ARMS))
-        tips.add(ExerciseTip(getString(R.string.arms4), getString(R.string.link_arms4), 4,
-                ExerciseTip.ExerciseType.ARMS))
-        tips.add(ExerciseTip(getString(R.string.arms5), getString(R.string.link_arms5), 5,
-                ExerciseTip.ExerciseType.ARMS))
-        tips.add(ExerciseTip(getString(R.string.arms6), getString(R.string.link_arms6), 6,
-                ExerciseTip.ExerciseType.ARMS))
-        tips.add(ExerciseTip(getString(R.string.arms7), getString(R.string.link_arms7), 7,
-                ExerciseTip.ExerciseType.ARMS))
-        tips.add(ExerciseTip(getString(R.string.arms8), getString(R.string.link_arms8), 8,
-                ExerciseTip.ExerciseType.ARMS))
-        tips.add(ExerciseTip(getString(R.string.arms9), getString(R.string.link_arms9), 9,
-                ExerciseTip.ExerciseType.ARMS))
-        tips.add(ExerciseTip(getString(R.string.arms10), getString(R.string.link_arms10), 10,
-                ExerciseTip.ExerciseType.ARMS))
-        tips.add(ExerciseTip(getString(R.string.arms11), getString(R.string.link_arms11), 11,
-                ExerciseTip.ExerciseType.ARMS))
-        tips.add(ExerciseTip(getString(R.string.arms12), getString(R.string.link_arms12), 12,
-                ExerciseTip.ExerciseType.ARMS))
-        tips.add(ExerciseTip(getString(R.string.arms13), getString(R.string.link_arms13), 13,
-                ExerciseTip.ExerciseType.ARMS))
-        tips.add(ExerciseTip(getString(R.string.arms14), getString(R.string.link_arms14), 14,
-                ExerciseTip.ExerciseType.ARMS))
+        videos.add(ExerciseVideo(getString(R.string.arms1), getString(R.string.link_arms1), 1,
+                ExerciseVideo.ExerciseType.ARMS))
+        videos.add(ExerciseVideo(getString(R.string.arms2), getString(R.string.link_arms2), 2,
+                ExerciseVideo.ExerciseType.ARMS))
+        videos.add(ExerciseVideo(getString(R.string.arms3), getString(R.string.link_arms3), 3,
+                ExerciseVideo.ExerciseType.ARMS))
+        videos.add(ExerciseVideo(getString(R.string.arms4), getString(R.string.link_arms4), 4,
+                ExerciseVideo.ExerciseType.ARMS))
+        videos.add(ExerciseVideo(getString(R.string.arms5), getString(R.string.link_arms5), 5,
+                ExerciseVideo.ExerciseType.ARMS))
+        videos.add(ExerciseVideo(getString(R.string.arms6), getString(R.string.link_arms6), 6,
+                ExerciseVideo.ExerciseType.ARMS))
+        videos.add(ExerciseVideo(getString(R.string.arms7), getString(R.string.link_arms7), 7,
+                ExerciseVideo.ExerciseType.ARMS))
+        videos.add(ExerciseVideo(getString(R.string.arms8), getString(R.string.link_arms8), 8,
+                ExerciseVideo.ExerciseType.ARMS))
+        videos.add(ExerciseVideo(getString(R.string.arms9), getString(R.string.link_arms9), 9,
+                ExerciseVideo.ExerciseType.ARMS))
+        videos.add(ExerciseVideo(getString(R.string.arms10), getString(R.string.link_arms10), 10,
+                ExerciseVideo.ExerciseType.ARMS))
+        videos.add(ExerciseVideo(getString(R.string.arms11), getString(R.string.link_arms11), 11,
+                ExerciseVideo.ExerciseType.ARMS))
+        videos.add(ExerciseVideo(getString(R.string.arms12), getString(R.string.link_arms12), 12,
+                ExerciseVideo.ExerciseType.ARMS))
+        videos.add(ExerciseVideo(getString(R.string.arms13), getString(R.string.link_arms13), 13,
+                ExerciseVideo.ExerciseType.ARMS))
+        videos.add(ExerciseVideo(getString(R.string.arms14), getString(R.string.link_arms14), 14,
+                ExerciseVideo.ExerciseType.ARMS))
 
         // Leg Ergonomics
-        tips.add(ExerciseTip(getString(R.string.legs1), getString(R.string.link_legs1), 1,
-                ExerciseTip.ExerciseType.LEGS))
-        tips.add(ExerciseTip(getString(R.string.legs2), getString(R.string.link_legs2), 2,
-                ExerciseTip.ExerciseType.LEGS))
-        tips.add(ExerciseTip(getString(R.string.legs3), getString(R.string.link_legs3), 3,
-                ExerciseTip.ExerciseType.LEGS))
-        tips.add(ExerciseTip(getString(R.string.legs4), getString(R.string.link_legs4), 4,
-                ExerciseTip.ExerciseType.LEGS))
-        tips.add(ExerciseTip(getString(R.string.legs5), getString(R.string.link_legs5), 5,
-                ExerciseTip.ExerciseType.LEGS))
-        tips.add(ExerciseTip(getString(R.string.legs6), getString(R.string.link_legs6), 6,
-                ExerciseTip.ExerciseType.LEGS))
-        tips.add(ExerciseTip(getString(R.string.legs7), getString(R.string.link_legs7), 7,
-                ExerciseTip.ExerciseType.LEGS))
-        tips.add(ExerciseTip(getString(R.string.legs8), getString(R.string.link_legs8), 8,
-                ExerciseTip.ExerciseType.LEGS))
-        tips.add(ExerciseTip(getString(R.string.legs9), getString(R.string.link_legs9), 9,
-                ExerciseTip.ExerciseType.LEGS))
-        tips.add(ExerciseTip(getString(R.string.legs10), getString(R.string.link_legs10), 10,
-                ExerciseTip.ExerciseType.LEGS))
-        tips.add(ExerciseTip(getString(R.string.legs11), getString(R.string.link_legs11), 11,
-                ExerciseTip.ExerciseType.LEGS))
-        tips.add(ExerciseTip(getString(R.string.legs12), getString(R.string.link_legs12), 12,
-                ExerciseTip.ExerciseType.LEGS))
-        tips.add(ExerciseTip(getString(R.string.legs13), getString(R.string.link_legs13), 13,
-                ExerciseTip.ExerciseType.LEGS))
+        videos.add(ExerciseVideo(getString(R.string.legs1), getString(R.string.link_legs1), 1,
+                ExerciseVideo.ExerciseType.LEGS))
+        videos.add(ExerciseVideo(getString(R.string.legs2), getString(R.string.link_legs2), 2,
+                ExerciseVideo.ExerciseType.LEGS))
+        videos.add(ExerciseVideo(getString(R.string.legs3), getString(R.string.link_legs3), 3,
+                ExerciseVideo.ExerciseType.LEGS))
+        videos.add(ExerciseVideo(getString(R.string.legs4), getString(R.string.link_legs4), 4,
+                ExerciseVideo.ExerciseType.LEGS))
+        videos.add(ExerciseVideo(getString(R.string.legs5), getString(R.string.link_legs5), 5,
+                ExerciseVideo.ExerciseType.LEGS))
+        videos.add(ExerciseVideo(getString(R.string.legs6), getString(R.string.link_legs6), 6,
+                ExerciseVideo.ExerciseType.LEGS))
+        videos.add(ExerciseVideo(getString(R.string.legs7), getString(R.string.link_legs7), 7,
+                ExerciseVideo.ExerciseType.LEGS))
+        videos.add(ExerciseVideo(getString(R.string.legs8), getString(R.string.link_legs8), 8,
+                ExerciseVideo.ExerciseType.LEGS))
+        videos.add(ExerciseVideo(getString(R.string.legs9), getString(R.string.link_legs9), 9,
+                ExerciseVideo.ExerciseType.LEGS))
+        videos.add(ExerciseVideo(getString(R.string.legs10), getString(R.string.link_legs10), 10,
+                ExerciseVideo.ExerciseType.LEGS))
+        videos.add(ExerciseVideo(getString(R.string.legs11), getString(R.string.link_legs11), 11,
+                ExerciseVideo.ExerciseType.LEGS))
+        videos.add(ExerciseVideo(getString(R.string.legs12), getString(R.string.link_legs12), 12,
+                ExerciseVideo.ExerciseType.LEGS))
+        videos.add(ExerciseVideo(getString(R.string.legs13), getString(R.string.link_legs13), 13,
+                ExerciseVideo.ExerciseType.LEGS))
 
-        return tips
+        return videos
     }
 
     override fun onResume() {
@@ -155,10 +155,10 @@ class VideosActivity : AppCompatActivity() {
         AppUtilities.setBottomNavBarIconActive(this, R.id.action_more)
     }
 
-    fun launchWebViewActivity(tip: ExerciseTip?) {
-        if (tip != null && !TextUtils.isEmpty(tip.url)) {
+    fun launchWebViewActivity(video: ExerciseVideo?) {
+        if (video != null && !TextUtils.isEmpty(video.url)) {
             val webViewIntent = Intent(this, WebViewActivity::class.java)
-            webViewIntent.putExtra(Constants.WEBVIEW_URL, tip.url)
+            webViewIntent.putExtra(Constants.WEBVIEW_URL, video.url)
 
             startActivity(webViewIntent)
         }

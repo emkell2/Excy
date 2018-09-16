@@ -127,7 +127,7 @@
     <string name="tip02Link">"http://excy.com/2015/11/17/take-excy-anywhere-for-anytime-exercise/"</string>
     <string name="tip03Link">"http://excy.com/2015/11/20/get-more-active-at-work/"</string>
     <string name="tip04Link">"http://excy.com/2015/12/09/hiit-excy-hard-for-total-efficiency/"</string>
-    <string name="tip05Link">"http://excy.com/2016/02/07/excy-tip-do-10-short-exercise-cycling-bursts-throughout-the-day/"</string>
+    <string name="tip05Link">"http://excy.com/2016/02/07/excy-video-do-10-short-exercise-cycling-bursts-throughout-the-day/"</string>
     <string name="tip06Link">"http://excy.com/2016/01/08/multi-task-excy-fitness-to-fit-anywhere/"</string>
     <string name="tip07Link">"http://excy.com/2015/11/20/take-the-excy-portable-cycling-system-outside/"</string>
     <string name="tip08Link">"http://excy.com/2015/11/09/use-excy-to-do-strengthening-exercises/"</string>
@@ -206,7 +206,7 @@
         completions."
     </string>
 
-    <!-- Strings for exercise tips -->
+    <!-- Strings for exercise videoList -->
     <string name="workout1">Arm Candy - 7 min arm strength workout</string>
     <string name="workout2">Super Cycle Cardio - 23 min high intensity interval</string>
     <string name="workout3">Cycle Leg Blast - 15 min interval spin</string>
@@ -252,9 +252,9 @@
     <string name="link_arms7">https://www.youtube.com/watch?v=HsI0cmx9i0U</string>
     <string name="link_arms8">https://www.youtube.com/watch?v=LjevKn9wmTU</string>
     <string name="link_arms9">https://www.youtube.com/watch?v=jI5sASjTJSg</string>
-    <string name="link_arms10">https://excy.com/excy-exercise-bike-upper-body-ergometer-ergonomic-setup-tips-physical-therapists-sports-medicine/</string>
+    <string name="link_arms10">https://excy.com/excy-exercise-bike-upper-body-ergometer-ergonomic-setup-videos-physical-therapists-sports-medicine/</string>
     <string name="link_arms11">https://www.youtube.com/watch?v=rKtmEqytb9Y</string>
-    <string name="link_arms12">https://excy.com/excy-exercise-bike-upper-body-ergometer-ergonomic-setup-tips-physical-therapists-sports-medicine/</string>
+    <string name="link_arms12">https://excy.com/excy-exercise-bike-upper-body-ergometer-ergonomic-setup-videos-physical-therapists-sports-medicine/</string>
     <string name="link_arms13">https://www.youtube.com/watch?v=qxyxjt5d0o8</string>
     <string name="link_arms14">https://www.youtube.com/watch?v=3dAGkht2c0Q&amp;feature=youtu.be</string>
 
