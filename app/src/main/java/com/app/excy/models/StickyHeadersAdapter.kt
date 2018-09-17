@@ -5,27 +5,32 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-
 import com.app.excy.R
 import com.app.excy.SectioningAdapter
 import com.app.excy.interfaces.OnListFragmentInteractionListener
 import com.squareup.picasso.Picasso
-
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by erin.kelley on 10/15/17.
  */
 
-class StickyHeadersAdapter(listener: OnListFragmentInteractionListener) : SectioningAdapter() {
+class StickyHeadersAdapter(private var listener: OnListFragmentInteractionListener) : SectioningAdapter() {
 
-    private var mValues: List<ExerciseVideo>? = null
+    private var mValues: List<ExerciseInfo>? = null
     private val sections = ArrayList<Section>()
-    private var listener = listener
 
     val WORKOUTS = "Workouts"
     val ARM_ERGONOMICS = "Arm Ergonomics"
     val LEG_ERGONOMICS = "Leg Ergonomics"
+    val LOWER_BODY = "Lower Body"
+    val UPPER_BODY = "Upper Body"
+    val TOTAL_BODY = "Total Body"
+
+    val videoWidth = 1080
+    val videoHeight = 540
+    val learnWidth = 0
+    val learnHeight = 0
 
     override fun onCreateItemViewHolder(parent: ViewGroup, itemUserType: Int): ItemViewHolder? {
         val view = LayoutInflater.from(parent.context)
@@ -51,7 +56,7 @@ class StickyHeadersAdapter(listener: OnListFragmentInteractionListener) : Sectio
         val section = sections[sectionIndex]
         val holder = viewHolder as ItemViewHolder
 
-        holder.mItem = section.tips[itemIndex]
+        holder.mItem = section.info[itemIndex]
         holder.mTextView.text = holder.mItem!!.getDescription()
 
         if (section.text!! == WORKOUTS) {
@@ -78,7 +83,7 @@ class StickyHeadersAdapter(listener: OnListFragmentInteractionListener) : Sectio
     }
 
     override fun getNumberOfItemsInSection(sectionIndex: Int): Int {
-        return sections[sectionIndex].tips.size
+        return sections[sectionIndex].info.size
     }
 
     override fun doesSectionHaveHeader(sectionIndex: Int): Boolean {
@@ -89,16 +94,16 @@ class StickyHeadersAdapter(listener: OnListFragmentInteractionListener) : Sectio
         return false
     }
 
-    fun setSections(videos: List<ExerciseVideo>) {
-        mValues = videos
+    fun setSections(infos: List<ExerciseInfo>) {
+        mValues = infos
         sections.clear()
 
         // Sort videoList into buckets by exercise type
         var currentSection: Section? = null
-        var prevType: ExerciseVideo.ExerciseType? = null
+        var prevType: ExerciseInfo.ExerciseType? = null
 
-        for (tip in videos) {
-            val currentType = tip.exerciseType
+        for (info in infos) {
+            val currentType = info.exerciseType
             if (currentSection == null || (currentSection != null && prevType != null
                             && currentType.toString() != prevType.toString())) {
                 if (currentSection != null) {
@@ -107,14 +112,17 @@ class StickyHeadersAdapter(listener: OnListFragmentInteractionListener) : Sectio
 
                 currentSection = Section()
                 currentSection.text = when (currentType.toString()) {
-                    ExerciseVideo.ExerciseType.WORKOUT.toString() -> WORKOUTS
-                    ExerciseVideo.ExerciseType.ARMS.toString() -> ARM_ERGONOMICS
-                    ExerciseVideo.ExerciseType.LEGS.toString() -> LEG_ERGONOMICS
+                    ExerciseInfo.ExerciseType.WORKOUT.toString() -> WORKOUTS
+                    ExerciseInfo.ExerciseType.ARMS.toString() -> ARM_ERGONOMICS
+                    ExerciseInfo.ExerciseType.LEGS.toString() -> LEG_ERGONOMICS
+                    ExerciseInfo.ExerciseType.LOWER_BODY.toString() -> LOWER_BODY
+                    ExerciseInfo.ExerciseType.UPPER_BODY.toString() -> UPPER_BODY
+                    ExerciseInfo.ExerciseType.TOTAL_BODY.toString() -> TOTAL_BODY
                     else -> ""
                 }
             }
 
-            currentSection?.tips?.add(tip)
+            currentSection.info.add(info)
 
             prevType = currentType
         }
@@ -123,24 +131,24 @@ class StickyHeadersAdapter(listener: OnListFragmentInteractionListener) : Sectio
         notifyAllSectionsDataSetChanged()
     }
 
-    private fun setupImageView(imageView: ImageView, video: ExerciseVideo?) {
-        if (video != null) {
-            val imageResId = getImageDrawableResId(video)
+    private fun setupImageView(imageView: ImageView, info: ExerciseInfo?) {
+        if (info != null) {
+            val imageResId = getImageDrawableResId(info)
             if (imageResId > 0) {
                 Picasso.with(imageView.context)
                         .load(imageResId)
-                        .resize(1080, 540)
+                        .resize(videoWidth, videoHeight)
                         .into(imageView)
             }
         }
     }
 
-    private fun getImageDrawableResId(video: ExerciseVideo): Int {
+    private fun getImageDrawableResId(info: ExerciseInfo): Int {
         var resId = 0
-        val type = video.exerciseType.toString()
+        val type = info.exerciseType.toString()
         when (type) {
-            ExerciseVideo.ExerciseType.ARMS.toString() ->
-                resId = when (video.getId()) {
+            ExerciseInfo.ExerciseType.ARMS.toString() ->
+                resId = when (info.getId()) {
                     1 -> R.drawable.arms_1
                     2 -> R.drawable.arms_2
                     3 -> R.drawable.arms_3
@@ -157,8 +165,8 @@ class StickyHeadersAdapter(listener: OnListFragmentInteractionListener) : Sectio
                     14 -> R.drawable.arms_14
                     else -> R.drawable.arms_1
                 }
-            ExerciseVideo.ExerciseType.LEGS.toString() ->
-                resId = when (video.getId()) {
+            ExerciseInfo.ExerciseType.LEGS.toString() ->
+                resId = when (info.getId()) {
                     1 -> R.drawable.legs_1
                     2 -> R.drawable.legs_2
                     3 -> R.drawable.legs_3
@@ -174,8 +182,8 @@ class StickyHeadersAdapter(listener: OnListFragmentInteractionListener) : Sectio
                     13 -> R.drawable.legs_13
                     else -> R.drawable.legs_1
                 }
-            ExerciseVideo.ExerciseType.WORKOUT.toString() ->
-                resId = when (video.getId()) {
+            ExerciseInfo.ExerciseType.WORKOUT.toString() ->
+                resId = when (info.getId()) {
                     1 -> R.drawable.watch_arm_candy
                     2 -> R.drawable.watch_super_cycle
                     3 -> R.drawable.watch_cycle_leg
@@ -183,6 +191,39 @@ class StickyHeadersAdapter(listener: OnListFragmentInteractionListener) : Sectio
                     5 -> R.drawable.watch_arm_blast
                     6 -> R.drawable.watch_ultimate_arm_leg
                     else -> R.drawable.watch_arm_candy
+                }
+            ExerciseInfo.ExerciseType.LOWER_BODY.toString() ->
+                resId = when (info.getId()) {
+                    1 -> R.drawable.lower_body1
+                    2 -> R.drawable.lower_body2
+                    3 -> R.drawable.lower_body3
+                    4 -> R.drawable.lower_body4
+                    5 -> R.drawable.lower_body5
+                    6 -> R.drawable.lower_body6
+                    else -> R.drawable.lower_body1
+                }
+            ExerciseInfo.ExerciseType.UPPER_BODY.toString() ->
+                resId = when (info.getId()) {
+                    1 -> R.drawable.upper_body1
+                    2 -> R.drawable.upper_body2
+                    3 -> R.drawable.upper_body3
+                    4 -> R.drawable.upper_body4
+                    5 -> R.drawable.upper_body5
+                    6 -> R.drawable.upper_body6
+                    7 -> R.drawable.upper_body7
+                    else -> R.drawable.upper_body1
+                }
+            ExerciseInfo.ExerciseType.TOTAL_BODY.toString() ->
+                resId = when (info.getId()) {
+                    1 -> R.drawable.total_body1
+                    2 -> R.drawable.total_body2
+                    3 -> R.drawable.total_body3
+                    4 -> R.drawable.total_body4
+                    5 -> R.drawable.total_body5
+                    6 -> R.drawable.total_body6
+                    7 -> R.drawable.total_body7
+                    8 -> R.drawable.total_body8
+                    else -> R.drawable.total_body1
                 }
         }
         return resId
@@ -192,7 +233,7 @@ class StickyHeadersAdapter(listener: OnListFragmentInteractionListener) : Sectio
         val mTextView: TextView
         val mImageView: ImageView
         val playButton: ImageView
-        var mItem: ExerciseVideo? = null
+        var mItem: ExerciseInfo? = null
 
         init {
             mTextView = mView.findViewById(R.id.tvArmsLegs)
@@ -211,6 +252,6 @@ class StickyHeadersAdapter(listener: OnListFragmentInteractionListener) : Sectio
 
     private inner class Section {
         internal var text: String? = null
-        internal var tips = ArrayList<ExerciseVideo>()
+        internal var info = ArrayList<ExerciseInfo>()
     }
 }

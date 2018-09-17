@@ -21,11 +21,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.app.excy.activities.PlayActivity"
+            android:name=".activities.PlayActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.app.excy.activities.LoginActivity"
+            android:name=".activities.LoginActivity"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,26 +34,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.app.excy.activities.SignUpActivity"
+            android:name=".activities.SignUpActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name="com.app.excy.activities.WorkoutListActivity" />
+        <activity android:name=".activities.WorkoutListActivity" />
         <activity
-            android:name="com.app.excy.activities.WorkoutActivity"
+            android:name=".activities.WorkoutActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="com.app.excy.activities.MeActivity"
+            android:name=".activities.MeActivity"
             android:hardwareAccelerated="false" />
         <activity
-            android:name="com.app.excy.activities.EditProfileActivity"
+            android:name=".activities.EditProfileActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name="com.app.excy.activities.SurveyActivity" />
+        <activity android:name=".activities.SurveyActivity" />
         <activity
-            android:name="com.app.excy.activities.MoreActivity"
+            android:name=".activities.MoreActivity"
             android:hardwareAccelerated="false" />
-        <activity android:name="com.app.excy.activities.QuickStatsActivity" />
-        <activity android:name="com.app.excy.activities.WarmUpActivity" />
-        <activity android:name="com.app.excy.activities.VideosActivity" />
-        <activity android:name="com.app.excy.activities.WebViewActivity"></activity>
+        <activity android:name=".activities.QuickStatsActivity" />
+        <activity android:name=".activities.WarmUpActivity" />
+        <activity android:name=".activities.VideosActivity" />
+        <activity android:name=".activities.WebViewActivity" />
+        <activity android:name=".activities.BaseVideoActivity" />
+        <activity android:name=".activities.LearnExercisesActivity"></activity>
     </application>
 
 </manifest>

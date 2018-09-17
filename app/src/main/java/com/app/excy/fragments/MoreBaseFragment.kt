@@ -12,6 +12,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 
 import com.app.excy.R
+import com.app.excy.activities.LearnExercisesActivity
 import com.app.excy.activities.VideosActivity
 
 /**
@@ -38,13 +39,8 @@ class MoreBaseFragment : Fragment() {
 
         val learnExercisesBtn = view.findViewById<ImageButton>(R.id.ibLearnExercises)
         learnExercisesBtn.setOnClickListener {
-            val frag = LearnTheExercisesFragment()
-            val str = resources.getString(R.string.learn_exercises)
-
-            fragmentManager!!.beginTransaction()
-                    .replace(R.id.more_fragment_container, frag, str)
-                    .addToBackStack(str)
-                    .commitAllowingStateLoss()
+            val intent = Intent(context, LearnExercisesActivity::class.java)
+            startActivity(intent)
         }
 
         val videoBtn = view.findViewById<ImageButton>(R.id.ibVideos)

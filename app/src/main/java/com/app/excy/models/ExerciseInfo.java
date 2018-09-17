@@ -4,7 +4,7 @@ package com.app.excy.models;
  * Created by erin.kelley on 10/16/17.
  */
 
-public class ExerciseVideo {
+public class ExerciseInfo {
     String description;
     String url;
     int id;
@@ -13,7 +13,10 @@ public class ExerciseVideo {
     public enum ExerciseType {
         WORKOUT("Workout"),
         ARMS("Arms"),
-        LEGS("Legs");
+        LEGS("Legs"),
+        LOWER_BODY("Lower Body"),
+        UPPER_BODY("Upper Body"),
+        TOTAL_BODY("Total Body");
 
         private final String exercise;
 
@@ -27,7 +30,7 @@ public class ExerciseVideo {
         }
     }
 
-    public ExerciseVideo(String description, String url, int id, ExerciseType type) {
+    public ExerciseInfo(String description, String url, int id, ExerciseType type) {
         this.description = description;
         this.url = url;
         this.id = id;

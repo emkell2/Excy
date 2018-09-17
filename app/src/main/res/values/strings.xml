@@ -127,7 +127,7 @@
     <string name="tip02Link">"http://excy.com/2015/11/17/take-excy-anywhere-for-anytime-exercise/"</string>
     <string name="tip03Link">"http://excy.com/2015/11/20/get-more-active-at-work/"</string>
     <string name="tip04Link">"http://excy.com/2015/12/09/hiit-excy-hard-for-total-efficiency/"</string>
-    <string name="tip05Link">"http://excy.com/2016/02/07/excy-video-do-10-short-exercise-cycling-bursts-throughout-the-day/"</string>
+    <string name="tip05Link">"http://excy.com/2016/02/07/excy-info-do-10-short-exercise-cycling-bursts-throughout-the-day/"</string>
     <string name="tip06Link">"http://excy.com/2016/01/08/multi-task-excy-fitness-to-fit-anywhere/"</string>
     <string name="tip07Link">"http://excy.com/2015/11/20/take-the-excy-portable-cycling-system-outside/"</string>
     <string name="tip08Link">"http://excy.com/2015/11/09/use-excy-to-do-strengthening-exercises/"</string>
@@ -243,6 +243,29 @@
     <string name="legs12">How do I hand cycle from a chair with Excy?</string>
     <string name="legs13">How do I do a single leg balance hand cycle exercise?</string>
 
+    <string name="lower_body1">Stationary Recumbent Chair Cycling</string>
+    <string name="lower_body2">Bedside or Chair Cycling</string>
+    <string name="lower_body3">Lying Down Exercise Cycling</string>
+    <string name="lower_body4">Sitting Upright Cycling in Bed</string>
+    <string name="lower_body5">Exercise Ball Balance Cycling</string>
+
+    <string name="upper_body1">Bed Exercise or Floor Exercise with Hand Ergometer</string>
+    <string name="upper_body2">Hand Pedal Bike Chair Workout</string>
+    <string name="upper_body3">Hand Ergometer Squat-N-Cycle</string>
+    <string name="upper_body4">Arm Ergometer Squat with Ledge Stabilizer</string>
+    <string name="upper_body5">Tabletop Upper Body Ergometer</string>
+    <string name="upper_body6">Shoulder Rotation Side Profile</string>
+    <string name="upper_body7">Forward Standing Shoulder Rotation</string>
+
+    <string name="total_body1">Single Leg Balance Hand Cycle</string>
+    <string name="total_body2">Glute Bridge Couch Pedal Exerciser</string>
+    <string name="total_body3">Hip Flexor Stretch &amp; Lunge</string>
+    <string name="total_body4">Plank Exercise Cycle</string>
+    <string name="total_body5">Rowing Exercise</string>
+    <string name="total_body6">Swim Exercises</string>
+    <string name="total_body7">Tricep Dip Bridge Exercycle</string>
+    <string name="total_body8">Unicycle Exercise and Step Cycle</string>
+
     <string name="link_arms1">https://www.youtube.com/watch?v=WcIWHB1ERK4</string>
     <string name="link_arms2">https://www.youtube.com/watch?v=6Z2oBqV9fOg</string>
     <string name="link_arms3">https://www.youtube.com/watch?v=5zc2vBmyNuk</string>
@@ -271,6 +294,30 @@
     <string name="link_legs11">https://www.youtube.com/watch?v=UMZyGtzKcG8</string>
     <string name="link_legs12">https://www.youtube.com/watch?v=ueaGkrxVt4Q&amp;feature=youtu.be</string>
     <string name="link_legs13">https://www.youtube.com/watch?v=0YjptN8YEi0 </string>
+
+    <string name="link_lower_body1">https://excy.com/bedside-cycle-chair-cycle-excy-ergometer/</string>
+    <string name="link_lower_body2">https://excy.com/lying-down-exercise-cycling-excy/</string>
+    <string name="link_lower_body3">https://excy.com/sitting-upright-cycling-bed-excy/</string>
+    <string name="link_lower_body4">https://excy.com/exercise-ball-balance-cycling-exercises/</string>
+    <string name="link_lower_body5">https://excy.com/excy-single-leg-hand-cycle-exercise/</string>
+
+    <string name="link_upper_body1">https://excy.com/bed-exercise-floor-exercise-hand-ergometer/</string>
+    <string name="link_upper_body2">https://excy.com/hand-pedal-bike-excy-ube/</string>
+    <string name="link_upper_body3">https://excy.com/hand-ergometer-squat-portable-exercise-bike/</string>
+    <string name="link_upper_body4">https://excy.com/arm-ergometer-squat-excy-full-body/</string>
+    <string name="link_upper_body5">https://excy.com/table-top-upper-body-ergometer-excy-exercises/</string>
+    <string name="link_upper_body6">https://excy.com/shoulder-rotation-exercise-excy-ube/</string>
+    <string name="link_upper_body7">https://excy.com/shoulder-exercises-excy-ergometer/</string>
+
+    <string name="link_total_body1">https://excy.com/excy-single-leg-hand-cycle-exercise/</string>
+    <string name="link_total_body2">https://excy.com/glute-bridge-couch-excy-pedal-exerciser/</string>
+    <string name="link_total_body3">https://excy.com/hip-flexor-stretch-excy-full-body-exercise-bike/</string>
+    <string name="link_total_body4">https://excy.com/plank-exercise-cycle-with-excy-portable-exercise-bike/</string>
+    <string name="link_total_body5">https://excy.com/rowing-exercise-excy-upper-body-ergometer/</string>
+    <string name="link_total_body6">https://excy.com/swim-exercises-excy-upper-body-ergometer/</string>
+    <string name="link_total_body7">https://excy.com/tricep-dip-exercycle-excy-ergometer/</string>
+    <string name="link_total_body8">https://excy.com/unicycle-exercise-excy-portable-trainer/</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
