@@ -32,7 +32,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.excy.R;
-import com.app.excy.activities.interfaces.PlayViewContract;
 import com.app.excy.dialogs.MaxTemperatureDialog;
 import com.app.excy.dialogs.WarmUpDialog;
 import com.app.excy.dialogs.WorkoutCompleteDialog;
@@ -50,9 +49,8 @@ import java.util.concurrent.TimeUnit;
 
 import info.hoang8f.widget.FButton;
 
-public class PlayActivity extends AppCompatActivity implements PlayViewContract,
-        WorkoutCompleteDialog.OnCompleteListener, View.OnKeyListener,
-        View.OnTouchListener, View.OnClickListener {
+public class PlayActivity extends AppCompatActivity implements WorkoutCompleteDialog.OnCompleteListener,
+        View.OnKeyListener, View.OnTouchListener, View.OnClickListener {
     private static final int BACKWARDS_FORWARDS_TEXT_SIZE = 12;
     private static final int MSG_INC = 0;
     private static final int MSG_DEC = 1;
