@@ -1,5 +1,6 @@
 package com.app.excy.models
 
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,8 +30,8 @@ class StickyHeadersAdapter(private var listener: OnListFragmentInteractionListen
 
     val videoWidth = 1080
     val videoHeight = 540
-    val learnWidth = 0
-    val learnHeight = 0
+    val learnWidth = 300
+    val learnHeight = 300
 
     override fun onCreateItemViewHolder(parent: ViewGroup, itemUserType: Int): ItemViewHolder? {
         val view = LayoutInflater.from(parent.context)
@@ -58,12 +59,16 @@ class StickyHeadersAdapter(private var listener: OnListFragmentInteractionListen
 
         holder.mItem = section.info[itemIndex]
         holder.mTextView.text = holder.mItem!!.getDescription()
-
-        if (section.text!! == WORKOUTS) {
-            holder.playButton.visibility = View.GONE
+        holder.mTextView.gravity = when (section.text!!) {
+            WORKOUTS, ARM_ERGONOMICS, LEG_ERGONOMICS -> Gravity.NO_GRAVITY
+            LOWER_BODY, UPPER_BODY, TOTAL_BODY -> Gravity.CENTER
+            else -> Gravity.NO_GRAVITY
         }
 
-        holder.playButton.visibility = if (section.text!! == WORKOUTS) View.GONE else View.VISIBLE
+        holder.playButton.visibility = when (section.text!!) {
+            WORKOUTS, LOWER_BODY, UPPER_BODY, TOTAL_BODY -> View.GONE
+            else -> View.VISIBLE
+        }
 
         setupImageView(holder.mImageView, holder.mItem)
 
@@ -134,10 +139,18 @@ class StickyHeadersAdapter(private var listener: OnListFragmentInteractionListen
     private fun setupImageView(imageView: ImageView, info: ExerciseInfo?) {
         if (info != null) {
             val imageResId = getImageDrawableResId(info)
+            val width = when (info.exerciseType) {
+                ExerciseInfo.ExerciseType.WORKOUT, ExerciseInfo.ExerciseType.ARMS, ExerciseInfo.ExerciseType.LEGS -> videoWidth
+                ExerciseInfo.ExerciseType.UPPER_BODY, ExerciseInfo.ExerciseType.LOWER_BODY, ExerciseInfo.ExerciseType.TOTAL_BODY -> learnWidth
+            }
+            val height = when (info.exerciseType) {
+                ExerciseInfo.ExerciseType.WORKOUT, ExerciseInfo.ExerciseType.ARMS, ExerciseInfo.ExerciseType.LEGS -> videoHeight
+                ExerciseInfo.ExerciseType.UPPER_BODY, ExerciseInfo.ExerciseType.LOWER_BODY, ExerciseInfo.ExerciseType.TOTAL_BODY -> learnHeight
+            }
             if (imageResId > 0) {
                 Picasso.with(imageView.context)
                         .load(imageResId)
-                        .resize(videoWidth, videoHeight)
+                        .resize(width, height)
                         .into(imageView)
             }
         }
