@@ -14,6 +14,7 @@
         android:paddingBottom="4dp"
         android:gravity="center_vertical"
         android:textColor="@color/colorNavBar"
+        android:textStyle="bold"
         android:textSize="@dimen/tip_font_size" />
 
     <RelativeLayout

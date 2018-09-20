@@ -30,8 +30,8 @@ class StickyHeadersAdapter(private var listener: OnListFragmentInteractionListen
 
     val videoWidth = 1080
     val videoHeight = 540
-    val learnWidth = 300
-    val learnHeight = 300
+    val learnWidth = 600
+    val learnHeight = 600
 
     override fun onCreateItemViewHolder(parent: ViewGroup, itemUserType: Int): ItemViewHolder? {
         val view = LayoutInflater.from(parent.context)
