@@ -70,6 +70,8 @@ class StickyHeadersAdapter(private var listener: OnListFragmentInteractionListen
             else -> View.VISIBLE
         }
 
+        holder.divider.visibility = if (itemIndex != (section.info.size - 1)) View.VISIBLE else View.GONE
+
         setupImageView(holder.mImageView, holder.mItem)
 
         holder.mView.setOnClickListener {
@@ -246,12 +248,14 @@ class StickyHeadersAdapter(private var listener: OnListFragmentInteractionListen
         val mTextView: TextView
         val mImageView: ImageView
         val playButton: ImageView
+        val divider: View
         var mItem: ExerciseInfo? = null
 
         init {
             mTextView = mView.findViewById(R.id.tvArmsLegs)
             mImageView = mView.findViewById(R.id.ivArmsLegs)
             playButton = mView.findViewById(R.id.ivPlayVideo)
+            divider = mView.findViewById(R.id.divider)
         }
     }
 
