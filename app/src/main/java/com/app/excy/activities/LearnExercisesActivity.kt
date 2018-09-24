@@ -25,6 +25,8 @@ class LearnExercisesActivity : BaseVideoActivity() {
                 ExerciseInfo.ExerciseType.LOWER_BODY))
         exercises.add(ExerciseInfo(getString(R.string.lower_body5), getString(R.string.link_lower_body5), 5,
                 ExerciseInfo.ExerciseType.LOWER_BODY))
+        exercises.add(ExerciseInfo(getString(R.string.lower_body6), getString(R.string.link_lower_body6), 6,
+                ExerciseInfo.ExerciseType.LOWER_BODY))
 
         // Upper Body
         exercises.add(ExerciseInfo(getString(R.string.upper_body1), getString(R.string.link_upper_body1), 1,
@@ -40,6 +42,8 @@ class LearnExercisesActivity : BaseVideoActivity() {
         exercises.add(ExerciseInfo(getString(R.string.upper_body6), getString(R.string.link_upper_body6), 6,
                 ExerciseInfo.ExerciseType.UPPER_BODY))
         exercises.add(ExerciseInfo(getString(R.string.upper_body7), getString(R.string.link_upper_body7), 7,
+                ExerciseInfo.ExerciseType.UPPER_BODY))
+        exercises.add(ExerciseInfo(getString(R.string.upper_body8), getString(R.string.link_upper_body8), 8,
                 ExerciseInfo.ExerciseType.UPPER_BODY))
 
         // Total Body

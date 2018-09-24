@@ -226,6 +226,7 @@ class StickyHeadersAdapter(private var listener: OnListFragmentInteractionListen
                     5 -> R.drawable.upper_body5
                     6 -> R.drawable.upper_body6
                     7 -> R.drawable.upper_body7
+                    8 -> R.drawable.upper_body8
                     else -> R.drawable.upper_body1
                 }
             ExerciseInfo.ExerciseType.TOTAL_BODY.toString() ->
@@ -252,8 +253,8 @@ class StickyHeadersAdapter(private var listener: OnListFragmentInteractionListen
         var mItem: ExerciseInfo? = null
 
         init {
-            mTextView = mView.findViewById(R.id.tvArmsLegs)
-            mImageView = mView.findViewById(R.id.ivArmsLegs)
+            mTextView = mView.findViewById(R.id.description)
+            mImageView = mView.findViewById(R.id.recyclerImage)
             playButton = mView.findViewById(R.id.ivPlayVideo)
             divider = mView.findViewById(R.id.divider)
         }
