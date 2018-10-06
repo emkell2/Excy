@@ -78,11 +78,13 @@ class StickyHeadersAdapter(private var listener: OnListFragmentInteractionListen
         if (section.info[itemIndex].id != -1) {
             setupImageView(holder.mImageView, holder.mItem)
             holder.mTextView.setTextColor(Color.parseColor("#6C6868"))
+            holder.mTextView.textSize = 18.0f
             holder.mTextView.typeface = Typeface.DEFAULT_BOLD
             holder.mTextView.paintFlags = 0
         } else {
             holder.mImageView.setImageDrawable(null)
             holder.mTextView.setTextColor(Color.BLUE)
+            holder.mTextView.textSize = 15.0f
             holder.mTextView.setTypeface(null, Typeface.ITALIC);
             holder.mTextView.paintFlags = holder.mTextView.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG
         }
