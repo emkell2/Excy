@@ -1,5 +1,8 @@
 package com.app.excy.models
 
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Typeface
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +14,8 @@ import com.app.excy.SectioningAdapter
 import com.app.excy.interfaces.OnListFragmentInteractionListener
 import com.squareup.picasso.Picasso
 import java.util.*
+
+
 
 /**
  * Created by erin.kelley on 10/15/17.
@@ -70,9 +75,19 @@ class StickyHeadersAdapter(private var listener: OnListFragmentInteractionListen
             else -> View.VISIBLE
         }
 
-        holder.divider.visibility = if (itemIndex != (section.info.size - 1)) View.VISIBLE else View.GONE
+        if (section.info[itemIndex].id != -1) {
+            setupImageView(holder.mImageView, holder.mItem)
+            holder.mTextView.setTextColor(Color.parseColor("#6C6868"))
+            holder.mTextView.typeface = Typeface.DEFAULT_BOLD
+            holder.mTextView.paintFlags = 0
+        } else {
+            holder.mImageView.setImageDrawable(null)
+            holder.mTextView.setTextColor(Color.BLUE)
+            holder.mTextView.setTypeface(null, Typeface.ITALIC);
+            holder.mTextView.paintFlags = holder.mTextView.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG
+        }
 
-        setupImageView(holder.mImageView, holder.mItem)
+        holder.divider.visibility = if (itemIndex != (section.info.size - 1)) View.VISIBLE else View.GONE
 
         holder.mView.setOnClickListener {
             listener?.onListFragmentInteraction(holder.mItem)

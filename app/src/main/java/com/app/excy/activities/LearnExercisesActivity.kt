@@ -64,6 +64,11 @@ class LearnExercisesActivity : BaseVideoActivity() {
         exercises.add(ExerciseInfo(getString(R.string.total_body8), getString(R.string.link_total_body8), 8,
                 ExerciseInfo.ExerciseType.TOTAL_BODY))
 
+        // PT Credit Link
+        exercises.add(ExerciseInfo("Exercise illustrations provided by PT-Helper, a customizable exercise app",
+                "http://www.pt-helper.com/", -1,
+                ExerciseInfo.ExerciseType.TOTAL_BODY))
+
         return exercises
     }
 }

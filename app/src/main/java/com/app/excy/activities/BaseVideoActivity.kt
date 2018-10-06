@@ -27,7 +27,6 @@ open class BaseVideoActivity : AppCompatActivity() {
         AppUtilities.setBottomNavBarIconActive(this, R.id.action_more)
 
         val bottomNavigationView = findViewById(R.id.bottomNavigationView) as BottomNavigationView
-
         AppUtilities.removeShiftMode(bottomNavigationView)
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
