@@ -4,15 +4,19 @@ package com.app.excy.models;
  * Created by erin.kelley on 10/16/17.
  */
 
-public class ExerciseTip {
-    String tip;
+public class ExerciseInfo {
+    String description;
     String url;
-    int tipNum;
+    int id;
     ExerciseType exerciseType;
 
     public enum ExerciseType {
+        WORKOUT("Workout"),
         ARMS("Arms"),
-        LEGS("Legs");
+        LEGS("Legs"),
+        LOWER_BODY("Lower Body"),
+        UPPER_BODY("Upper Body"),
+        TOTAL_BODY("Total Body");
 
         private final String exercise;
 
@@ -26,19 +30,19 @@ public class ExerciseTip {
         }
     }
 
-    public ExerciseTip(String tip, String url, int tipNum, ExerciseType type) {
-        this.tip = tip;
+    public ExerciseInfo(String description, String url, int id, ExerciseType type) {
+        this.description = description;
         this.url = url;
-        this.tipNum = tipNum;
+        this.id = id;
         this.exerciseType = type;
     }
 
-    public String getTip() {
-        return tip;
+    public String getDescription() {
+        return description;
     }
 
-    public void setTip(String tip) {
-        this.tip = tip;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getUrl() {
@@ -49,11 +53,11 @@ public class ExerciseTip {
         this.url = url;
     }
 
-    public int getTipNum() {
-        return tipNum;
+    public int getId() {
+        return id;
     }
 
-    public void setTipNum(int tipNum) {
-        this.tipNum = tipNum;
+    public void setId(int id) {
+        this.id = id;
     }
 }

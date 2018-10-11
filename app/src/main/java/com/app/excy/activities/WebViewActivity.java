@@ -129,6 +129,7 @@ public class WebViewActivity extends AppCompatActivity {
         // Check if the key event was the Back button and if there's history
         if ((keyCode == KeyEvent.KEYCODE_BACK) && (mWebView != null && mWebView.canGoBack())) {
             mWebView.goBack();
+            finish();
             return true;
         }
         // If it wasn't the Back key or there's no web page history, bubble up to the default

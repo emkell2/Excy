@@ -127,7 +127,7 @@
     <string name="tip02Link">"http://excy.com/2015/11/17/take-excy-anywhere-for-anytime-exercise/"</string>
     <string name="tip03Link">"http://excy.com/2015/11/20/get-more-active-at-work/"</string>
     <string name="tip04Link">"http://excy.com/2015/12/09/hiit-excy-hard-for-total-efficiency/"</string>
-    <string name="tip05Link">"http://excy.com/2016/02/07/excy-tip-do-10-short-exercise-cycling-bursts-throughout-the-day/"</string>
+    <string name="tip05Link">"http://excy.com/2016/02/07/excy-info-do-10-short-exercise-cycling-bursts-throughout-the-day/"</string>
     <string name="tip06Link">"http://excy.com/2016/01/08/multi-task-excy-fitness-to-fit-anywhere/"</string>
     <string name="tip07Link">"http://excy.com/2015/11/20/take-the-excy-portable-cycling-system-outside/"</string>
     <string name="tip08Link">"http://excy.com/2015/11/09/use-excy-to-do-strengthening-exercises/"</string>
@@ -141,12 +141,12 @@
     <string name="tip16Link">"http://excy.com/2015/11/18/take-excy-for-a-leisure-spin/"</string>
     <string name="tip17Link">"http://excy.com/2015/10/30/use-excy-to-train-for-swimming/"</string>
 
-    <string name="armCandyYoutubeLink">0eONwwRUIJc</string>
-    <string name="superCycleYoutubeLink">tSRh26o3zaI</string>
-    <string name="cycleLegYoutubeLink">aIxytWycNhg</string>
-    <string name="coreFloorYoutubeLink">RA-dtZcF75c</string>
-    <string name="armBlastYoutubeLink">4k7JUFgF57M</string>
-    <string name="ultimateArmLegYoutubeLink">QnwdAfD3XLI</string>
+    <string name="armCandyYoutubeLink">https://www.youtube.com/watch?v=0eONwwRUIJc</string>
+    <string name="superCycleYoutubeLink">https://www.youtube.com/watch?v=tSRh26o3zaI</string>
+    <string name="cycleLegYoutubeLink">https://www.youtube.com/watch?v=aIxytWycNhg</string>
+    <string name="coreFloorYoutubeLink">https://www.youtube.com/watch?v=RA-dtZcF75c</string>
+    <string name="armBlastYoutubeLink">https://www.youtube.com/watch?v=4k7JUFgF57M</string>
+    <string name="ultimateArmLegYoutubeLink">https://www.youtube.com/watch?v=QnwdAfD3XLI</string>
 
     <!-- Resume Dialog Strings -->
     <string name="resume_continue">"Continue?"</string>
@@ -206,7 +206,14 @@
         completions."
     </string>
 
-    <!-- Strings for exercise tips -->
+    <!-- Strings for exercise videoList -->
+    <string name="workout1">Arm Candy - 7 min arm strength workout</string>
+    <string name="workout2">Super Cycle Cardio - 23 min high intensity interval</string>
+    <string name="workout3">Cycle Leg Blast - 15 min interval spin</string>
+    <string name="workout4">Core Floor Explosion - 10 min core training</string>
+    <string name="workout5">Arm Blast - 10 min interval arm spin</string>
+    <string name="workout6">Ultimate Arm &amp; Leg Toning - 7 min arm strength workout</string>
+
     <string name="arms1">What Are the Benefits of an Upper Body Ergometer Like Excy?</string>
     <string name="arms2">How do I use Excy as an Upper Body Ergometer from the Floor?</string>
     <string name="arms3">How do I use Excy as an Upper Body Ergometer on the Table?</string>
@@ -219,6 +226,8 @@
     <string name="arms10">How Do I Plank on Excy?</string>
     <string name="arms11">How do I use Excy as an Upper Body Ergometer from a Chair Without a Table?</string>
     <string name="arms12">How to use Excy with Hand Pedals for Hand Cycling?</string>
+    <string name="arms13">How to I squat and hand cycle with Excy?</string>
+    <string name="arms14">How do I hand cycle in bed?</string>
 
     <string name="legs1">How to Pedal Excy as a Portable Recumbent Exercise Bike</string>
     <string name="legs2">How do I use Excy in the unicucle and step cycle position</string>
@@ -229,6 +238,35 @@
     <string name="legs7">How do I cycle Excy on the floor with the Keeper?</string>
     <string name="legs8">How to get started with Excy as a recumbent exercise bike after an injury?</string>
     <string name="legs9">What is the proper posture to use while cycling Excy from a chair?</string>
+    <string name="legs10">How do I stretch and lunge with Excy?</string>
+    <string name="legs11">How do I use Excy lying down on a bed or table?</string>
+    <string name="legs12">How do I hand cycle from a chair with Excy?</string>
+    <string name="legs13">How do I do a single leg balance hand cycle exercise?</string>
+
+    <string name="lower_body1">Stationary Recumbent Chair Cycling</string>
+    <string name="lower_body2">Bedside or Chair Cycling</string>
+    <string name="lower_body3">Lying Down Exercise Cycling</string>
+    <string name="lower_body4">Sitting Upright Cycling in Bed</string>
+    <string name="lower_body5">Bedside Lying Down Exercise Cycling</string>
+    <string name="lower_body6">Exercise Ball Balance Cycling</string>
+
+    <string name="upper_body1">Bed Exercise or Floor Exercise with Hand Ergometer</string>
+    <string name="upper_body2">Hand Pedal Bike Chair Workout</string>
+    <string name="upper_body3">Hand Ergometer Squat-N-Cycle</string>
+    <string name="upper_body4">Arm Ergometer Squat with Ledge Stabilizer</string>
+    <string name="upper_body5">Tabletop Upper Body Ergometer</string>
+    <string name="upper_body6">Shoulder Rotation Side Profile</string>
+    <string name="upper_body7">Forward Standing Shoulder Rotation</string>
+    <string name="upper_body8">Bicep Exercises</string>
+
+    <string name="total_body1">Single Leg Balance Hand Cycle</string>
+    <string name="total_body2">Glute Bridge Couch Pedal Exerciser</string>
+    <string name="total_body3">Hip Flexor Stretch &amp; Lunge</string>
+    <string name="total_body4">Plank Exercise Cycle</string>
+    <string name="total_body5">Rowing Exercise</string>
+    <string name="total_body6">Swim Exercises</string>
+    <string name="total_body7">Tricep Dip Bridge Exercycle</string>
+    <string name="total_body8">Unicycle Exercise and Step Cycle</string>
 
     <string name="link_arms1">https://www.youtube.com/watch?v=WcIWHB1ERK4</string>
     <string name="link_arms2">https://www.youtube.com/watch?v=6Z2oBqV9fOg</string>
@@ -239,9 +277,11 @@
     <string name="link_arms7">https://www.youtube.com/watch?v=HsI0cmx9i0U</string>
     <string name="link_arms8">https://www.youtube.com/watch?v=LjevKn9wmTU</string>
     <string name="link_arms9">https://www.youtube.com/watch?v=jI5sASjTJSg</string>
-    <string name="link_arms10">https://excy.com/excy-exercise-bike-upper-body-ergometer-ergonomic-setup-tips-physical-therapists-sports-medicine/</string>
+    <string name="link_arms10">https://www.youtube.com/watch?v=gFsiTnPZ5QM</string>
     <string name="link_arms11">https://www.youtube.com/watch?v=rKtmEqytb9Y</string>
-    <string name="link_arms12">https://excy.com/excy-exercise-bike-upper-body-ergometer-ergonomic-setup-tips-physical-therapists-sports-medicine/</string>
+    <string name="link_arms12">https://www.youtube.com/watch?v=YV4uwvPldc0</string>
+    <string name="link_arms13">https://www.youtube.com/watch?v=qxyxjt5d0o8</string>
+    <string name="link_arms14">https://www.youtube.com/watch?v=3dAGkht2c0Q&amp;feature=youtu.be</string>
 
     <string name="link_legs1">https://www.youtube.com/watch?v=jXHt24vmmak</string>
     <string name="link_legs2">https://www.youtube.com/watch?v=M7mTiJADqqE</string>
@@ -252,6 +292,36 @@
     <string name="link_legs7">https://www.youtube.com/watch?v=sEkhc35Legs</string>
     <string name="link_legs8">https://www.youtube.com/watch?v=rQYsUxcLnuI</string>
     <string name="link_legs9">https://www.youtube.com/watch?time_continue=5&amp;v=4PwTWHltpZI</string>
+    <string name="link_legs10">https://youtu.be/T9oC1yQ2teQ</string>
+    <string name="link_legs11">https://www.youtube.com/watch?v=UMZyGtzKcG8</string>
+    <string name="link_legs12">https://www.youtube.com/watch?v=ueaGkrxVt4Q&amp;feature=youtu.be</string>
+    <string name="link_legs13">https://www.youtube.com/watch?v=0YjptN8YEi0 </string>
+
+    <string name="link_lower_body1">https://excy.com/recumbent-chair-cycling-with-excy/</string>
+    <string name="link_lower_body2">https://excy.com/bedside-cycle-chair-cycle-excy-ergometer/</string>
+    <string name="link_lower_body3">https://excy.com/lying-down-exercise-cycling-excy/</string>
+    <string name="link_lower_body4">https://excy.com/sitting-upright-cycling-bed-excy/</string>
+    <string name="link_lower_body5">https://excy.com/lying-down-exercise-cycling-excy-bed/</string>
+    <string name="link_lower_body6">https://excy.com/exercise-ball-balance-cycling-exercises/</string>
+
+    <string name="link_upper_body1">https://excy.com/bed-exercise-floor-exercise-hand-ergometer/</string>
+    <string name="link_upper_body2">https://excy.com/hand-pedal-bike-excy-ube/</string>
+    <string name="link_upper_body3">https://excy.com/hand-ergometer-squat-portable-exercise-bike/</string>
+    <string name="link_upper_body4">https://excy.com/arm-ergometer-squat-excy-full-body/</string>
+    <string name="link_upper_body5">https://excy.com/table-top-upper-body-ergometer-excy-exercises/</string>
+    <string name="link_upper_body6">https://excy.com/shoulder-rotation-exercise-excy-ube/</string>
+    <string name="link_upper_body7">https://excy.com/shoulder-exercises-excy-ergometer/</string>
+    <string name="link_upper_body8">https://excy.com/bicep-exercises-excy-upper-body-ergometer/</string>
+
+    <string name="link_total_body1">https://excy.com/excy-single-leg-hand-cycle-exercise/</string>
+    <string name="link_total_body2">https://excy.com/glute-bridge-couch-excy-pedal-exerciser/</string>
+    <string name="link_total_body3">https://excy.com/hip-flexor-stretch-excy-full-body-exercise-bike/</string>
+    <string name="link_total_body4">https://excy.com/plank-exercise-cycle-with-excy-portable-exercise-bike/</string>
+    <string name="link_total_body5">https://excy.com/rowing-exercise-excy-upper-body-ergometer/</string>
+    <string name="link_total_body6">https://excy.com/swim-exercises-excy-upper-body-ergometer/</string>
+    <string name="link_total_body7">https://excy.com/tricep-dip-exercycle-excy-ergometer/</string>
+    <string name="link_total_body8">https://excy.com/unicycle-exercise-excy-portable-trainer/</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
