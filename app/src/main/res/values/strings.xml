@@ -207,6 +207,7 @@
     </string>
 
     <!-- Strings for exercise videoList -->
+    <!-- XCS 200 -->
     <string name="workout1">Arm Candy - 7 min arm strength workout</string>
     <string name="workout2">Super Cycle Cardio - 23 min high intensity interval</string>
     <string name="workout3">Cycle Leg Blast - 15 min interval spin</string>
@@ -323,6 +324,43 @@
     <string name="link_total_body8">https://excy.com/unicycle-exercise-excy-portable-trainer/</string>
 
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- XCR 300 -->
+    <string name="xcr300_video1_text">How do I pedal the XCR 300 as a standing up arm ergometer</string>
+    <string name="xcr300_video2_text">How do I pedal arms above my head on the XCR 300?</string>
+    <string name="xcr300_video3_text">How do I pedal arms on the XCR 300 from a seated position?</string>
+    <string name="xcr300_video4_text">How do I use the XCR 300 for external and internal shoulder rotations</string>
+    <string name="xcr300_video5_text">How do I use the XCR for single arm bike exercises</string>
+    <string name="xcr300_video6_text">How do I use the XCR from a seated wheelchair position?</string>
+    <string name="xcr300_video7_text">How do I pedal the XCR 300 while lying down?</string>
+    <string name="xcr300_video8_text">How do I pedal the XCR 300 as a recumbent exercise bike?</string>
+
+    <string name="xcr300_video1_yt">https://www.youtube.com/watch?time_continue=5&amp;v=AvUvEQVgrgo</string>
+    <string name="xcr300_video2_yt">https://www.youtube.com/watch?time_continue=6&amp;v=gYgH5n1PzNQ</string>
+    <string name="xcr300_video3_yt">https://www.youtube.com/watch?v=HAFxG9Rz5YU&amp;feature=youtu.be</string>
+    <string name="xcr300_video4_yt">https://www.youtube.com/watch?v=nFQcuFBfjfk</string>
+    <string name="xcr300_video5_yt">"https://www.youtube.com/watch?v=nFQcuFBfjfk&amp;feature=youtu.be"</string>
+    <string name="xcr300_video6_yt">https://www.youtube.com/watch?v=HAFxG9Rz5YU&amp;feature=youtu.be</string>
+    <string name="xcr300_video7_yt">https://youtu.be/55owOUil2PY</string>
+    <string name="xcr300_video8_yt">https://www.youtube.com/watch?v=55owOUil2PY</string>
+
+    <string name="xcr300_upper_body1">Standing Upper Body Ergometer</string>
+    <string name="xcr300_upper_body2">Sport Standing Upper Body Exerciser</string>
+    <string name="xcr300_upper_body3">Seated Upper Body Ergometer (Ball or Chair)</string>
+    <string name="xcr300_upper_body4">External and Internal Shoulder Rotations</string>
+    <string name="xcr300_upper_body5">Single Arm Bike Exercise and Range of Motion</string>
+    <string name="xcr300_upper_body6">Wheelchair Upper Body Ergometer</string>
+
+    <string name="xcr300_lower_body1">Exercise Bike Pedal Motions Lying Down</string>
+    <string name="xcr300_lower_body2">Recumbent Bike Exercise Training</string>
+
+    <string name="link_xcr300_upper_body1">https://excy.com/excy-xcr-300-standing-upper-body-ergometer-position/</string>
+    <string name="link_xcr300_upper_body2">https://excy.com/overhead-shoulder-upper-body-ergometer-using-a-weight-rack/</string>
+    <string name="link_xcr300_upper_body3">https://excy.com/excy-xcr-300-seated-upper-body-ergometer/</string>
+    <string name="link_xcr300_upper_body4">https://excy.com/excy-xcr-300-external-and-internal-shoulder-rotation-upper-body-ergometer-exercises/</string>
+    <string name="link_xcr300_upper_body5">https://excy.com/excy-xcr-300-single-arm-bike-exercise-and-range-of-motion/</string>
+    <string name="link_xcr300_upper_body6">https://excy.com/excy-wheelchair-upper-body-ergometer-with-a-power-weight-rack/</string>
+
+    <string name="link_xcr300_lower_body1">https://excy.com/excy-xcr-300-lying-down-exercise-bike/</string>
+    <string name="link_xcr300_lower_body2">https://excy.com/power-rack-mounted-ergometer-for-recumbent-exercise-bike-workout/</string>
+
 </resources>

@@ -137,11 +137,11 @@ class StickyHeadersAdapter(private var listener: OnListFragmentInteractionListen
                 currentSection = Section()
                 currentSection.text = when (currentType.toString()) {
                     ExerciseInfo.ExerciseType.WORKOUT.toString() -> WORKOUTS
-                    ExerciseInfo.ExerciseType.ARMS.toString() -> ARM_ERGONOMICS
-                    ExerciseInfo.ExerciseType.LEGS.toString() -> LEG_ERGONOMICS
-                    ExerciseInfo.ExerciseType.LOWER_BODY.toString() -> LOWER_BODY
-                    ExerciseInfo.ExerciseType.UPPER_BODY.toString() -> UPPER_BODY
-                    ExerciseInfo.ExerciseType.TOTAL_BODY.toString() -> TOTAL_BODY
+                    ExerciseInfo.ExerciseType.XCS200_ARMS.toString() -> ARM_ERGONOMICS
+                    ExerciseInfo.ExerciseType.XCS200_LEGS.toString() -> LEG_ERGONOMICS
+                    ExerciseInfo.ExerciseType.XCS200_LOWER_BODY.toString() -> LOWER_BODY
+                    ExerciseInfo.ExerciseType.XCS200_UPPER_BODY.toString() -> UPPER_BODY
+                    ExerciseInfo.ExerciseType.XCS200_TOTAL_BODY.toString() -> TOTAL_BODY
                     else -> ""
                 }
             }
@@ -156,15 +156,21 @@ class StickyHeadersAdapter(private var listener: OnListFragmentInteractionListen
     }
 
     private fun setupImageView(imageView: ImageView, info: ExerciseInfo?) {
-        if (info != null) {
+        info?.let {
             val imageResId = getImageDrawableResId(info)
-            val width = when (info.exerciseType) {
-                ExerciseInfo.ExerciseType.WORKOUT, ExerciseInfo.ExerciseType.ARMS, ExerciseInfo.ExerciseType.LEGS -> videoWidth
-                ExerciseInfo.ExerciseType.UPPER_BODY, ExerciseInfo.ExerciseType.LOWER_BODY, ExerciseInfo.ExerciseType.TOTAL_BODY -> learnWidth
+            val width = when (it.exerciseType) {
+                ExerciseInfo.ExerciseType.WORKOUT, ExerciseInfo.ExerciseType.XCS200_ARMS, ExerciseInfo.ExerciseType.XCS200_LEGS,
+                ExerciseInfo.ExerciseType.XCR300_ARMS, ExerciseInfo.ExerciseType.XCR300_LEGS -> videoWidth
+                ExerciseInfo.ExerciseType.XCS200_UPPER_BODY, ExerciseInfo.ExerciseType.XCS200_LOWER_BODY,
+                ExerciseInfo.ExerciseType.XCR300_UPPER_BODY, ExerciseInfo.ExerciseType.XCR300_LOWER_BODY,
+                ExerciseInfo.ExerciseType.XCS200_TOTAL_BODY -> learnWidth
             }
-            val height = when (info.exerciseType) {
-                ExerciseInfo.ExerciseType.WORKOUT, ExerciseInfo.ExerciseType.ARMS, ExerciseInfo.ExerciseType.LEGS -> videoHeight
-                ExerciseInfo.ExerciseType.UPPER_BODY, ExerciseInfo.ExerciseType.LOWER_BODY, ExerciseInfo.ExerciseType.TOTAL_BODY -> learnHeight
+            val height = when (it.exerciseType) {
+                ExerciseInfo.ExerciseType.WORKOUT, ExerciseInfo.ExerciseType.XCS200_ARMS, ExerciseInfo.ExerciseType.XCS200_LEGS,
+                ExerciseInfo.ExerciseType.XCR300_ARMS, ExerciseInfo.ExerciseType.XCR300_LEGS -> videoHeight
+                ExerciseInfo.ExerciseType.XCS200_UPPER_BODY, ExerciseInfo.ExerciseType.XCS200_LOWER_BODY,
+                ExerciseInfo.ExerciseType.XCR300_UPPER_BODY, ExerciseInfo.ExerciseType.XCR300_LOWER_BODY,
+                ExerciseInfo.ExerciseType.XCS200_TOTAL_BODY -> learnHeight
             }
             if (imageResId > 0) {
                 Picasso.with(imageView.context)
@@ -179,7 +185,7 @@ class StickyHeadersAdapter(private var listener: OnListFragmentInteractionListen
         var resId = 0
         val type = info.exerciseType.toString()
         when (type) {
-            ExerciseInfo.ExerciseType.ARMS.toString() ->
+            ExerciseInfo.ExerciseType.XCS200_ARMS.toString() ->
                 resId = when (info.getId()) {
                     1 -> R.drawable.arms_1
                     2 -> R.drawable.arms_2
@@ -197,7 +203,17 @@ class StickyHeadersAdapter(private var listener: OnListFragmentInteractionListen
                     14 -> R.drawable.arms_14
                     else -> R.drawable.arms_1
                 }
-            ExerciseInfo.ExerciseType.LEGS.toString() ->
+            ExerciseInfo.ExerciseType.XCR300_ARMS.toString() ->
+                resId = when (info.getId()) {
+                    1 -> R.drawable.xcr300_arms1
+                    2 -> R.drawable.xcr300_arms2
+                    3 -> R.drawable.xcr300_arms3
+                    4 -> R.drawable.xcr300_arms4
+                    5 -> R.drawable.xcr300_arms5
+                    6 -> R.drawable.xcr300_arms6
+                    else -> R.drawable.xcr300_arms1
+                }
+            ExerciseInfo.ExerciseType.XCS200_LEGS.toString() ->
                 resId = when (info.getId()) {
                     1 -> R.drawable.legs_1
                     2 -> R.drawable.legs_2
@@ -214,6 +230,12 @@ class StickyHeadersAdapter(private var listener: OnListFragmentInteractionListen
                     13 -> R.drawable.legs_13
                     else -> R.drawable.legs_1
                 }
+            ExerciseInfo.ExerciseType.XCR300_LEGS.toString() ->
+                resId = when (info.getId()) {
+                    1 -> R.drawable.xcr300_legs1
+                    2 -> R.drawable.xcr300_legs2
+                    else -> R.drawable.xcr300_legs1
+                }
             ExerciseInfo.ExerciseType.WORKOUT.toString() ->
                 resId = when (info.getId()) {
                     1 -> R.drawable.watch_arm_candy
@@ -224,7 +246,7 @@ class StickyHeadersAdapter(private var listener: OnListFragmentInteractionListen
                     6 -> R.drawable.watch_ultimate_arm_leg
                     else -> R.drawable.watch_arm_candy
                 }
-            ExerciseInfo.ExerciseType.LOWER_BODY.toString() ->
+            ExerciseInfo.ExerciseType.XCS200_LOWER_BODY.toString() ->
                 resId = when (info.getId()) {
                     1 -> R.drawable.lower_body1
                     2 -> R.drawable.lower_body2
@@ -234,7 +256,13 @@ class StickyHeadersAdapter(private var listener: OnListFragmentInteractionListen
                     6 -> R.drawable.lower_body6
                     else -> R.drawable.lower_body1
                 }
-            ExerciseInfo.ExerciseType.UPPER_BODY.toString() ->
+            ExerciseInfo.ExerciseType.XCR300_LOWER_BODY.toString() ->
+                resId = when (info.getId()) {
+                    1 -> R.drawable.xcr_300_lower_body1
+                    2 -> R.drawable.xcr_300_lower_body2
+                    else -> R.drawable.xcr_300_lower_body1
+                }
+            ExerciseInfo.ExerciseType.XCS200_UPPER_BODY.toString() ->
                 resId = when (info.getId()) {
                     1 -> R.drawable.upper_body1
                     2 -> R.drawable.upper_body2
@@ -246,7 +274,17 @@ class StickyHeadersAdapter(private var listener: OnListFragmentInteractionListen
                     8 -> R.drawable.upper_body8
                     else -> R.drawable.upper_body1
                 }
-            ExerciseInfo.ExerciseType.TOTAL_BODY.toString() ->
+            ExerciseInfo.ExerciseType.XCR300_UPPER_BODY.toString() ->
+                resId = when (info.getId()) {
+                    1 -> R.drawable.xcr_300_upper_body1
+                    2 -> R.drawable.xcr_300_upper_body2
+                    3 -> R.drawable.xcr_300_upper_body3
+                    4 -> R.drawable.xcr_300_upper_body4
+                    5 -> R.drawable.xcr_300_upper_body5
+                    6 -> R.drawable.xcr_300_upper_body6
+                    else -> R.drawable.xcr_300_upper_body1
+                }
+            ExerciseInfo.ExerciseType.XCS200_TOTAL_BODY.toString() ->
                 resId = when (info.getId()) {
                     1 -> R.drawable.total_body1
                     2 -> R.drawable.total_body2
