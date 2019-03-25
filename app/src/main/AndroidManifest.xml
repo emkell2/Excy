@@ -54,7 +54,7 @@
         <activity android:name=".activities.WarmUpActivity" />
         <activity android:name=".activities.VideosActivity" />
         <activity android:name=".activities.WebViewActivity" />
-        <activity android:name=".activities.BaseVideoActivity" />
+        <activity android:name=".activities.BaseListActivity" />
         <activity android:name=".activities.LearnExercisesActivity"></activity>
     </application>
 
