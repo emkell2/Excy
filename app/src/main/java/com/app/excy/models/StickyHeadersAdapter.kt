@@ -138,9 +138,13 @@ class StickyHeadersAdapter(private var listener: OnListFragmentInteractionListen
                 currentSection.text = when (currentType.toString()) {
                     ExerciseInfo.ExerciseType.WORKOUT.toString() -> WORKOUTS
                     ExerciseInfo.ExerciseType.XCS200_ARMS.toString() -> ARM_ERGONOMICS
+                    ExerciseInfo.ExerciseType.XCR300_ARMS.toString() -> ARM_ERGONOMICS
                     ExerciseInfo.ExerciseType.XCS200_LEGS.toString() -> LEG_ERGONOMICS
+                    ExerciseInfo.ExerciseType.XCR300_LEGS.toString() -> LEG_ERGONOMICS
                     ExerciseInfo.ExerciseType.XCS200_LOWER_BODY.toString() -> LOWER_BODY
+                    ExerciseInfo.ExerciseType.XCR300_LOWER_BODY.toString() -> LOWER_BODY
                     ExerciseInfo.ExerciseType.XCS200_UPPER_BODY.toString() -> UPPER_BODY
+                    ExerciseInfo.ExerciseType.XCR300_UPPER_BODY.toString() -> UPPER_BODY
                     ExerciseInfo.ExerciseType.XCS200_TOTAL_BODY.toString() -> TOTAL_BODY
                     else -> ""
                 }
