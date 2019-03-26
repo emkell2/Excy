@@ -2,10 +2,14 @@ package com.app.excy.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.support.design.widget.BottomNavigationView
+import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
+import android.view.View
+import android.view.ViewTreeObserver
 import com.app.excy.R
 import com.app.excy.models.ExerciseInfo
 import com.app.excy.models.ListPagerAdapter
@@ -13,8 +17,21 @@ import com.app.excy.utilities.AppUtilities
 import com.app.excy.utilities.Constants
 import kotlinx.android.synthetic.main.activity_base_list.*
 
+
+
+inline fun View.afterMeasured(crossinline f: View.() -> Unit) {
+    viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        override fun onGlobalLayout() {
+            if (measuredWidth > 0 && measuredHeight > 0) {
+                viewTreeObserver.removeOnGlobalLayoutListener(this)
+                f()
+            }
+        }
+    })
+}
+
 open class BaseListActivity : AppCompatActivity() {
-    private lateinit var viewPager: ViewPager
+    lateinit var pager: ViewPager
     lateinit var viewPagerAdapter: ListPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,10 +39,10 @@ open class BaseListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_base_list)
         AppUtilities.setBottomNavBarIconActive(this, R.id.action_more)
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        AppUtilities.removeShiftMode(bottomNavigationView)
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        AppUtilities.removeShiftMode(bottomNav)
 
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+        bottomNav.setOnNavigationItemSelectedListener { item ->
             val intent: Intent
             when (item.itemId) {
                 R.id.action_play -> {
@@ -50,11 +67,19 @@ open class BaseListActivity : AppCompatActivity() {
             true
         }
 
-        viewPager = findViewById(R.id.viewPager)
-        viewPagerAdapter = ListPagerAdapter(supportFragmentManager)
-        viewPager.adapter = viewPagerAdapter
+        pager = findViewById(R.id.viewPager)
+        val tabs = findViewById<TabLayout>(R.id.tabLayout)
+        bottomNav.afterMeasured {
+            val params = pager.layoutParams as ConstraintLayout.LayoutParams
+            params.height = pager.height - bottomNav.height - tabs.height
+            pager.layoutParams = params
+            pager.requestLayout()
+        }
 
-        tabLayout.setupWithViewPager(viewPager)
+        viewPagerAdapter = ListPagerAdapter(supportFragmentManager)
+        pager.adapter = viewPagerAdapter
+
+        tabLayout.setupWithViewPager(pager)
     }
 
     override fun onResume() {

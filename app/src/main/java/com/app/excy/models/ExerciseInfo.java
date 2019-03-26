@@ -12,15 +12,15 @@ public class ExerciseInfo {
 
     public enum ExerciseType {
         WORKOUT("Workout"),
-        XCS200_ARMS("Arms"),
-        XCS200_LEGS("Legs"),
-        XCR300_ARMS("Arms"),
-        XCR300_LEGS("Legs"),
-        XCS200_LOWER_BODY("Lower Body"),
-        XCS200_UPPER_BODY("Upper Body"),
-        XCS200_TOTAL_BODY("Total Body"),
-        XCR300_LOWER_BODY("Lower Body"),
-        XCR300_UPPER_BODY("Upper Body");
+        XCS200_ARMS("XCS200 Arms"),
+        XCS200_LEGS("XCS200 Legs"),
+        XCR300_ARMS("XCR300 Arms"),
+        XCR300_LEGS("XCR300 Legs"),
+        XCS200_LOWER_BODY("XCS200 Lower Body"),
+        XCS200_UPPER_BODY("XCS200 Upper Body"),
+        XCS200_TOTAL_BODY("XCS200 Total Body"),
+        XCR300_LOWER_BODY("XCR300 Lower Body"),
+        XCR300_UPPER_BODY("XCR300 Upper Body");
 
         private final String exercise;
 
